@@ -88,7 +88,7 @@
 <div class="wrap">
   <div>
     <h1>Sauna Recovery Tracker</h1>
-    <div class="version">version v15</div>
+    <div class="version">version v16</div>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -262,14 +262,14 @@ const baselineValues = {
   hrvStatusHigh:41,
   hrvCurrent:34,
   pulseOx:96,
-  bodyBatteryMorningHigh4wk:null,
+  bodyBatteryMorningHigh4wk:76,
 };
 const baselines = [
   {label:"Sleep (4wk)", value:"78"},
   {label:"Resting HR", value:"58 bpm"},
   {label:"HRV typical", value:"29–42 ms"},
   {label:"SpO2", value:"96%"},
-  {label:"Body Battery", value:"4wk avg AM high"}
+  {label:"Body Battery", value:"76"}
 ];
 const seedEntries = [
   {id:"seed-2026-03-09-am",date:"2026-03-09",timeOfDay:"morning",saunaMinutes:"",sleepScore:"",sleepSelf:10,hrv:"",restingHr:"",bodyBattery:"",respiration:"",pulseOx:"",energy:7,stress:3,muscleSoreness:3,jointSoreness:0,jointStiffness:1,redLightUsed:false,notes:"Baseline entry. Burn Boot Camp at 4:30pm. Previous day: walked 1.23 miles and played 1 hour of singles pickleball."},
@@ -363,24 +363,55 @@ function renderTodaySlot(slot, title){
     <div class="secondary-grid">
       ${secondary.map(item=>`<div class="secondary-metric"><div class="secondary-head"><span>${item.label}</span>${item.rawNonNumeric ? '<span class="delta neutral">logged</span>' : deltaChip(item.kind, item.value, item.baseline)}</div><div class="secondary-value">${formatVal(item.value)}</div></div>`).join('')}
     </div>
-    ${entry.notes ? `<div class="today-note">${escapeHtml(entry.notes)}</div>` : ''}
+    ${entry.notes && entry.notes !== 'Screenshot-derived baseline.' ? `<div class="today-note">${escapeHtml(entry.notes)}</div>` : ''}
   </div>`;
 }
 function renderToday(){
   document.getElementById('todayMorningCol').innerHTML = renderTodaySlot('morning','Morning');
   document.getElementById('todayNightCol').innerHTML = renderTodaySlot('post_sauna','Night / Post Sauna');
 }
+function renderHistoryGroups(entry){
+  const primary = [
+    ['😴 Sleep', entry.sleepScore],
+    ['📉 HRV', entry.hrv],
+    ['❤️ RHR', entry.restingHr],
+  ].filter(([,v]) => !isBlank(v));
+  const supplemental = [
+    ['🔋 Body Battery', entry.bodyBattery],
+    ['🫁 Resp', entry.respiration],
+    ['🩸 Pulse Ox', entry.pulseOx],
+  ].filter(([,v]) => !isBlank(v));
+  const subjective = [
+    ['🛌 Self Sleep', entry.sleepSelf],
+    ['⚡ Energy', entry.energy],
+    ['🧠 Stress', entry.stress],
+    ['🦴 Joint Stiff', entry.jointStiffness],
+  ].filter(([,v]) => !isBlank(v));
+  const session = [
+    ['🔥 Sauna', entry.saunaMinutes === '' ? '' : entry.saunaMinutes + 'm'],
+    ['🔴 Red light', entry.redLightUsed ? 'Yes' : ''],
+  ].filter(([,v]) => !isBlank(v));
+  const groups = [
+    ['Primary', primary],
+    ['Supplemental', supplemental],
+    ['Subjective', subjective],
+    ['Session', session],
+  ].filter(([,items]) => items.length);
+  return groups.map(([label, items]) => `<div><div class="history-note" style="margin-bottom:4px">${label}</div><div class="history-metrics">${items.map(([k,v]) => `<div class="metric">${k} ${v}</div>`).join('')}</div></div>`).join('');
+}
+
 function renderHistory(){
   const holder = document.getElementById("historyList");
   const sorted = sortEntriesDesc();
   if(!sorted.length){ holder.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
   holder.innerHTML = sorted.map(entry=>{
     const visibleMetrics = metricDefs.filter(m => !isBlank(entry[m.key]));
-    return `<div class="history-item"><div class="history-head"><div><div class="history-date">${longDate(entry.date)}${dayLabel(entry)}</div><div class="history-metrics">${visibleMetrics.map(m=>`<div class="metric">${m.label} ${m.fmt(entry[m.key])}</div>`).join("")}</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="startEdit('${entry.id}')">Edit</button><button onclick="removeEntry('${entry.id}')">Delete</button></div></div>${entry.notes ? `<div class="history-note">${escapeHtml(entry.notes)}</div>` : ""}</div>`;
+    return `<div class="history-item"><div class="history-head"><div><div class="history-date">${longDate(entry.date)}${dayLabel(entry)}</div><div style="display:grid;gap:8px;margin-top:6px">${renderHistoryGroups(entry)}</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="startEdit('${entry.id}')">Edit</button><button onclick="removeEntry('${entry.id}')">Delete</button></div></div>${entry.notes ? `<div class="history-note">${entry.notes === 'Screenshot-derived baseline.' ? '' : escapeHtml(entry.notes)}</div>` : ""}</div>`;
   }).join("");
 }
 
 function drawChart(svgId, series, yMin, yMax){
+  const minLabelSpacing = 26;
   const svg = document.getElementById(svgId);
   const data = sortEntriesAsc();
   if(!data.length){ svg.innerHTML = ""; return; }
@@ -401,7 +432,18 @@ function drawChart(svgId, series, yMin, yMax){
     let path = "";
     pts.forEach((pt,i)=>{ if(!pt) return; const hasPrev = pts.slice(0,i).some(Boolean); path += `${hasPrev ? ' L ' : 'M '}${pt[0]} ${pt[1]}`; });
     out += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''} stroke-linecap="round" stroke-linejoin="round" />`;
-    pts.forEach(pt=>{ if(pt){ out += `<circle cx="${pt[0]}" cy="${pt[1]}" r="3.5" fill="${s.color}" />`; out += `<text x="${pt[0]}" y="${pt[1]-8}" text-anchor="middle" font-size="10" fill="${s.color}">${pt[2]}</text>`; }});
+    let lastLabelY = -999;
+    pts.forEach((pt, idx)=>{ 
+      if(pt){ 
+        out += `<circle cx="${pt[0]}" cy="${pt[1]}" r="3.5" fill="${s.color}" />`;
+        const nearPrev = Math.abs(pt[1] - lastLabelY) < minLabelSpacing;
+        const isLast = idx === pts.length - 1;
+        if(!nearPrev || isLast){
+          out += `<text x="${pt[0]}" y="${pt[1]-8}" text-anchor="middle" font-size="10" fill="${s.color}">${pt[2]}</text>`;
+          lastLabelY = pt[1];
+        }
+      }
+    });
   });
   data.forEach((d,i)=>{ const dt = new Date(d.date+"T12:00:00"); const label1 = dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(); const label2 = dt.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+dt.getDate(); out += `<text x="${x(i)}" y="${height-24}" text-anchor="middle" font-size="11" fill="#6f6277">${label1}</text>`; out += `<text x="${x(i)}" y="${height-9}" text-anchor="middle" font-size="11" fill="#6f6277">${label2}</text>`; });
   svg.innerHTML = out;
