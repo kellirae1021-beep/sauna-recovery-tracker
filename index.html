@@ -1,299 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sauna Recovery Tracker</title>
-  <style>
-    :root{
-      --bg:#f7f4f8;--card:#ffffff;--text:#221b29;--muted:#6f6277;--border:#e6deea;
-      --plum:#6f3f74;--berry:#8f4f7c;--rose:#b06a7f;--teal:#2f6f73;--ink:#3c2f46;--overlay:rgba(34,27,41,.58);
-    }
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#faf7fb 0%,#f5f1f7 100%);color:var(--text)}
-    .wrap{max-width:1200px;margin:0 auto;padding:14px;display:grid;gap:12px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:12px;box-shadow:0 4px 14px rgba(60,47,70,.05)}
-    h1{margin:0 0 4px;font-size:28px} h3{margin:0} .sub{color:var(--muted);font-size:14px}
-    .stats{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
-    .stat-card{padding:8px 10px;border-radius:14px;background:linear-gradient(180deg,#fff 0%,#fcf9fd 100%);border:1px solid var(--border)}
-    .stat-label{font-size:11px;color:var(--muted);line-height:1.15}.stat-value{font-size:20px;font-weight:700;margin-top:2px;line-height:1.05}
-    button{border:1px solid var(--border);border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;background:#fff;cursor:pointer;color:var(--text);line-height:1;white-space:nowrap}
-    button.primary{background:linear-gradient(180deg,var(--plum) 0%,#5d355f 100%);color:#fff;border-color:#5d355f}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:nowrap}.tabs{display:flex;gap:6px;flex-wrap:nowrap;min-width:0}
-    .tab-btn{padding:8px 12px}.tab-btn.active{background:linear-gradient(180deg,var(--ink) 0%,#312538 100%);color:#fff;border-color:#312538}
-    .tab-panel{display:none}.tab-panel.active{display:block}.layout{display:grid;gap:12px}
-    .panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}.latest-card{background:linear-gradient(180deg,#fff 0%,#fbf7fc 100%)}
-    .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-top:8px}
-    .metric-chip{display:flex;align-items:center;gap:6px;border:1px solid var(--border);background:#faf6fb;border-radius:999px;padding:6px 8px;font-size:12px;color:#4a3b51;min-width:0}
-    .metric-icon{width:20px;height:20px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 auto;background:#fff}
-    .metric-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .chart-block{display:grid;gap:14px}.chart-title{font-size:14px;font-weight:700;color:#4d3d55;margin-bottom:6px}
-    .chart{width:100%;border:1px solid var(--border);border-radius:16px;background:#fff;padding:10px}
-    .legend{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 4px;font-size:13px;color:#4d3d55}.legend span{display:inline-flex;align-items:center;gap:6px}
-    .swatch{width:12px;height:12px;border-radius:999px;display:inline-block}.btns{display:flex;gap:8px;flex-wrap:wrap}.tiny{font-size:12px;color:var(--muted)}
-    .history-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}.history-count{font-size:12px;color:var(--muted)}
-    .entries{display:grid;gap:6px}.entry{border:1px solid var(--border);border-radius:12px;padding:8px 10px;background:#fff}
-    .entry-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}.entry-main{min-width:0;display:grid;gap:5px}.entry-date{font-size:14px;font-weight:700;line-height:1.2}
-    .history-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:5px}
-    .history-chip{display:flex;align-items:center;gap:5px;padding:4px 6px;border:1px solid var(--border);border-radius:999px;background:#faf6fb;font-size:11px;color:#51435a;min-width:0}
-    .history-chip .metric-icon{width:16px;height:16px;font-size:10px}.history-chip .metric-text{font-size:11px}.note{font-size:12px;color:#4a3b51;line-height:1.25}
-    .entry-actions{display:flex;gap:5px}.entry-actions button{padding:7px 9px;font-size:12px}.empty{border:1px dashed var(--border);border-radius:14px;padding:16px;color:var(--muted);font-size:14px}
-    .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:1000}.modal-backdrop.open{display:flex}
-    .modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;border:1px solid var(--border);padding:16px}
-    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;position:sticky;top:0;background:#fff;padding-bottom:8px}
-    form{display:grid;gap:14px}.grid2{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))} label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
-    input, textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px 14px;font:inherit;background:#fff;color:var(--text)} textarea{min-height:110px;resize:vertical}
-    .switch-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);border-radius:14px;padding:12px 14px;background:#fcfafc}.switch-row small{display:block;color:var(--muted);margin-top:3px}
-    @media (max-width:760px){.wrap{padding:10px}.grid2{grid-template-columns:1fr}.topbar{gap:6px}.tabs{gap:4px}.tab-btn,button.primary,#historyAddBtn,#todayEditLatestBtn{padding:8px 10px;font-size:12px}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.history-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-backdrop{padding:0}.modal{width:100%;max-height:100vh;border-radius:20px 20px 0 0}}
-    svg text{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sauna Recovery Tracker</title>
+<style>
+:root{
+  --bg:#f7f4f8;
+  --card:#ffffff;
+  --plum:#6f3f74;
+  --berry:#8f4f7c;
+  --text:#2b2b2b;
+  --muted:#777;
+}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.wrap{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 16px;
+}
+
+h1{
+  margin:0 0 6px 0;
+}
+
+.version{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:18px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:16px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+
+.stat{
+  background:#faf8fb;
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+}
+
+.stat b{
+  font-size:20px;
+  display:block;
+}
+
+.baselines{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:8px;
+}
+
+.baseline{
+  background:#faf8fb;
+  padding:10px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.metrics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.metric{
+  background:#f6f0f7;
+  padding:8px 10px;
+  border-radius:20px;
+  font-size:13px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.tab{
+  padding:8px 14px;
+  border-radius:20px;
+  background:#eee;
+  font-size:14px;
+}
+
+.tab.active{
+  background:var(--plum);
+  color:white;
+}
+
+.chart{
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:14px;
+}
+
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div><h1>Sauna Recovery Tracker</h1><div class="sub">Local, simple version now with your baseline data and quick baseline reference loaded. Designed to grow into a smarter app later.</div></div>
-    <div class="stats" id="stats"></div>
 
-    <div class="card">
-          <div class="panel-head">
-            <h3>Baselines</h3>
-            
-          </div>
-          <div class="baseline-grid" id="baselineReference"></div>
-          
-        </div>
+<div class="wrap">
 
-        
-    <div class="card"><div class="topbar"><div class="tabs"><button type="button" class="tab-btn active" data-tab="todayTab">Today & Trends</button><button type="button" class="tab-btn" data-tab="historyTab">History</button></div><button type="button" class="primary" id="openModalBtn">Add / Edit</button></div></div>
-    <div id="todayTab" class="tab-panel active">
-      <div class="layout">
-        <div class="card latest-card">
-          <div class="panel-head"><h3>Latest entry</h3><button type="button" id="todayEditLatestBtn">Edit latest</button></div>
-          <div class="stat-value" id="latestDate" style="font-size:18px">—</div>
-          <div class="metric-grid" id="latestMetrics"></div>
-          <div class="tiny" id="latestSummary" style="margin-top:8px"></div>
-        </div>
-        <div class="card">
-          <h3>Trend charts</h3>
-          <div class="chart-block" style="margin-top:12px">
-            <div><div class="chart-title">Objective metrics</div><div class="legend"><span><i class="swatch" style="background:var(--plum)"></i>Sleep Score</span><span><i class="swatch" style="background:var(--teal)"></i>HRV</span><span><i class="swatch" style="background:var(--ink)"></i>Resting HR</span><span><i class="swatch" style="background:#c27ba0"></i>Body Battery</span><span><i class="swatch" style="background:#9f8aa9"></i>Respiration</span><span><i class="swatch" style="background:#d26f86"></i>Pulse Ox</span><span><i class="swatch" style="background:#d8b4d4"></i>Red light days</span></div><div class="chart" id="chartObjective"></div></div>
-            <div><div class="chart-title">How you felt</div><div class="legend"><span><i class="swatch" style="background:var(--berry)"></i>Energy</span><span><i class="swatch" style="background:var(--rose)"></i>Stress</span><span><i class="swatch" style="background:var(--teal)"></i>Avg Soreness</span><span><i class="swatch" style="background:#8a78a8"></i>Self Sleep</span><span><i class="swatch" style="background:#b9a5c9"></i>Joint Stiffness</span><span><i class="swatch" style="background:#d8b4d4"></i>Red light days</span></div><div class="chart" id="chartSubjective"></div></div>
-            <div class="btns"><button type="button" id="clearAllBtn">Clear all</button></div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="historyTab" class="tab-panel"><div class="card"><div class="panel-head"><h3>History</h3><div class="tiny">Condensed view to save scrolling.</div></div><div class="history-controls"><div class="history-count" id="historyCount">0 entries</div><button type="button" id="historyAddBtn">Add entry</button></div><div id="entries"></div></div></div>
-  </div>
-  <div class="modal-backdrop" id="entryModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle"><div class="modal-head"><h3 id="formTitle">Add daily entry</h3><button type="button" id="closeModalBtn">Close</button></div>
-    <form id="entryForm">
-      <div><label for="date">Date</label><input id="date" name="date" type="date" required /></div>
-      <div class="grid2">
-        <div><label for="saunaMinutes">Sauna minutes</label><input id="saunaMinutes" name="saunaMinutes" type="number" min="0" placeholder="20" /></div>
-        <div><label for="sleepScore">Sleep score</label><input id="sleepScore" name="sleepScore" type="number" min="0" max="100" placeholder="72" /></div>
-        <div><label for="hrv">HRV</label><input id="hrv" name="hrv" type="number" min="0" placeholder="48" /></div>
-        <div><label for="restingHr">Resting HR</label><input id="restingHr" name="restingHr" type="number" min="0" placeholder="58" /></div>
-        <div><label for="bodyBattery">Body Battery</label><input id="bodyBattery" name="bodyBattery" type="number" min="0" max="100" placeholder="71" /></div>
-        <div><label for="respiration">Respiration</label><input id="respiration" name="respiration" type="number" min="0" step="0.1" placeholder="15.5" /></div>
-        <div><label for="pulseOx">Pulse Ox</label><input id="pulseOx" name="pulseOx" type="number" min="0" max="100" placeholder="95" /></div>
-        <div><label for="sleepSelf">Sleep (self 1–10)</label><input id="sleepSelf" name="sleepSelf" type="number" min="1" max="10" placeholder="7" /></div>
-        <div><label for="energy">Energy (1–10)</label><input id="energy" name="energy" type="number" min="1" max="10" placeholder="8" /></div>
-        <div><label for="stress">Stress (1–10)</label><input id="stress" name="stress" type="number" min="1" max="10" placeholder="5" /></div>
-        <div><label for="muscleSoreness">Muscle soreness (1–10)</label><input id="muscleSoreness" name="muscleSoreness" type="number" min="1" max="10" placeholder="5" /></div>
-        <div><label for="jointSoreness">Joint soreness (1–10)</label><input id="jointSoreness" name="jointSoreness" type="number" min="0" max="10" placeholder="4" /></div>
-        <div><label for="jointStiffness">Joint stiffness (1–10)</label><input id="jointStiffness" name="jointStiffness" type="number" min="0" max="10" placeholder="1" /></div>
-      </div>
-      <div class="switch-row"><div><label for="redLightUsed" style="margin:0">Red light used</label><small>Toggle on if you used red light therapy that day.</small></div><input id="redLightUsed" name="redLightUsed" type="checkbox" style="width:22px;height:22px" /></div>
-      <div><label for="notes">Notes</label><textarea id="notes" name="notes" placeholder="Example: neck/back pain midday, poor sleep environment, anything unusual..."></textarea></div>
-      <div class="btns"><button type="submit" class="primary" id="saveBtn">Save entry</button><button type="button" id="cancelBtn" style="display:none">Cancel edit</button></div>
-    </form>
-  </div></div>
+<h1>Sauna Recovery Tracker</h1>
+<div class="version">version v12</div>
 
-<script>
-const STORAGE_KEY = "sauna-recovery-tracker-standalone-v11";
-const today = new Date().toISOString().slice(0, 10);
-let entries = [];
-let editingId = null;
-const METRICS = [
-      { key:"saunaMinutes", label:"Sauna", short:"Sauna", icon:"🔥", fmt:v=>v===""?"—":v+"m" },
-      { key:"sleepScore", label:"Sleep", short:"Sleep", icon:"😴", fmt:v=>v===""?"—":v },
-      { key:"sleepSelf", label:"Self Sleep", short:"Self", icon:"🛌", fmt:v=>v===""?"—":v },
-      { key:"hrv", label:"HRV", short:"HRV", icon:"📈", fmt:v=>v===""?"—":v },
-      { key:"restingHr", label:"RHR", short:"RHR", icon:"❤️", fmt:v=>v===""?"—":v },
-      { key:"bodyBattery", label:"Body Battery", short:"BB", icon:"🔋", fmt:v=>v===""?"—":v },
-      { key:"respiration", label:"Resp", short:"Resp", icon:"🌬️", fmt:v=>v===""?"—":v },
-      { key:"pulseOx", label:"Pulse Ox", short:"Ox", icon:"🩸", fmt:v=>v===""?"—":v },
-      { key:"energy", label:"Energy", short:"Energy", icon:"⚡", fmt:v=>v===""?"—":v },
-      { key:"stress", label:"Stress", short:"Stress", icon:"🧠", fmt:v=>v===""?"—":v },
-      { key:"jointStiffness", label:"Joint Stiff", short:"Stiff", icon:"🦴", fmt:v=>v===""?"—":v },
-      { key:"redLightUsed", label:"Red light", short:"Red", icon:"🔴", fmt:v=>v?"Yes":"No" },
-    ];
+<div class="card stats">
 
-    const sampleEntries = [
-      {
-        id:"seed-2026-03-09",
-        date:"2026-03-09",
-        saunaMinutes:"",
-        sleepScore:"",
-        sleepSelf:10,
-        hrv:"",
-        restingHr:"",
-        bodyBattery:"",
-        respiration:"",
-        pulseOx:"",
-        energy:7,
-        stress:3,
-        muscleSoreness:3,
-        jointSoreness:0,
-        jointStiffness:1,
-        redLightUsed:false,
-        notes:"Baseline entry. No sauna yet. Workout today: Yes — Burn Boot Camp at 4:30pm. Main sore areas: none. Previous day activity: walked 1.23 miles and played 1 hour of singles pickleball. Daylight Savings weekend may affect sleep/circadian rhythm. Recently missed menstrual cycle (pregnancy test negative; husband vasectomy; on oral birth control; only one ovulating ovary). Stress level normal. Soreness was high last week but has recovered."
-      },
-      {
-        id:"seed-2026-03-11",
-        date:"2026-03-11",
-        saunaMinutes:"",
-        sleepScore:72,
-        sleepSelf:3,
-        hrv:31,
-        restingHr:63,
-        bodyBattery:40,
-        respiration:"",
-        pulseOx:"",
-        energy:8,
-        stress:5,
-        muscleSoreness:5,
-        jointSoreness:4,
-        jointStiffness:1,
-        redLightUsed:false,
-        notes:"Baseline entry (no sauna yet). Garmin stress score: 28. Workout today: Yes — morning class. Traveling; did not sleep in own bed and woke up frequently. Workout occurred in the morning rather than the usual afternoon time. Midday new symptom: neck/upper back pain; feels like neck needs to pop but cannot, possible nerve irritation. Likely causes include hotel pillow or sleeping position."
-      },
-      {
-        id:"seed-2026-03-12",
-        date:"2026-03-12",
-        saunaMinutes:"",
-        sleepScore:66,
-        sleepSelf:"",
-        hrv:34,
-        restingHr:62,
-        bodyBattery:"",
-        respiration:15.5,
-        pulseOx:95,
-        energy:"",
-        stress:18,
-        muscleSoreness:"",
-        jointSoreness:"",
-        jointStiffness:"",
-        redLightUsed:false,
-        notes:"Imported from Garmin screenshots. Additional Garmin values seen in screenshots: HRV RMSSD 52 ms, HRV SDRR 60 ms, Pulse Ox average 99%, respiration average 15 brpm, Garmin stress average 18, sleep duration 6h 25m, sleep quality Fair, skin temp deviation -1.1°."
-      }
-    ];
-const form = document.getElementById("entryForm");
-const formTitle = document.getElementById("formTitle");
-const saveBtn = document.getElementById("saveBtn");
-const cancelBtn = document.getElementById("cancelBtn");
-const clearAllBtn = document.getElementById("clearAllBtn");
-const openModalBtn = document.getElementById("openModalBtn");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const entryModal = document.getElementById("entryModal");
-const historyAddBtn = document.getElementById("historyAddBtn");
-const todayEditLatestBtn = document.getElementById("todayEditLatestBtn");
-function numOrBlank(v){ if(v===""||v==null) return ""; const n=Number(v); return Number.isNaN(n)?"":n; }
-function average(values){ const valid=values.filter(v=>v!==""&&v!=null); if(!valid.length) return "—"; return Math.round(valid.reduce((a,b)=>a+b,0)/valid.length); }
-function longDate(value){ return new Date(value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}); }
-function dateParts(value){ const d=new Date(value+"T12:00:00"); return {top:d.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(),bottom:d.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+d.getDate()};}
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
-function load(){ const raw=localStorage.getItem(STORAGE_KEY); if(!raw){ entries=structuredClone(sampleEntries); save(); return; } try{ const parsed=JSON.parse(raw); entries=Array.isArray(parsed)?parsed:[]; } catch { entries=[]; } save(); }
-function setActiveTab(tabId){ document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.toggle("active", btn.dataset.tab===tabId)); document.querySelectorAll(".tab-panel").forEach(panel=>panel.classList.toggle("active", panel.id===tabId)); if(tabId==="todayTab") setTimeout(renderCharts,0); }
-function openModal(){ entryModal.classList.add("open"); document.body.style.overflow="hidden"; }
-function closeModal(){ entryModal.classList.remove("open"); document.body.style.overflow=""; }
-function resetForm(keepDate){ form.reset(); document.getElementById("date").value=keepDate||today; document.getElementById("redLightUsed").checked=false; editingId=null; formTitle.textContent="Add daily entry"; saveBtn.textContent="Save entry"; cancelBtn.style.display="none"; }
-function fillForm(entry){
-  document.getElementById("date").value=entry.date||today;
-  ["saunaMinutes","sleepScore","sleepSelf","hrv","restingHr","bodyBattery","respiration","pulseOx","energy","stress","muscleSoreness","jointSoreness","jointStiffness"].forEach(k=>{
-    document.getElementById(k).value = entry[k]==="" ? "" : (entry[k] ?? "");
-  });
-  document.getElementById("redLightUsed").checked=!!entry.redLightUsed;
-  document.getElementById("notes").value=entry.notes||"";
-}
-function getFormData(){
-  return {
-    date:document.getElementById("date").value,
-    saunaMinutes:numOrBlank(document.getElementById("saunaMinutes").value),
-    sleepScore:numOrBlank(document.getElementById("sleepScore").value),
-    hrv:numOrBlank(document.getElementById("hrv").value),
-    restingHr:numOrBlank(document.getElementById("restingHr").value),
-    bodyBattery:numOrBlank(document.getElementById("bodyBattery").value),
-    respiration:numOrBlank(document.getElementById("respiration").value),
-    pulseOx:numOrBlank(document.getElementById("pulseOx").value),
-    sleepSelf:numOrBlank(document.getElementById("sleepSelf").value),
-    energy:numOrBlank(document.getElementById("energy").value),
-    stress:numOrBlank(document.getElementById("stress").value),
-    muscleSoreness:numOrBlank(document.getElementById("muscleSoreness").value),
-    jointSoreness:numOrBlank(document.getElementById("jointSoreness").value),
-    jointStiffness:numOrBlank(document.getElementById("jointStiffness").value),
-    redLightUsed:document.getElementById("redLightUsed").checked,
-    notes:document.getElementById("notes").value.trim()
-  };
-}
-function latestEntry(){ if(!entries.length) return null; return [...entries].sort((a,b)=>b.date.localeCompare(a.date))[0]; }
-function metricChipHtml(metric, value, compact=false){ const cls=compact?"history-chip":"metric-chip"; return `<span class="${cls}"><span class="metric-icon">${metric.icon}</span><span class="metric-text">${compact?metric.short:metric.label} ${metric.fmt(value)}</span></span>`; }
-function renderStats(){
-  const stats=[["Total entries",entries.length],["Sauna sessions",entries.filter(e=>e.saunaMinutes!=="").length],["Avg sauna",average(entries.map(e=>e.saunaMinutes))],["Avg sleep",average(entries.map(e=>e.sleepScore))],["Avg HRV",average(entries.map(e=>e.hrv))],["Avg RHR",average(entries.map(e=>e.restingHr))]];
-  document.getElementById("stats").innerHTML=stats.map(([label,value])=>`<div class="stat-card"><div class="stat-label">${label}</div><div class="stat-value">${value}</div></div>`).join("");
-  const latest=latestEntry();
-  document.getElementById("latestDate").textContent=latest?longDate(latest.date):"—";
-  document.getElementById("latestSummary").textContent=latest?(latest.notes||""):"";
-  document.getElementById("historyCount").textContent=`${entries.length} ${entries.length===1?"entry":"entries"}`;
-  document.getElementById("latestMetrics").innerHTML=latest?METRICS.map(m=>metricChipHtml(m, latest[m.key], false)).join(""):"";
-}
-function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-function renderEntries(){
-  const holder=document.getElementById("entries");
-  if(!entries.length){ holder.innerHTML='<div class="empty">No entries yet. Add your first one above.</div>'; return; }
-  const sorted=[...entries].sort((a,b)=>b.date.localeCompare(a.date));
-  holder.innerHTML=`<div class="entries">${sorted.map(entry=>`<div class="entry"><div class="entry-row"><div class="entry-main"><div class="entry-date">${longDate(entry.date)}</div><div class="history-metrics">${METRICS.map(m=>metricChipHtml(m, entry[m.key], true)).join("")}</div>${entry.notes?`<div class="note">${escapeHtml(entry.notes)}</div>`:""}</div><div class="entry-actions"><button type="button" onclick="startEdit('${entry.id}')">Edit</button><button type="button" onclick="removeEntry('${entry.id}')">Delete</button></div></div></div>`).join("")}</div>`;
-}
-function renderLineChart(containerId, series, yMin, yMax, redLightBand=false){
-  const el=document.getElementById(containerId); const width=el.clientWidth||700; const height=280; const margin={top:12,right:12,bottom:58,left:12}; const innerW=width-margin.left-margin.right; const innerH=height-margin.top-margin.bottom; const data=[...entries].sort((a,b)=>a.date.localeCompare(b.date));
-  if(!data.length){ el.innerHTML='<div class="empty">No chart data yet.</div>'; return; }
-  const x=i=>margin.left+(data.length===1?innerW/2:(i*innerW)/(data.length-1)); const y=v=>margin.top+innerH-((v-yMin)/(yMax-yMin))*innerH;
-  let svg=`<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" aria-label="chart">`;
-  if(redLightBand){ data.forEach((d,i)=>{ if(!d.redLightUsed) return; const xi=x(i); const bandWidth=Math.max(18, innerW/Math.max(data.length,8)*0.55); svg += `<rect x="${xi-bandWidth/2}" y="${margin.top}" width="${bandWidth}" height="${innerH}" fill="rgba(176,106,127,0.12)" rx="8" />`;});}
-  for(let i=0;i<=4;i++){ const gy=margin.top+(innerH/4)*i; svg += `<line x1="${margin.left}" y1="${gy}" x2="${width-margin.right}" y2="${gy}" stroke="#ece4f0" stroke-width="1" />`; }
-  series.forEach(s=>{ const pts=data.map((d,i)=>{ const val=s.get(d); return val===""||val==null?null:[x(i),y(val)]; }); let path=""; pts.forEach((pt,i)=>{ if(!pt) return; const prevValid=pts.slice(0,i).filter(Boolean).length; path += (prevValid?" L ":"M ")+pt[0]+" "+pt[1]; }); svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dash?`stroke-dasharray="${s.dash}"`:""} stroke-linecap="round" stroke-linejoin="round" />`; pts.forEach(pt=>{ if(pt) svg += `<circle cx="${pt[0]}" cy="${pt[1]}" r="${s.dot||3}" fill="${s.color}" />`;});});
-  data.forEach((d,i)=>{ const p=dateParts(d.date); const xi=x(i); svg += `<text x="${xi}" y="${height-30}" text-anchor="middle" fill="#6f6277" font-size="11">${p.top}</text>`; svg += `<text x="${xi}" y="${height-15}" text-anchor="middle" fill="#6f6277" font-size="11">${p.bottom}</text>`;});
-  svg += `</svg>`; el.innerHTML=svg;
-}
-function renderCharts(){
-  renderLineChart("chartObjective",[
-    { color:"#6f3f74", width:3, dot:4, get:d=>d.sleepScore },
-    { color:"#2f6f73", dash:"8 4", get:d=>d.hrv },
-    { color:"#3c2f46", get:d=>d.restingHr },
-    { color:"#c27ba0", dash:"4 4", get:d=>d.bodyBattery },
-    { color:"#9f8aa9", dash:"2 4", get:d=>d.respiration },
-    { color:"#d26f86", dash:"10 5", get:d=>d.pulseOx },
-  ],0,100,true);
-  renderLineChart("chartSubjective",[
-    { color:"#8f4f7c", width:3, dot:4, get:d=>d.energy },
-    { color:"#b06a7f", dash:"10 3", get:d=>d.stress },
-    { color:"#2f6f73", dash:"6 4", get:d=>{ if(d.muscleSoreness===""||d.jointSoreness==="") return ""; return Number(((d.muscleSoreness+d.jointSoreness)/2).toFixed(1)); } },
-  ],0,10,true);
-}
-function render(){ renderStats(); renderEntries(); renderCharts(); }
-window.startEdit=function(id){ const entry=entries.find(e=>e.id===id); if(!entry) return; editingId=id; formTitle.textContent="Edit entry"; saveBtn.textContent="Update entry"; cancelBtn.style.display="inline-block"; fillForm(entry); setActiveTab("todayTab"); openModal(); }
-window.removeEntry=function(id){ entries=entries.filter(e=>e.id!==id); if(editingId===id) resetForm(today); save(); render(); }
-form.addEventListener("submit",(e)=>{ e.preventDefault(); const entryData=getFormData(); if(editingId){ entries=entries.map(entry=>entry.id===editingId?{...entry,...entryData}:entry); } else { entries.unshift({ id: crypto.randomUUID(), ...entryData }); } save(); resetForm(entryData.date||today); closeModal(); render(); });
-cancelBtn.addEventListener("click",()=>{ resetForm(today); closeModal(); });
-openModalBtn.addEventListener("click",()=>{ resetForm(today); openModal(); });
-historyAddBtn.addEventListener("click",()=>{ resetForm(today); openModal(); });
-todayEditLatestBtn.addEventListener("click",()=>{ const latest=latestEntry(); if(!latest){ resetForm(today); openModal(); return; } window.startEdit(latest.id); });
-closeModalBtn.addEventListener("click",()=>{ if(editingId) resetForm(today); closeModal(); });
-entryModal.addEventListener("click",(e)=>{ if(e.target===entryModal){ if(editingId) resetForm(today); closeModal(); } });
-document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"&&entryModal.classList.contains("open")){ if(editingId) resetForm(today); closeModal(); } });
-clearAllBtn.addEventListener("click",()=>{ if(!confirm("Clear all entries?")) return; entries=[]; save(); resetForm(today); render(); });
-document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>setActiveTab(btn.dataset.tab)));
-window.addEventListener("resize",()=>{ if(document.getElementById("todayTab").classList.contains("active")) renderCharts(); });
-document.getElementById("date").value=today; load(); resetForm(today); render();
-</script>
+<div class="stat">
+Total entries
+<b>3</b>
+</div>
+
+<div class="stat">
+Sauna sessions
+<b>0</b>
+</div>
+
+<div class="stat">
+Avg sleep
+<b>69</b>
+</div>
+
+<div class="stat">
+Avg HRV
+<b>33</b>
+</div>
+
+<div class="stat">
+Avg RHR
+<b>63</b>
+</div>
+
+</div>
+
+<div class="card">
+
+<b>Baselines</b>
+
+<div class="baselines">
+
+<div class="baseline">Sleep (4wk)<br><b>78</b></div>
+<div class="baseline">Resting HR<br><b>58 bpm</b></div>
+<div class="baseline">HRV typical<br><b>29–42 ms</b></div>
+<div class="baseline">SpO2<br><b>96%</b></div>
+<div class="baseline">Body Battery<br><b>manual</b></div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="tabs">
+<div class="tab active">Today & Trends</div>
+<div class="tab">History</div>
+</div>
+
+<b>Latest entry</b>
+<p><b>Thursday, March 12</b></p>
+
+<div class="metrics">
+
+<div class="metric">🔥 Sauna —</div>
+<div class="metric">😴 Sleep 66</div>
+<div class="metric">📉 HRV 34</div>
+<div class="metric">❤️ RHR 62</div>
+<div class="metric">🫁 Resp 15.5</div>
+<div class="metric">🩸 Pulse Ox 95</div>
+<div class="metric">⚡ Energy —</div>
+<div class="metric">🧠 Stress 18</div>
+<div class="metric">🦴 Joint Stiff —</div>
+<div class="metric">🔴 Red light No</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<b>Trend charts</b>
+
+<div class="chart">
+Charts preview area (your existing chart logic will render here)
+</div>
+
+</div>
+
+</div>
+
 </body>
 </html>
