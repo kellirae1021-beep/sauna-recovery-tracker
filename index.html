@@ -51,6 +51,17 @@
   <div class="wrap">
     <div><h1>Sauna Recovery Tracker</h1><div class="sub">Local, simple version now with your baseline data and quick baseline reference loaded. Designed to grow into a smarter app later.</div></div>
     <div class="stats" id="stats"></div>
+
+    <div class="card">
+          <div class="panel-head">
+            <h3>Baselines</h3>
+            
+          </div>
+          <div class="baseline-grid" id="baselineReference"></div>
+          
+        </div>
+
+        
     <div class="card"><div class="topbar"><div class="tabs"><button type="button" class="tab-btn active" data-tab="todayTab">Today & Trends</button><button type="button" class="tab-btn" data-tab="historyTab">History</button></div><button type="button" class="primary" id="openModalBtn">Add / Edit</button></div></div>
     <div id="todayTab" class="tab-panel active">
       <div class="layout">
@@ -58,24 +69,15 @@
           <div class="panel-head"><h3>Latest entry</h3><button type="button" id="todayEditLatestBtn">Edit latest</button></div>
           <div class="stat-value" id="latestDate" style="font-size:18px">—</div>
           <div class="metric-grid" id="latestMetrics"></div>
-          <div class="tiny" id="latestSummary" style="margin-top:8px">No entries yet</div>
+          <div class="tiny" id="latestSummary" style="margin-top:8px"></div>
         </div>
-        <div class="card">
-          <div class="panel-head">
-            <h3>Baseline reference</h3>
-            <div class="tiny">Quick comparison from the screenshots and baseline entries available so far.</div>
-          </div>
-          <div class="baseline-grid" id="baselineReference"></div>
-          <div class="tiny" id="baselineReferenceNote" style="margin-top:8px"></div>
-        </div>
-
         <div class="card">
           <h3>Trend charts</h3>
           <div class="chart-block" style="margin-top:12px">
             <div><div class="chart-title">Objective metrics</div><div class="legend"><span><i class="swatch" style="background:var(--plum)"></i>Sleep Score</span><span><i class="swatch" style="background:var(--teal)"></i>HRV</span><span><i class="swatch" style="background:var(--ink)"></i>Resting HR</span><span><i class="swatch" style="background:#c27ba0"></i>Body Battery</span><span><i class="swatch" style="background:#9f8aa9"></i>Respiration</span><span><i class="swatch" style="background:#d26f86"></i>Pulse Ox</span><span><i class="swatch" style="background:#d8b4d4"></i>Red light days</span></div><div class="chart" id="chartObjective"></div></div>
             <div><div class="chart-title">How you felt</div><div class="legend"><span><i class="swatch" style="background:var(--berry)"></i>Energy</span><span><i class="swatch" style="background:var(--rose)"></i>Stress</span><span><i class="swatch" style="background:var(--teal)"></i>Avg Soreness</span><span><i class="swatch" style="background:#8a78a8"></i>Self Sleep</span><span><i class="swatch" style="background:#b9a5c9"></i>Joint Stiffness</span><span><i class="swatch" style="background:#d8b4d4"></i>Red light days</span></div><div class="chart" id="chartSubjective"></div></div>
             <div class="btns"><button type="button" id="clearAllBtn">Clear all</button></div>
-            <div class="tiny">When your Garmin export arrives, we can do a one-time import. Next major step after that: screenshot parsing into the app version.</div>
+            
           </div>
         </div>
       </div>
@@ -107,7 +109,7 @@
   </div></div>
 
 <script>
-const STORAGE_KEY = "sauna-recovery-tracker-standalone-v10";
+const STORAGE_KEY = "sauna-recovery-tracker-standalone-v11";
 const today = new Date().toISOString().slice(0, 10);
 let entries = [];
 let editingId = null;
@@ -240,7 +242,7 @@ function renderStats(){
   document.getElementById("stats").innerHTML=stats.map(([label,value])=>`<div class="stat-card"><div class="stat-label">${label}</div><div class="stat-value">${value}</div></div>`).join("");
   const latest=latestEntry();
   document.getElementById("latestDate").textContent=latest?longDate(latest.date):"—";
-  document.getElementById("latestSummary").textContent=latest?(latest.notes||"No notes for this entry."):"No entries yet";
+  document.getElementById("latestSummary").textContent=latest?(latest.notes||""):"";
   document.getElementById("historyCount").textContent=`${entries.length} ${entries.length===1?"entry":"entries"}`;
   document.getElementById("latestMetrics").innerHTML=latest?METRICS.map(m=>metricChipHtml(m, latest[m.key], false)).join(""):"";
 }
