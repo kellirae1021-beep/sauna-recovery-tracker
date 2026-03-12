@@ -17,6 +17,9 @@
     --text:#221b29;
     --border:#e6deea;
     --overlay:rgba(34,27,41,.58);
+    --good:#2f6f73;
+    --bad:#b06a7f;
+    --neutral:#9a8fa1;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,#faf7fb 0%,#f5f1f7 100%);color:var(--text)}
@@ -42,7 +45,7 @@
   .history-date{font-weight:700}.history-note{font-size:12px;color:var(--muted);line-height:1.35}
   .chart-wrap{display:grid;gap:18px}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
   .legend-item{display:inline-flex;align-items:center;gap:6px}.swatch{width:12px;height:12px;border-radius:999px;display:inline-block}
-  .chart-box{border:1px solid var(--border);border-radius:16px;padding:10px;background:#fff}.chart-title{font-weight:700;margin-bottom:4px}.chart-svg{width:100%;height:280px;display:block}
+  .chart-box{border:1px solid var(--border);border-radius:16px;padding:10px;background:#fff}.chart-title{font-weight:700;margin-bottom:4px}.chart-svg{width:100%;height:300px;display:block}
   .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:1000}.modal-backdrop.open{display:flex}
   .modal{width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px}
   .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;position:sticky;top:0;background:#fff;padding-bottom:8px}
@@ -57,6 +60,27 @@
   .ingest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
   .ingest-field{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:12px;color:var(--muted)}
   .ingest-field b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
+  .today-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+  .today-col{display:grid;gap:12px}
+  .today-slot{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fcfafc}
+  .today-slot.empty{background:#fff}
+  .today-slot-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+  .today-slot h4{margin:0;font-size:16px}
+  .prominent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+  .prominent-metric{border:1px solid var(--border);border-radius:14px;padding:10px;background:#fff}
+  .prominent-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-size:12px;color:var(--muted)}
+  .prominent-value{font-size:26px;font-weight:700;line-height:1.1;margin-top:4px}
+  .prominent-sub{font-size:11px;color:var(--muted);margin-top:4px}
+  .secondary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .secondary-metric{border:1px solid var(--border);border-radius:12px;padding:9px 10px;background:#fff}
+  .secondary-head{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .secondary-value{font-size:18px;font-weight:700;line-height:1.1;margin-top:4px}
+  .delta{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 7px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
+  .delta.good{color:var(--good);background:#eef8f5;border-color:#cfe8df}
+  .delta.bad{color:var(--bad);background:#fbf0f3;border-color:#ecd2da}
+  .delta.neutral{color:var(--neutral);background:#f6f3f7;border-color:#e6deea}
+  .today-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:8px}
+  @media (max-width:900px){.today-grid{grid-template-columns:1fr}}
   @media (max-width:760px){.wrap{padding:0 10px}.grid2{grid-template-columns:1fr}.modal-backdrop{padding:0}.modal{width:100%;max-height:100vh;border-radius:18px 18px 0 0}}
 </style>
 </head>
@@ -64,7 +88,7 @@
 <div class="wrap">
   <div>
     <h1>Sauna Recovery Tracker</h1>
-    <div class="version">version v14</div>
+    <div class="version">version v15</div>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -88,10 +112,12 @@
   <div id="todayTab" class="tab-panel active">
     <div class="card">
       <div class="section-title">
-        <h3>Latest entry</h3>
-        <button id="editLatestBtn">Edit latest</button>
+        <h3>Today</h3>
       </div>
-      <div id="latestEntry"></div>
+      <div class="today-grid">
+        <div class="today-col" id="todayMorningCol"></div>
+        <div class="today-col" id="todayNightCol"></div>
+      </div>
     </div>
 
     <div class="card chart-wrap">
@@ -102,7 +128,7 @@
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>HRV</span>
           <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
         </div>
-        <div class="chart-box"><svg id="primaryChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="primaryChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">Supplemental recovery</div>
@@ -111,7 +137,7 @@
           <span class="legend-item"><span class="swatch" style="background:#9f8aa9"></span>Respiration</span>
           <span class="legend-item"><span class="swatch" style="background:#d26f86"></span>Pulse Ox</span>
         </div>
-        <div class="chart-box"><svg id="supplementalChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="supplementalChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">How you felt</div>
@@ -122,7 +148,7 @@
           <span class="legend-item"><span class="swatch" style="background:#8a78a8"></span>Self Sleep</span>
           <span class="legend-item"><span class="swatch" style="background:#b9a5c9"></span>Joint Stiffness</span>
         </div>
-        <div class="chart-box"><svg id="subjectiveChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="subjectiveChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
     </div>
   </div>
@@ -225,8 +251,19 @@
 </div>
 
 <script>
-const STORAGE_KEY = "sauna-recovery-tracker-v14";
+const STORAGE_KEY = "sauna-recovery-tracker-v15";
 const today = new Date().toISOString().slice(0,10);
+const baselineValues = {
+  sleepScore:78,
+  restingHr:58,
+  hrvTypicalLow:29,
+  hrvTypicalHigh:42,
+  hrvStatusLow:34,
+  hrvStatusHigh:41,
+  hrvCurrent:34,
+  pulseOx:96,
+  bodyBatteryMorningHigh4wk:null,
+};
 const baselines = [
   {label:"Sleep (4wk)", value:"78"},
   {label:"Resting HR", value:"58 bpm"},
@@ -272,22 +309,66 @@ function sorenessAvg(entry){ return entry.muscleSoreness!=="" && entry.jointSore
 function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
 function isBlank(v){ return v==="" || v==null || v===false; }
 function dayLabel(entry){ return entry.timeOfDay ? ` · ${entry.timeOfDay.replace('_',' ')}` : ''; }
-
+function findTodayEntry(slot){ return sortEntriesDesc().find(e=>e.date===today && e.timeOfDay===slot) || null; }
+function formatVal(v){ return v==="" || v==null ? "—" : v; }
+function deltaChip(kind, value, baseline){
+  if(value==="" || value==null || baseline==null || baseline==="") return `<span class="delta neutral">—</span>`;
+  if(kind==='higher_better'){
+    if(value > baseline) return `<span class="delta good">↑ vs base</span>`;
+    if(value < baseline) return `<span class="delta bad">↓ vs base</span>`;
+    return `<span class="delta neutral">= base</span>`;
+  }
+  if(kind==='lower_better'){
+    if(value < baseline) return `<span class="delta good">↓ vs base</span>`;
+    if(value > baseline) return `<span class="delta bad">↑ vs base</span>`;
+    return `<span class="delta neutral">= base</span>`;
+  }
+  if(kind==='range'){
+    if(value >= baseline.low && value <= baseline.high) return `<span class="delta good">in range</span>`;
+    return `<span class="delta bad">out of range</span>`;
+  }
+  return `<span class="delta neutral">—</span>`;
+}
 function renderStats(){
   const stats = [["Total entries", entries.length],["Sauna sessions", entries.filter(e=>e.saunaMinutes!=="").length],["Avg sleep", avg(entries.map(e=>e.sleepScore))],["Avg HRV", avg(entries.map(e=>e.hrv))],["Avg RHR", avg(entries.map(e=>e.restingHr))]];
   document.getElementById("stats").innerHTML = stats.map(([label,value])=>`<div class="stat">${label}<b>${value}</b></div>`).join("");
 }
 function renderBaselines(){ document.getElementById("baselineCards").innerHTML = baselines.map(b=>`<div class="baseline">${b.label}<b>${b.value}</b></div>`).join(""); }
-function renderLatest(){
-  const holder = document.getElementById("latestEntry");
-  const latest = sortEntriesDesc()[0];
-  if(!latest){ holder.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
-  const visibleMetrics = metricDefs.filter(m => !isBlank(latest[m.key]));
-  holder.innerHTML = `
-    <div style="font-size:18px;font-weight:700;margin-bottom:10px">${longDate(latest.date)}${dayLabel(latest)}</div>
-    <div class="metric-row">${visibleMetrics.map(m=>`<div class="metric">${m.label} ${m.fmt(latest[m.key])}</div>`).join("")}</div>
-    ${latest.notes ? `<div class="history-note" style="margin-top:10px">${escapeHtml(latest.notes)}</div>` : ""}
-  `;
+function renderTodaySlot(slot, title){
+  const entry = findTodayEntry(slot);
+  if(!entry){
+    return `<div class="today-slot empty"><div class="today-slot-title"><h4>${title}</h4><button onclick="openCreateForSlot('${slot}')">Add</button></div><div class="empty">No ${title.toLowerCase()} entry yet.</div></div>`;
+  }
+  const primary = [
+    {label:'Sleep', value:entry.sleepScore, baseline:baselineValues.sleepScore, kind:'higher_better'},
+    {label:'HRV', value:entry.hrv, baseline:{low:baselineValues.hrvTypicalLow, high:baselineValues.hrvTypicalHigh}, kind:'range'},
+    {label:'RHR', value:entry.restingHr, baseline:baselineValues.restingHr, kind:'lower_better'},
+  ];
+  const secondary = [
+    {label:'Body Battery', value:entry.bodyBattery, baseline:baselineValues.bodyBatteryMorningHigh4wk, kind:'higher_better'},
+    {label:'Respiration', value:entry.respiration, baseline:null, kind:'neutral'},
+    {label:'Pulse Ox', value:entry.pulseOx, baseline:baselineValues.pulseOx, kind:'higher_better'},
+    {label:'Energy', value:entry.energy, baseline:null, kind:'neutral'},
+    {label:'Stress', value:entry.stress, baseline:null, kind:'neutral'},
+    {label:'Joint stiffness', value:entry.jointStiffness, baseline:null, kind:'neutral'},
+    {label:'Sauna', value:entry.saunaMinutes===''?'—':entry.saunaMinutes+'m', baseline:null, kind:'neutral', rawNonNumeric:true},
+    {label:'Red light', value:entry.redLightUsed ? 'Yes' : '', baseline:null, kind:'neutral', rawNonNumeric:true},
+  ].filter(item=> item.value!=='' && item.value!=null && item.value!=='—');
+
+  return `<div class="today-slot">
+    <div class="today-slot-title"><h4>${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>
+    <div class="prominent-grid">
+      ${primary.map(item=>`<div class="prominent-metric"><div class="prominent-top"><span>${item.label}</span>${item.kind==='range' ? deltaChip(item.kind, item.value, item.baseline) : deltaChip(item.kind, item.value, item.baseline)}</div><div class="prominent-value">${formatVal(item.value)}</div><div class="prominent-sub">${item.kind==='range' ? `${item.baseline.low}–${item.baseline.high}` : (item.baseline!=null ? `base ${item.baseline}` : 'baseline n/a')}</div></div>`).join('')}
+    </div>
+    <div class="secondary-grid">
+      ${secondary.map(item=>`<div class="secondary-metric"><div class="secondary-head"><span>${item.label}</span>${item.rawNonNumeric ? '<span class="delta neutral">logged</span>' : deltaChip(item.kind, item.value, item.baseline)}</div><div class="secondary-value">${formatVal(item.value)}</div></div>`).join('')}
+    </div>
+    ${entry.notes ? `<div class="today-note">${escapeHtml(entry.notes)}</div>` : ''}
+  </div>`;
+}
+function renderToday(){
+  document.getElementById('todayMorningCol').innerHTML = renderTodaySlot('morning','Morning');
+  document.getElementById('todayNightCol').innerHTML = renderTodaySlot('post_sauna','Night / Post Sauna');
 }
 function renderHistory(){
   const holder = document.getElementById("historyList");
@@ -303,20 +384,26 @@ function drawChart(svgId, series, yMin, yMax){
   const svg = document.getElementById(svgId);
   const data = sortEntriesAsc();
   if(!data.length){ svg.innerHTML = ""; return; }
-  const width = 900, height = 280, left = 55, right = 20, top = 12, bottom = 42;
+  const width = 900, height = 300, left = 58, right = 24, top = 14, bottom = 48;
   const plotW = width-left-right, plotH = height-top-bottom;
   const x = i => data.length === 1 ? left + plotW/2 : left + (i * plotW/(data.length-1));
   const y = v => top + plotH - ((v-yMin)/(yMax-yMin))*plotH;
   let out = "";
-  for(let i=0;i<5;i++){ const gy = top + (plotH/4)*i; out += `<line x1="${left}" y1="${gy}" x2="${width-right}" y2="${gy}" stroke="#ece4f0" stroke-width="1" />`; }
+  const steps = 4;
+  for(let i=0;i<=steps;i++){
+    const val = yMax - ((yMax-yMin)/steps)*i;
+    const gy = top + (plotH/steps)*i;
+    out += `<line x1="${left}" y1="${gy}" x2="${width-right}" y2="${gy}" stroke="#ece4f0" stroke-width="1" />`;
+    out += `<text x="${left-8}" y="${gy+4}" text-anchor="end" font-size="11" fill="#6f6277">${Math.round(val*10)/10}</text>`;
+  }
   series.forEach(s=>{
-    const pts = data.map((d,i)=>{ const val = s.get(d); return val === "" || val == null ? null : [x(i), y(Number(val))]; });
+    const pts = data.map((d,i)=>{ const val = s.get(d); return val === "" || val == null ? null : [x(i), y(Number(val)), Number(val)]; });
     let path = "";
     pts.forEach((pt,i)=>{ if(!pt) return; const hasPrev = pts.slice(0,i).some(Boolean); path += `${hasPrev ? ' L ' : 'M '}${pt[0]} ${pt[1]}`; });
     out += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''} stroke-linecap="round" stroke-linejoin="round" />`;
-    pts.forEach(pt=>{ if(pt) out += `<circle cx="${pt[0]}" cy="${pt[1]}" r="3" fill="${s.color}" />`; });
+    pts.forEach(pt=>{ if(pt){ out += `<circle cx="${pt[0]}" cy="${pt[1]}" r="3.5" fill="${s.color}" />`; out += `<text x="${pt[0]}" y="${pt[1]-8}" text-anchor="middle" font-size="10" fill="${s.color}">${pt[2]}</text>`; }});
   });
-  data.forEach((d,i)=>{ const dt = new Date(d.date+"T12:00:00"); const label1 = dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(); const label2 = dt.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+dt.getDate(); out += `<text x="${x(i)}" y="${height-22}" text-anchor="middle" font-size="11" fill="#6f6277">${label1}</text>`; out += `<text x="${x(i)}" y="${height-8}" text-anchor="middle" font-size="11" fill="#6f6277">${label2}</text>`; });
+  data.forEach((d,i)=>{ const dt = new Date(d.date+"T12:00:00"); const label1 = dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(); const label2 = dt.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+dt.getDate(); out += `<text x="${x(i)}" y="${height-24}" text-anchor="middle" font-size="11" fill="#6f6277">${label1}</text>`; out += `<text x="${x(i)}" y="${height-9}" text-anchor="middle" font-size="11" fill="#6f6277">${label2}</text>`; });
   svg.innerHTML = out;
 }
 function renderCharts(){
@@ -339,11 +426,13 @@ function renderCharts(){
   ],0,10);
 }
 
-function renderAll(){ renderStats(); renderBaselines(); renderLatest(); renderHistory(); renderCharts(); }
+function renderAll(){ renderStats(); renderBaselines(); renderToday(); renderHistory(); renderCharts(); }
 function setTab(tabId){ document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===tabId)); document.querySelectorAll('.tab-panel').forEach(panel=>panel.classList.toggle('active', panel.id===tabId)); if(tabId === 'todayTab') setTimeout(renderCharts, 0); }
 function openModal(id){ document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function resetForm(){ editingId = null; document.getElementById('entryModalTitle').textContent = 'Add daily entry'; document.getElementById('entryForm').reset(); document.getElementById('date').value = today; document.getElementById('timeOfDay').value = 'morning'; }
+function openCreateForSlot(slot){ resetForm(); document.getElementById('timeOfDay').value = slot; openModal('entryModal'); }
+window.openCreateForSlot = openCreateForSlot;
 
 function startEdit(id){
   const entry = entries.find(e=>e.id===id); if(!entry) return; editingId = id; document.getElementById('entryModalTitle').textContent = 'Edit entry';
@@ -390,7 +479,6 @@ function sendDraftToEntry(){
 document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>setTab(btn.dataset.tab)));
 document.getElementById('openEntryBtn').addEventListener('click',()=>{ resetForm(); openModal('entryModal'); });
 document.getElementById('historyAddBtn').addEventListener('click',()=>{ resetForm(); openModal('entryModal'); });
-document.getElementById('editLatestBtn').addEventListener('click',()=>{ const latest = sortEntriesDesc()[0]; if(latest) startEdit(latest.id); else { resetForm(); openModal('entryModal'); } });
 document.getElementById('closeEntryBtn').addEventListener('click',()=>closeModal('entryModal'));
 document.getElementById('cancelEditBtn').addEventListener('click',()=>closeModal('entryModal'));
 document.getElementById('openIngestBtn').addEventListener('click',()=>{ renderIngestDraft(); openModal('ingestModal'); });
