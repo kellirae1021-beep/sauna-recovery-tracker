@@ -19,17 +19,10 @@
     --overlay:rgba(34,27,41,.58);
   }
   *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:linear-gradient(180deg,#faf7fb 0%,#f5f1f7 100%);
-    color:var(--text);
-  }
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,#faf7fb 0%,#f5f1f7 100%);color:var(--text)}
   .wrap{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;gap:14px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05)}
-  h1{margin:0 0 4px 0;font-size:28px}
-  h3{margin:0}
-  .version{font-size:12px;color:var(--muted)}
+  h1{margin:0 0 4px 0;font-size:28px} h3{margin:0} .version{font-size:12px;color:var(--muted)}
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
   .stat{background:#faf8fb;border:1px solid var(--border);padding:12px;border-radius:12px;font-size:12px;color:var(--muted)}
   .stat b{display:block;color:var(--text);font-size:20px;line-height:1.1;margin-top:3px}
@@ -40,49 +33,38 @@
   .tabs{display:flex;gap:8px;flex-wrap:wrap}
   .tab-btn,.pill-btn,button{border:1px solid var(--border);border-radius:999px;background:#fff;padding:8px 12px;font:inherit;color:var(--text);cursor:pointer}
   .tab-btn.active,.pill-btn.primary{background:var(--plum);color:#fff;border-color:var(--plum)}
-  .tab-panel{display:none}
-  .tab-panel.active{display:block}
+  .tab-panel{display:none}.tab-panel.active{display:block}
   .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
   .metric-row,.history-metrics{display:flex;flex-wrap:wrap;gap:8px}
   .metric{background:#f6f0f7;border:1px solid var(--border);padding:8px 10px;border-radius:999px;font-size:13px;white-space:nowrap}
   .history-item{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fcfafc;display:grid;gap:8px}
   .history-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-  .history-date{font-weight:700}
-  .history-note{font-size:12px;color:var(--muted);line-height:1.35}
-  .chart-wrap{display:grid;gap:18px}
-  .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
-  .legend-item{display:inline-flex;align-items:center;gap:6px}
-  .swatch{width:12px;height:12px;border-radius:999px;display:inline-block}
-  .chart-box{border:1px solid var(--border);border-radius:16px;padding:10px;background:#fff}
-  .chart-title{font-weight:700;margin-bottom:4px}
-  .chart-svg{width:100%;height:280px;display:block}
-  .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:1000}
-  .modal-backdrop.open{display:flex}
+  .history-date{font-weight:700}.history-note{font-size:12px;color:var(--muted);line-height:1.35}
+  .chart-wrap{display:grid;gap:18px}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
+  .legend-item{display:inline-flex;align-items:center;gap:6px}.swatch{width:12px;height:12px;border-radius:999px;display:inline-block}
+  .chart-box{border:1px solid var(--border);border-radius:16px;padding:10px;background:#fff}.chart-title{font-weight:700;margin-bottom:4px}.chart-svg{width:100%;height:280px;display:block}
+  .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:1000}.modal-backdrop.open{display:flex}
   .modal{width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px}
   .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;position:sticky;top:0;background:#fff;padding-bottom:8px}
-  form{display:grid;gap:14px}
-  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  form{display:grid;gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
-  input,textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;background:#fff;color:var(--text)}
+  input,textarea,select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;background:#fff;color:var(--text)}
   textarea{min-height:110px;resize:vertical}
   .switch-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);border-radius:14px;padding:12px;background:#fcfafc}
-  .dropzone{border:1px dashed var(--border);border-radius:14px;padding:16px;background:#fcfafc}
-  .dropzone h4{margin:0 0 6px 0}
-  .dropzone p,.helper{font-size:12px;color:var(--muted);line-height:1.4;margin:0}
+  .dropzone{border:1px dashed var(--border);border-radius:14px;padding:16px;background:#fcfafc}.dropzone h4{margin:0 0 6px 0}.dropzone p,.helper{font-size:12px;color:var(--muted);line-height:1.4;margin:0}
   .empty{font-size:13px;color:var(--muted)}
-  @media (max-width:760px){
-    .wrap{padding:0 10px}
-    .grid2{grid-template-columns:1fr}
-    .modal-backdrop{padding:0}
-    .modal{width:100%;max-height:100vh;border-radius:18px 18px 0 0}
-  }
+  .ingest-preview{display:grid;gap:10px;margin-top:12px}
+  .ingest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .ingest-field{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:12px;color:var(--muted)}
+  .ingest-field b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
+  @media (max-width:760px){.wrap{padding:0 10px}.grid2{grid-template-columns:1fr}.modal-backdrop{padding:0}.modal{width:100%;max-height:100vh;border-radius:18px 18px 0 0}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div>
     <h1>Sauna Recovery Tracker</h1>
-    <div class="version">version v13</div>
+    <div class="version">version v14</div>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -114,16 +96,22 @@
 
     <div class="card chart-wrap">
       <div>
-        <div class="chart-title">Objective metrics</div>
+        <div class="chart-title">Primary recovery</div>
         <div class="legend">
           <span class="legend-item"><span class="swatch" style="background:#6f3f74"></span>Sleep</span>
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>HRV</span>
           <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
+        </div>
+        <div class="chart-box"><svg id="primaryChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div>
+        <div class="chart-title">Supplemental recovery</div>
+        <div class="legend">
           <span class="legend-item"><span class="swatch" style="background:#c27ba0"></span>Body Battery</span>
           <span class="legend-item"><span class="swatch" style="background:#9f8aa9"></span>Respiration</span>
           <span class="legend-item"><span class="swatch" style="background:#d26f86"></span>Pulse Ox</span>
         </div>
-        <div class="chart-box"><svg id="objectiveChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="supplementalChart" class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">How you felt</div>
@@ -159,6 +147,7 @@
     <form id="entryForm">
       <div class="grid2">
         <div><label for="date">Date</label><input id="date" type="date" required /></div>
+        <div><label for="timeOfDay">Time of day</label><select id="timeOfDay"><option value="morning">Morning</option><option value="post_sauna">Post sauna</option><option value="other">Other</option></select></div>
         <div><label for="saunaMinutes">Sauna minutes</label><input id="saunaMinutes" type="number" min="0" /></div>
         <div><label for="sleepScore">Sleep score</label><input id="sleepScore" type="number" min="0" max="100" /></div>
         <div><label for="sleepSelf">Self sleep (1-10)</label><input id="sleepSelf" type="number" min="0" max="10" /></div>
@@ -199,36 +188,56 @@
       <button id="closeIngestBtn">Close</button>
     </div>
     <div class="dropzone">
-      <h4>Ready for screenshot ingestion</h4>
-      <p>This local version now includes the structure for screenshot intake, but actual Garmin parsing still needs OCR or an AI/API step. For now, use this as the staging area for the future app path.</p>
+      <h4>Ready for screenshot staging</h4>
+      <p>This version supports a screenshot intake workflow, but local Garmin parsing still needs OCR or an AI/API step. For now, stage likely extracted values here, review them, then send them into a draft entry.</p>
     </div>
-    <div style="margin-top:12px" class="grid2">
-      <div class="card" style="padding:12px;margin:0">
-        <strong>Preferred screenshots</strong>
-        <p class="helper" style="margin-top:6px">Sleep score, HRV, Body Battery, and Health Snapshot / Health Status.</p>
+    <div class="ingest-preview">
+      <div class="grid2">
+        <div>
+          <label for="ingestSource">Screenshot type</label>
+          <select id="ingestSource">
+            <option value="sleep">Sleep screen</option>
+            <option value="hrv">HRV screen</option>
+            <option value="body_battery">Body Battery screen</option>
+            <option value="health_snapshot">Health Snapshot / Health Status</option>
+          </select>
+        </div>
+        <div>
+          <label for="ingestDate">Date for draft entry</label>
+          <input id="ingestDate" type="date" />
+        </div>
       </div>
-      <div class="card" style="padding:12px;margin:0">
-        <strong>Future behavior</strong>
-        <p class="helper" style="margin-top:6px">Upload screenshot → extract Garmin metrics → prefill entry → add subjective notes → save.</p>
+      <div class="ingest-grid">
+        <div class="ingest-field">Sleep score<b id="ingestSleep">—</b></div>
+        <div class="ingest-field">HRV<b id="ingestHrv">—</b></div>
+        <div class="ingest-field">Resting HR<b id="ingestRhr">—</b></div>
+        <div class="ingest-field">Body Battery<b id="ingestBb">—</b></div>
+        <div class="ingest-field">Respiration<b id="ingestResp">—</b></div>
+        <div class="ingest-field">Pulse Ox<b id="ingestSpo2">—</b></div>
       </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="loadDemoIngest" type="button">Load demo draft</button>
+        <button id="sendToEntry" type="button" class="pill-btn primary">Send to entry form</button>
+      </div>
+      <p class="helper">Phase 1 behavior: staged values. Phase 2: actual screenshot upload and extraction.</p>
     </div>
   </div>
 </div>
 
 <script>
-const STORAGE_KEY = "sauna-recovery-tracker-v13";
+const STORAGE_KEY = "sauna-recovery-tracker-v14";
 const today = new Date().toISOString().slice(0,10);
 const baselines = [
   {label:"Sleep (4wk)", value:"78"},
   {label:"Resting HR", value:"58 bpm"},
   {label:"HRV typical", value:"29–42 ms"},
   {label:"SpO2", value:"96%"},
-  {label:"Body Battery", value:"manual"}
+  {label:"Body Battery", value:"4wk avg AM high"}
 ];
 const seedEntries = [
-  {id:"seed-2026-03-09",date:"2026-03-09",saunaMinutes:"",sleepScore:"",sleepSelf:10,hrv:"",restingHr:"",bodyBattery:"",respiration:"",pulseOx:"",energy:7,stress:3,muscleSoreness:3,jointSoreness:0,jointStiffness:1,redLightUsed:false,notes:"Baseline entry. Burn Boot Camp at 4:30pm. Previous day: walked 1.23 miles and played 1 hour of singles pickleball."},
-  {id:"seed-2026-03-11",date:"2026-03-11",saunaMinutes:"",sleepScore:72,sleepSelf:3,hrv:31,restingHr:63,bodyBattery:40,respiration:"",pulseOx:"",energy:8,stress:5,muscleSoreness:5,jointSoreness:4,jointStiffness:1,redLightUsed:false,notes:"Baseline entry. Traveling, poor sleep, morning workout, midday neck / upper-back pain."},
-  {id:"seed-2026-03-12",date:"2026-03-12",saunaMinutes:"",sleepScore:66,sleepSelf:"",hrv:34,restingHr:62,bodyBattery:"",respiration:15.5,pulseOx:95,energy:"",stress:18,muscleSoreness:"",jointSoreness:"",jointStiffness:"",redLightUsed:false,notes:"Screenshot-derived baseline."}
+  {id:"seed-2026-03-09-am",date:"2026-03-09",timeOfDay:"morning",saunaMinutes:"",sleepScore:"",sleepSelf:10,hrv:"",restingHr:"",bodyBattery:"",respiration:"",pulseOx:"",energy:7,stress:3,muscleSoreness:3,jointSoreness:0,jointStiffness:1,redLightUsed:false,notes:"Baseline entry. Burn Boot Camp at 4:30pm. Previous day: walked 1.23 miles and played 1 hour of singles pickleball."},
+  {id:"seed-2026-03-11-am",date:"2026-03-11",timeOfDay:"morning",saunaMinutes:"",sleepScore:72,sleepSelf:3,hrv:31,restingHr:63,bodyBattery:40,respiration:"",pulseOx:"",energy:8,stress:5,muscleSoreness:5,jointSoreness:4,jointStiffness:1,redLightUsed:false,notes:"Baseline entry. Traveling, poor sleep, morning workout, midday neck / upper-back pain."},
+  {id:"seed-2026-03-12-am",date:"2026-03-12",timeOfDay:"morning",saunaMinutes:"",sleepScore:66,sleepSelf:"",hrv:34,restingHr:62,bodyBattery:"",respiration:15.5,pulseOx:95,energy:"",stress:18,muscleSoreness:"",jointSoreness:"",jointStiffness:"",redLightUsed:false,notes:"Screenshot-derived baseline."}
 ];
 const metricDefs = [
   {key:"saunaMinutes", label:"🔥 Sauna", fmt:v=>v===""?"—":v+"m"},
@@ -246,49 +255,37 @@ const metricDefs = [
 ];
 let entries = [];
 let editingId = null;
+let ingestDraft = {date:today,sleepScore:"",hrv:"",restingHr:"",bodyBattery:"",respiration:"",pulseOx:""};
 
 function loadEntries(){
   const raw = localStorage.getItem(STORAGE_KEY);
-  if(!raw){
-    entries = structuredClone(seedEntries);
-    saveEntries();
-    return;
-  }
-  try{
-    const parsed = JSON.parse(raw);
-    entries = Array.isArray(parsed) && parsed.length ? parsed : structuredClone(seedEntries);
-  }catch{
-    entries = structuredClone(seedEntries);
-  }
+  if(!raw){ entries = structuredClone(seedEntries); saveEntries(); return; }
+  try{ const parsed = JSON.parse(raw); entries = Array.isArray(parsed) && parsed.length ? parsed : structuredClone(seedEntries); }
+  catch{ entries = structuredClone(seedEntries); }
 }
 function saveEntries(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
 function avg(values){ const valid = values.filter(v=>v!=="" && v!=null); return valid.length ? Math.round(valid.reduce((a,b)=>a+Number(b),0)/valid.length) : "—"; }
 function longDate(v){ return new Date(v+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}); }
-function sortEntriesAsc(){ return [...entries].sort((a,b)=>a.date.localeCompare(b.date)); }
-function sortEntriesDesc(){ return [...entries].sort((a,b)=>b.date.localeCompare(a.date)); }
+function sortEntriesAsc(){ return [...entries].sort((a,b)=> a.date.localeCompare(b.date) || String(a.timeOfDay||'').localeCompare(String(b.timeOfDay||''))); }
+function sortEntriesDesc(){ return [...entries].sort((a,b)=> b.date.localeCompare(a.date) || String(b.timeOfDay||'').localeCompare(String(a.timeOfDay||''))); }
 function sorenessAvg(entry){ return entry.muscleSoreness!=="" && entry.jointSoreness!=="" ? ((Number(entry.muscleSoreness)+Number(entry.jointSoreness))/2) : ""; }
 function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+function isBlank(v){ return v==="" || v==null || v===false; }
+function dayLabel(entry){ return entry.timeOfDay ? ` · ${entry.timeOfDay.replace('_',' ')}` : ''; }
 
 function renderStats(){
-  const stats = [
-    ["Total entries", entries.length],
-    ["Sauna sessions", entries.filter(e=>e.saunaMinutes!=="").length],
-    ["Avg sleep", avg(entries.map(e=>e.sleepScore))],
-    ["Avg HRV", avg(entries.map(e=>e.hrv))],
-    ["Avg RHR", avg(entries.map(e=>e.restingHr))],
-  ];
+  const stats = [["Total entries", entries.length],["Sauna sessions", entries.filter(e=>e.saunaMinutes!=="").length],["Avg sleep", avg(entries.map(e=>e.sleepScore))],["Avg HRV", avg(entries.map(e=>e.hrv))],["Avg RHR", avg(entries.map(e=>e.restingHr))]];
   document.getElementById("stats").innerHTML = stats.map(([label,value])=>`<div class="stat">${label}<b>${value}</b></div>`).join("");
 }
-function renderBaselines(){
-  document.getElementById("baselineCards").innerHTML = baselines.map(b=>`<div class="baseline">${b.label}<b>${b.value}</b></div>`).join("");
-}
+function renderBaselines(){ document.getElementById("baselineCards").innerHTML = baselines.map(b=>`<div class="baseline">${b.label}<b>${b.value}</b></div>`).join(""); }
 function renderLatest(){
   const holder = document.getElementById("latestEntry");
   const latest = sortEntriesDesc()[0];
   if(!latest){ holder.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
+  const visibleMetrics = metricDefs.filter(m => !isBlank(latest[m.key]));
   holder.innerHTML = `
-    <div style="font-size:18px;font-weight:700;margin-bottom:10px">${longDate(latest.date)}</div>
-    <div class="metric-row">${metricDefs.map(m=>`<div class="metric">${m.label} ${m.fmt(latest[m.key])}</div>`).join("")}</div>
+    <div style="font-size:18px;font-weight:700;margin-bottom:10px">${longDate(latest.date)}${dayLabel(latest)}</div>
+    <div class="metric-row">${visibleMetrics.map(m=>`<div class="metric">${m.label} ${m.fmt(latest[m.key])}</div>`).join("")}</div>
     ${latest.notes ? `<div class="history-note" style="margin-top:10px">${escapeHtml(latest.notes)}</div>` : ""}
   `;
 }
@@ -296,21 +293,10 @@ function renderHistory(){
   const holder = document.getElementById("historyList");
   const sorted = sortEntriesDesc();
   if(!sorted.length){ holder.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
-  holder.innerHTML = sorted.map(entry=>`
-    <div class="history-item">
-      <div class="history-head">
-        <div>
-          <div class="history-date">${longDate(entry.date)}</div>
-          <div class="history-metrics">${metricDefs.map(m=>`<div class="metric">${m.label} ${m.fmt(entry[m.key])}</div>`).join("")}</div>
-        </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <button onclick="startEdit('${entry.id}')">Edit</button>
-          <button onclick="removeEntry('${entry.id}')">Delete</button>
-        </div>
-      </div>
-      ${entry.notes ? `<div class="history-note">${escapeHtml(entry.notes)}</div>` : ""}
-    </div>
-  `).join("");
+  holder.innerHTML = sorted.map(entry=>{
+    const visibleMetrics = metricDefs.filter(m => !isBlank(entry[m.key]));
+    return `<div class="history-item"><div class="history-head"><div><div class="history-date">${longDate(entry.date)}${dayLabel(entry)}</div><div class="history-metrics">${visibleMetrics.map(m=>`<div class="metric">${m.label} ${m.fmt(entry[m.key])}</div>`).join("")}</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="startEdit('${entry.id}')">Edit</button><button onclick="removeEntry('${entry.id}')">Delete</button></div></div>${entry.notes ? `<div class="history-note">${escapeHtml(entry.notes)}</div>` : ""}</div>`;
+  }).join("");
 }
 
 function drawChart(svgId, series, yMin, yMax){
@@ -322,38 +308,24 @@ function drawChart(svgId, series, yMin, yMax){
   const x = i => data.length === 1 ? left + plotW/2 : left + (i * plotW/(data.length-1));
   const y = v => top + plotH - ((v-yMin)/(yMax-yMin))*plotH;
   let out = "";
-  for(let i=0;i<5;i++){
-    const gy = top + (plotH/4)*i;
-    out += `<line x1="${left}" y1="${gy}" x2="${width-right}" y2="${gy}" stroke="#ece4f0" stroke-width="1" />`;
-  }
+  for(let i=0;i<5;i++){ const gy = top + (plotH/4)*i; out += `<line x1="${left}" y1="${gy}" x2="${width-right}" y2="${gy}" stroke="#ece4f0" stroke-width="1" />`; }
   series.forEach(s=>{
-    const pts = data.map((d,i)=>{
-      const val = s.get(d);
-      return val === "" || val == null ? null : [x(i), y(Number(val))];
-    });
+    const pts = data.map((d,i)=>{ const val = s.get(d); return val === "" || val == null ? null : [x(i), y(Number(val))]; });
     let path = "";
-    pts.forEach((pt,i)=>{
-      if(!pt) return;
-      const hasPrev = pts.slice(0,i).some(Boolean);
-      path += `${hasPrev ? ' L ' : 'M '}${pt[0]} ${pt[1]}`;
-    });
+    pts.forEach((pt,i)=>{ if(!pt) return; const hasPrev = pts.slice(0,i).some(Boolean); path += `${hasPrev ? ' L ' : 'M '}${pt[0]} ${pt[1]}`; });
     out += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''} stroke-linecap="round" stroke-linejoin="round" />`;
     pts.forEach(pt=>{ if(pt) out += `<circle cx="${pt[0]}" cy="${pt[1]}" r="3" fill="${s.color}" />`; });
   });
-  data.forEach((d,i)=>{
-    const dt = new Date(d.date+"T12:00:00");
-    const label1 = dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase();
-    const label2 = dt.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+dt.getDate();
-    out += `<text x="${x(i)}" y="${height-22}" text-anchor="middle" font-size="11" fill="#6f6277">${label1}</text>`;
-    out += `<text x="${x(i)}" y="${height-8}" text-anchor="middle" font-size="11" fill="#6f6277">${label2}</text>`;
-  });
+  data.forEach((d,i)=>{ const dt = new Date(d.date+"T12:00:00"); const label1 = dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(); const label2 = dt.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+" "+dt.getDate(); out += `<text x="${x(i)}" y="${height-22}" text-anchor="middle" font-size="11" fill="#6f6277">${label1}</text>`; out += `<text x="${x(i)}" y="${height-8}" text-anchor="middle" font-size="11" fill="#6f6277">${label2}</text>`; });
   svg.innerHTML = out;
 }
 function renderCharts(){
-  drawChart("objectiveChart",[
+  drawChart("primaryChart",[
     {color:"#6f3f74", width:3, get:d=>d.sleepScore},
     {color:"#2f6f73", dash:"8 4", get:d=>d.hrv},
     {color:"#3c2f46", get:d=>d.restingHr},
+  ],0,100);
+  drawChart("supplementalChart",[
     {color:"#c27ba0", dash:"4 4", get:d=>d.bodyBattery},
     {color:"#9f8aa9", dash:"2 4", get:d=>d.respiration},
     {color:"#d26f86", dash:"10 5", get:d=>d.pulseOx},
@@ -367,74 +339,52 @@ function renderCharts(){
   ],0,10);
 }
 
-function renderAll(){
-  renderStats();
-  renderBaselines();
-  renderLatest();
-  renderHistory();
-  renderCharts();
-}
-
-function setTab(tabId){
-  document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===tabId));
-  document.querySelectorAll('.tab-panel').forEach(panel=>panel.classList.toggle('active', panel.id===tabId));
-  if(tabId === 'todayTab') setTimeout(renderCharts, 0);
-}
-
+function renderAll(){ renderStats(); renderBaselines(); renderLatest(); renderHistory(); renderCharts(); }
+function setTab(tabId){ document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===tabId)); document.querySelectorAll('.tab-panel').forEach(panel=>panel.classList.toggle('active', panel.id===tabId)); if(tabId === 'todayTab') setTimeout(renderCharts, 0); }
 function openModal(id){ document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-
-function resetForm(){
-  editingId = null;
-  document.getElementById('entryModalTitle').textContent = 'Add daily entry';
-  document.getElementById('entryForm').reset();
-  document.getElementById('date').value = today;
-}
+function resetForm(){ editingId = null; document.getElementById('entryModalTitle').textContent = 'Add daily entry'; document.getElementById('entryForm').reset(); document.getElementById('date').value = today; document.getElementById('timeOfDay').value = 'morning'; }
 
 function startEdit(id){
-  const entry = entries.find(e=>e.id===id);
-  if(!entry) return;
-  editingId = id;
-  document.getElementById('entryModalTitle').textContent = 'Edit entry';
-  ["date","saunaMinutes","sleepScore","sleepSelf","hrv","restingHr","bodyBattery","respiration","pulseOx","energy","stress","muscleSoreness","jointSoreness","jointStiffness","notes"].forEach(k=>{
-    document.getElementById(k).value = entry[k] ?? "";
-  });
-  document.getElementById('redLightUsed').checked = !!entry.redLightUsed;
-  openModal('entryModal');
+  const entry = entries.find(e=>e.id===id); if(!entry) return; editingId = id; document.getElementById('entryModalTitle').textContent = 'Edit entry';
+  ["date","timeOfDay","saunaMinutes","sleepScore","sleepSelf","hrv","restingHr","bodyBattery","respiration","pulseOx","energy","stress","muscleSoreness","jointSoreness","jointStiffness","notes"].forEach(k=>{ document.getElementById(k).value = entry[k] ?? ""; });
+  document.getElementById('redLightUsed').checked = !!entry.redLightUsed; openModal('entryModal');
 }
 window.startEdit = startEdit;
-
-function removeEntry(id){
-  entries = entries.filter(e=>e.id!==id);
-  saveEntries();
-  renderAll();
-}
+function removeEntry(id){ entries = entries.filter(e=>e.id!==id); saveEntries(); renderAll(); }
 window.removeEntry = removeEntry;
-
 function getFormData(){
-  const num = id => {
-    const v = document.getElementById(id).value;
-    return v === '' ? '' : Number(v);
+  const num = id => { const v = document.getElementById(id).value; return v === '' ? '' : Number(v); };
+  return { id: editingId || crypto.randomUUID(), date: document.getElementById('date').value, timeOfDay: document.getElementById('timeOfDay').value, saunaMinutes: num('saunaMinutes'), sleepScore: num('sleepScore'), sleepSelf: num('sleepSelf'), hrv: num('hrv'), restingHr: num('restingHr'), bodyBattery: num('bodyBattery'), respiration: num('respiration'), pulseOx: num('pulseOx'), energy: num('energy'), stress: num('stress'), muscleSoreness: num('muscleSoreness'), jointSoreness: num('jointSoreness'), jointStiffness: num('jointStiffness'), redLightUsed: document.getElementById('redLightUsed').checked, notes: document.getElementById('notes').value.trim() };
+}
+
+function renderIngestDraft(){
+  document.getElementById('ingestDate').value = ingestDraft.date || today;
+  document.getElementById('ingestSleep').textContent = ingestDraft.sleepScore || '—';
+  document.getElementById('ingestHrv').textContent = ingestDraft.hrv || '—';
+  document.getElementById('ingestRhr').textContent = ingestDraft.restingHr || '—';
+  document.getElementById('ingestBb').textContent = ingestDraft.bodyBattery || '—';
+  document.getElementById('ingestResp').textContent = ingestDraft.respiration || '—';
+  document.getElementById('ingestSpo2').textContent = ingestDraft.pulseOx || '—';
+}
+function loadDemoIngest(){
+  const source = document.getElementById('ingestSource').value;
+  const date = document.getElementById('ingestDate').value || today;
+  const demoMap = {
+    sleep:{date,sleepScore:66,hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:''},
+    hrv:{date,sleepScore:'',hrv:34,restingHr:62,bodyBattery:'',respiration:'',pulseOx:''},
+    body_battery:{date,sleepScore:'',hrv:'',restingHr:'',bodyBattery:53,respiration:'',pulseOx:''},
+    health_snapshot:{date,sleepScore:'',hrv:34,restingHr:62,bodyBattery:'',respiration:15.5,pulseOx:95},
   };
-  return {
-    id: editingId || crypto.randomUUID(),
-    date: document.getElementById('date').value,
-    saunaMinutes: num('saunaMinutes'),
-    sleepScore: num('sleepScore'),
-    sleepSelf: num('sleepSelf'),
-    hrv: num('hrv'),
-    restingHr: num('restingHr'),
-    bodyBattery: num('bodyBattery'),
-    respiration: num('respiration'),
-    pulseOx: num('pulseOx'),
-    energy: num('energy'),
-    stress: num('stress'),
-    muscleSoreness: num('muscleSoreness'),
-    jointSoreness: num('jointSoreness'),
-    jointStiffness: num('jointStiffness'),
-    redLightUsed: document.getElementById('redLightUsed').checked,
-    notes: document.getElementById('notes').value.trim(),
-  };
+  ingestDraft = demoMap[source];
+  renderIngestDraft();
+}
+function sendDraftToEntry(){
+  resetForm();
+  document.getElementById('date').value = ingestDraft.date || today;
+  ['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx'].forEach(k=>{ if(ingestDraft[k]!=='' && ingestDraft[k]!=null) document.getElementById(k).value = ingestDraft[k]; });
+  closeModal('ingestModal');
+  openModal('entryModal');
 }
 
 document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>setTab(btn.dataset.tab)));
@@ -443,23 +393,16 @@ document.getElementById('historyAddBtn').addEventListener('click',()=>{ resetFor
 document.getElementById('editLatestBtn').addEventListener('click',()=>{ const latest = sortEntriesDesc()[0]; if(latest) startEdit(latest.id); else { resetForm(); openModal('entryModal'); } });
 document.getElementById('closeEntryBtn').addEventListener('click',()=>closeModal('entryModal'));
 document.getElementById('cancelEditBtn').addEventListener('click',()=>closeModal('entryModal'));
-document.getElementById('openIngestBtn').addEventListener('click',()=>openModal('ingestModal'));
+document.getElementById('openIngestBtn').addEventListener('click',()=>{ renderIngestDraft(); openModal('ingestModal'); });
 document.getElementById('closeIngestBtn').addEventListener('click',()=>closeModal('ingestModal'));
+document.getElementById('loadDemoIngest').addEventListener('click',loadDemoIngest);
+document.getElementById('sendToEntry').addEventListener('click',sendDraftToEntry);
+document.getElementById('ingestDate').addEventListener('change',e=>{ ingestDraft.date = e.target.value; });
 
-document.getElementById('entryForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const data = getFormData();
-  const idx = entries.findIndex(e=>e.id===data.id);
-  if(idx >= 0) entries[idx] = data; else entries.unshift(data);
-  saveEntries();
-  closeModal('entryModal');
-  renderAll();
-});
-
+document.getElementById('entryForm').addEventListener('submit',e=>{ e.preventDefault(); const data = getFormData(); const idx = entries.findIndex(e=>e.id===data.id); if(idx >= 0) entries[idx] = data; else entries.unshift(data); saveEntries(); closeModal('entryModal'); renderAll(); });
 window.addEventListener('resize', renderCharts);
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{ if(e.target === m) m.classList.remove('open'); }));
-loadEntries();
-renderAll();
+loadEntries(); renderAll();
 </script>
 </body>
 </html>
