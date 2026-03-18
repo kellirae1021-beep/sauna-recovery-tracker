@@ -327,9 +327,6 @@ const STORAGE_KEY = 'sauna-recovery-tracker-v17';
 const API_KEY_STORAGE = 'sauna-tracker-api-key';
 const GARMIN_PATH = 'data/garmin_daily_summary.json';
 const SAUNA_WEEKLY_GOAL = 4;
-const SUPABASE_URL = 'https://gnggxqvmcatqholjxtsz.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImduZ2d4cXZtY2F0cWhvbGp4dHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjgxOTYsImV4cCI6MjA4OTQ0NDE5Nn0.LZEPVQ5dPpkSihLMiQJLB2vX5oQEpuaSEpz-Mckxe1I';
-const SB_HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=representation' };
 
 let entries = [], garminHistory = [], chartRange = '7';
 let baselineValues = { sleepScore:null, restingHr:null, hrvTypicalLow:null, hrvTypicalHigh:null, pulseOx:null, bodyBatteryMorningHigh:null, respiration:null };
@@ -359,73 +356,36 @@ const FIELD_RULES = {
   saunaMinutes:{min:1,max:120}, weight:{min:50,max:500}
 };
 
-// ─── Supabase helpers ─────────────────────────────────────────────────────────
-function entryToRow(e) {
-  return {
-    id: e.id, date: e.date, entry_type: e.entryType, time_of_day: e.timeOfDay,
-    sauna_minutes: e.saunaMinutes === '' ? null : e.saunaMinutes,
-    sleep_score: e.sleepScore === '' ? null : e.sleepScore,
-    sleep_self: e.sleepSelf === '' ? null : e.sleepSelf,
-    hrv: e.hrv === '' ? null : e.hrv,
-    resting_hr: e.restingHr === '' ? null : e.restingHr,
-    body_battery: e.bodyBattery === '' ? null : e.bodyBattery,
-    respiration: e.respiration === '' ? null : e.respiration,
-    pulse_ox: e.pulseOx === '' ? null : e.pulseOx,
-    weight: e.weight === '' ? null : e.weight,
-    energy: e.energy === '' ? null : e.energy,
-    stress: e.stress === '' ? null : e.stress,
-    muscle_soreness: e.muscleSoreness === '' ? null : e.muscleSoreness,
-    joint_soreness: e.jointSoreness === '' ? null : e.jointSoreness,
-    joint_stiffness: e.jointStiffness === '' ? null : e.jointStiffness,
-    red_light_used: !!e.redLightUsed, notes: e.notes || '',
-    updated_at: new Date().toISOString()
-  };
-}
-function rowToEntry(r) {
-  return {
-    id: r.id, date: r.date, entryType: r.entry_type || 'morning', timeOfDay: r.time_of_day || 'morning',
-    saunaMinutes: r.sauna_minutes ?? '', sleepScore: r.sleep_score ?? '',
-    sleepSelf: r.sleep_self ?? '', hrv: r.hrv ?? '', restingHr: r.resting_hr ?? '',
-    bodyBattery: r.body_battery ?? '', respiration: r.respiration ?? '',
-    pulseOx: r.pulse_ox ?? '', weight: r.weight ?? '',
-    energy: r.energy ?? '', stress: r.stress ?? '',
-    muscleSoreness: r.muscle_soreness ?? '', jointSoreness: r.joint_soreness ?? '',
-    jointStiffness: r.joint_stiffness ?? '', redLightUsed: !!r.red_light_used,
-    notes: r.notes || ''
-  };
-}
-async function sbFetchAll() {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/entries?select=*&order=date.desc`, { headers: SB_HEADERS });
-  if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
-  return (await res.json()).map(rowToEntry);
-}
-async function sbUpsert(entry) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/entries`, {
-    method: 'POST', headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
-    body: JSON.stringify(entryToRow(entry))
-  });
-  if (!res.ok) throw new Error(`Supabase upsert failed: ${res.status}`);
-}
-async function sbDelete(id) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/entries?id=eq.${id}`, { method: 'DELETE', headers: SB_HEADERS });
-  if (!res.ok) throw new Error(`Supabase delete failed: ${res.status}`);
-}
-
 // ─── Persistence ──────────────────────────────────────────────────────────────
-function loadLocalFallback() {
+function loadEntries() {
   const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return structuredClone(seedEntries);
-  try { const p = JSON.parse(raw); return Array.isArray(p) && p.length ? p : structuredClone(seedEntries); }
-  catch { return structuredClone(seedEntries); }
+  if (!raw) { entries = structuredClone(seedEntries); saveEntries(); return; }
+  try {
+    const p = JSON.parse(raw);
+    entries = Array.isArray(p) && p.length ? p : structuredClone(seedEntries);
+    migrateEntries();
+  } catch { entries = structuredClone(seedEntries); }
 }
-function migrateEntries(arr) {
-  arr.forEach(e => {
-    if (!e.entryType) e.entryType = e.timeOfDay === 'post_sauna' ? 'bedtime' : (e.saunaMinutes !== '' && e.saunaMinutes != null ? 'sauna' : 'morning');
-    if (e.weight === undefined) e.weight = '';
+function saveEntries() { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
+function migrateEntries() {
+  let changed = false;
+  entries = entries.map(e => {
+    const o = {...e};
+    if (!o.entryType) {
+      changed = true;
+      o.entryType = o.timeOfDay === 'post_sauna' ? 'bedtime' : (o.saunaMinutes !== '' && o.saunaMinutes != null ? 'sauna' : 'morning');
+    }
+    if (o.weight === undefined) { o.weight = ''; changed = true; }
+    // clamp out-of-range subjective values
     ['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness'].forEach(k => {
-      if (e[k] !== '' && e[k] != null) e[k] = Math.max(1, Math.min(10, Number(e[k])));
+      if (o[k] !== '' && o[k] != null) {
+        const n = Math.max(1, Math.min(10, Number(o[k])));
+        if (n !== o[k]) { o[k] = n; changed = true; }
+      }
     });
+    return o;
   });
+  if (changed) saveEntries();
 }
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -889,9 +849,7 @@ function startEdit(id) {
 window.startEdit = startEdit;
 function removeEntry(id) {
   if(!confirm('Delete this entry?')) return;
-  entries=entries.filter(e=>e.id!==id);
-  sbDelete(id).catch(err=>console.warn('Supabase delete failed:', err));
-  renderAll();
+  entries=entries.filter(e=>e.id!==id); saveEntries(); renderAll();
 }
 window.removeEntry = removeEntry;
 
@@ -953,23 +911,21 @@ function sendDraftToEntry() {
 document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
 document.querySelectorAll('.entry-type-btn').forEach(b=>b.addEventListener('click',()=>setEntryType(b.dataset.entryType)));
 document.getElementById('openEntryBtn').addEventListener('click',()=>{ resetForm(); openModal('entryModal'); });
-document.getElementById('cleanupBtn').addEventListener('click', async () => {
+document.getElementById('cleanupBtn').addEventListener('click', () => {
   if (!garminHistory.length) { alert('No Garmin data loaded — nothing to clean up.'); return; }
   const garminDates = new Set(garminHistory.map(r => r.date));
   const GARMIN_FIELDS = ['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx','weight'];
   const SUBJECTIVE_FIELDS = ['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness','notes','redLightUsed'];
   let stripped = 0, deleted = 0;
-  const toDelete = [];
   entries = entries.filter(entry => {
     if (entry.entryType !== 'morning' || !garminDates.has(entry.date)) return true;
     GARMIN_FIELDS.forEach(k => { entry[k] = ''; });
     const hasSubjective = SUBJECTIVE_FIELDS.some(k => !isBlank(entry[k]));
-    if (!hasSubjective) { deleted++; toDelete.push(entry.id); return false; }
+    if (!hasSubjective) { deleted++; return false; }
     stripped++;
     return true;
   });
-  for (const id of toDelete) { await sbDelete(id).catch(console.warn); }
-  for (const entry of entries) { await sbUpsert(entry).catch(console.warn); }
+  saveEntries();
   renderAll();
   alert(`Done! Removed ${deleted} empty duplicate entries, cleaned Garmin fields from ${stripped} entries that had subjective data.`);
 });
@@ -987,12 +943,11 @@ dz.addEventListener('click',()=>document.getElementById('screenshotInput').click
 dz.addEventListener('dragover',e=>{ e.preventDefault(); dz.classList.add('drag-over'); });
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
 dz.addEventListener('drop',e=>{ e.preventDefault(); dz.classList.remove('drag-over'); const f=e.dataTransfer.files?.[0]; if(f&&f.type.startsWith('image/')) parseScreenshot(f); });
-document.getElementById('entryForm').addEventListener('submit', async e=>{
+document.getElementById('entryForm').addEventListener('submit',e=>{
   e.preventDefault(); if(!validateForm()){ alert('Fix highlighted fields before saving.'); return; }
   const data=getFormData(); const idx=entries.findIndex(x=>x.id===data.id);
   if(idx>=0) entries[idx]=data; else entries.unshift(data);
-  try { await sbUpsert(data); } catch(err) { console.warn('Supabase save failed, keeping local:', err); }
-  closeModal('entryModal'); renderAll();
+  saveEntries(); closeModal('entryModal'); renderAll();
 });
 Object.keys(FIELD_RULES).forEach(id=>{ const el=document.getElementById(id); if(el){ el.addEventListener('input',validateForm); el.addEventListener('blur',validateForm); } });
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
@@ -1000,26 +955,9 @@ window.addEventListener('resize',renderCharts);
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
-  // Load Garmin history
+  loadEntries();
   try { const r=await fetch(GARMIN_PATH,{cache:'no-store'}); if(!r.ok) throw 0; garminHistory=await r.json(); } catch { garminHistory=[]; }
   computeBaselines();
-
-  // Load entries from Supabase, fall back to localStorage if offline
-  try {
-    entries = await sbFetchAll();
-    if (!entries.length) {
-      // First time — migrate localStorage entries up to Supabase
-      const local = loadLocalFallback();
-      migrateEntries(local);
-      for (const e of local) { await sbUpsert(e); }
-      entries = local;
-    }
-  } catch(err) {
-    console.warn('Supabase unavailable, using localStorage:', err);
-    entries = loadLocalFallback();
-    migrateEntries(entries);
-  }
-
   const savedKey=localStorage.getItem(API_KEY_STORAGE); if(savedKey) document.getElementById('apiKeyInput').value=savedKey;
   renderAll();
 }
