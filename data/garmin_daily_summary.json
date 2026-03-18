@@ -18235,5 +18235,50 @@
     "hrv": 34.0,
     "respiration": 14.0,
     "pulseOx": 96.0
+  },
+  {
+    "date": "2026-03-14",
+    "restingHr": 63,
+    "bodyBatteryHigh": 42,
+    "sleepScore": 71,
+    "hrv": 33.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-03-15",
+    "restingHr": 61,
+    "bodyBatteryHigh": 60,
+    "sleepScore": 73,
+    "hrv": 33.0,
+    "respiration": 14.0,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-03-16",
+    "restingHr": 59,
+    "bodyBatteryHigh": 45,
+    "sleepScore": 81,
+    "hrv": 34.0,
+    "respiration": 15.0,
+    "pulseOx": 98.0
+  },
+  {
+    "date": "2026-03-17",
+    "restingHr": 58,
+    "bodyBatteryHigh": 42,
+    "sleepScore": 75,
+    "hrv": 34.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-03-18",
+    "restingHr": 61,
+    "bodyBatteryHigh": 28,
+    "sleepScore": 63,
+    "hrv": 34.0,
+    "respiration": 13.0,
+    "pulseOx": 98.0
   }
 ]
