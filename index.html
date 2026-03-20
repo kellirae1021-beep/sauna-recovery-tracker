@@ -15,36 +15,70 @@
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);overscroll-behavior:none}
 button{touch-action:manipulation;cursor:pointer;font:inherit}
 
-/* ── Desktop layout ── */
-.wrap{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;gap:14px}
+/* ── Shared ── */
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05)}
-h1{margin:0 0 4px 0;font-size:28px} h3{margin:0} .version{font-size:12px;color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+h3{margin:0}
+.pill-btn{border:1px solid var(--border);border-radius:999px;background:#fff;padding:8px 12px;color:var(--text)}
+.pill-btn.primary{background:var(--plum);color:#fff;border-color:var(--plum)}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.delta{display:inline-flex;align-items:center;font-size:11px;padding:2px 6px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
+.delta.good{color:var(--good);background:#eef8f5;border-color:#cfe8df}.delta.bad{color:var(--bad);background:#fbf0f3;border-color:#ecd2da}.delta.neutral{color:var(--neutral);background:#f6f3f7;border-color:var(--border)}
+.history-btn-edit{border:1px solid var(--border);border-radius:999px;background:#fff;padding:5px 12px;font:inherit;font-size:12px;color:var(--text);cursor:pointer}
+.history-btn-delete{border:1px solid var(--border);border-radius:999px;background:#fff;padding:5px 12px;font:inherit;font-size:12px;color:var(--bad);cursor:pointer}
+.history-btn-edit:hover{background:#f3edf7}.history-btn-delete:hover{background:#fbf0f3}
+
+/* ── Modals (shared) ── */
+.modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;z-index:1000}
+.modal-backdrop.open{display:flex}
+.modal{width:min(820px,100%);max-height:95vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:20px 20px 0 0;padding:0}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 16px 12px;position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:1;border-radius:20px 20px 0 0}
+.modal-head h3{font-size:17px}
+.modal-body{padding:16px 16px 40px}
+form{display:grid;gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+input,textarea,select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;font-size:16px;background:#fff;color:var(--text)}
+input[type=number]{-moz-appearance:textfield}
+textarea{min-height:90px;resize:vertical}
+.switch-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);border-radius:14px;padding:12px;background:#fcfafc}
+.entry-type-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.entry-type-btn{border:1px solid var(--border);border-radius:999px;padding:10px 16px;background:#fff;color:var(--text);min-height:44px}
+.entry-type-btn.active{background:var(--plum);color:#fff;border-color:var(--plum)}
+.field-error{display:none;color:#b00020;font-size:12px;margin-top:4px}
+.field-invalid input{border-color:#d44!important;background:#fff7f7}
+.field-invalid .field-error{display:block}
+.dropzone{border:2px dashed var(--border);border-radius:14px;padding:20px;background:#fcfafc;text-align:center;cursor:pointer;transition:background .15s}
+.dropzone:hover,.dropzone.drag-over{background:#f3edf7;border-color:var(--plum)}
+.dropzone h4{margin:0 0 6px 0}.dropzone p{font-size:12px;color:var(--muted);margin:0}
+.ingest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ingest-field{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:12px;color:var(--muted)}
+.ingest-field b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
+.parse-status{font-size:12px;padding:10px 14px;border-radius:10px;background:#f3edf7;color:var(--plum)}
+.parse-status.error{background:#fbf0f3;color:var(--bad)}.parse-status.success{background:#eef8f5;color:var(--good)}
+.chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#221b29;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 8px 20px rgba(34,27,41,.25);display:none;max-width:200px}
+
+/* ── Desktop layout ── */
+.desktop-wrap{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;gap:14px}
+.desktop-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.desktop-header h1{margin:0 0 4px 0;font-size:28px}
+.version{font-size:12px;color:var(--muted)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .stat{background:#faf8fb;border:1px solid var(--border);padding:12px;border-radius:12px;font-size:12px;color:var(--muted)}
 .stat b{display:block;color:var(--text);font-size:20px;line-height:1.1;margin-top:3px}
 .stat.goal-met b{color:var(--teal)}.stat.goal-close b{color:#a07828}
-.baselines{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.baselines-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
 .baseline{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:11px;color:var(--muted)}
 .baseline b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab-btn,.pill-btn{border:1px solid var(--border);border-radius:999px;background:#fff;padding:8px 12px;color:var(--text)}
-.tab-btn.active,.pill-btn.primary{background:var(--plum);color:#fff;border-color:var(--plum)}
-.tab-panel{display:none}.tab-panel.active{display:block}
-.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.recovery-banner{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1px solid var(--border);border-radius:16px;padding:14px 16px;background:#faf8fb;margin-bottom:14px}
-.recovery-circle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:24px;line-height:1;color:#fff;flex-shrink:0}
-.recovery-circle .score-lbl{font-size:10px;font-weight:600;margin-top:2px;opacity:.85}
-.recovery-circle.excellent{background:var(--teal)}.recovery-circle.good{background:#5a8a8e}.recovery-circle.fair{background:#a07828}.recovery-circle.low{background:var(--rose)}.recovery-circle.none{background:var(--neutral)}
-.recovery-info h4{margin:0 0 4px 0;font-size:15px}.recovery-info p{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
-.recovery-factors{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.rfactor{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted)}
-.rfactor.good{color:var(--good);background:#eef8f5;border-color:#cfe8df}.rfactor.bad{color:var(--bad);background:#fbf0f3;border-color:#ecd2da}
+.desktop-tabs{display:flex;gap:8px}
+.desktop-tab-btn{border:1px solid var(--border);border-radius:999px;background:#fff;padding:8px 16px;color:var(--text);font-weight:600}
+.desktop-tab-btn.active{background:var(--plum);color:#fff;border-color:var(--plum)}
+.desktop-tab-panel{display:none}.desktop-tab-panel.active{display:block}
 .today-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
 .today-slot{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fcfafc}
 .today-slot.empty{background:#fff}
 .today-slot-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .today-slot h4{margin:0;font-size:15px}
+.today-slot-title button{border:1px solid var(--border);border-radius:999px;background:#fff;padding:6px 12px;font:inherit;font-size:13px;color:var(--text)}
 .prominent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:8px}
 .prominent-metric{border:1px solid var(--border);border-radius:14px;padding:10px;background:#fff}
 .prominent-top{display:flex;justify-content:space-between;align-items:flex-start;gap:4px;font-size:11px;color:var(--muted)}
@@ -62,20 +96,25 @@ h1{margin:0 0 4px 0;font-size:28px} h3{margin:0} .version{font-size:12px;color:v
 .week-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);background:#fff}
 .week-dot.filled{background:var(--plum);border-color:var(--plum)}
 .week-dot.goal-met{background:var(--teal);border-color:var(--teal)}
-.delta{display:inline-flex;align-items:center;font-size:11px;padding:2px 6px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
-.delta.good{color:var(--good);background:#eef8f5;border-color:#cfe8df}.delta.bad{color:var(--bad);background:#fbf0f3;border-color:#ecd2da}.delta.neutral{color:var(--neutral);background:#f6f3f7;border-color:var(--border)}
 .today-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:8px}
-.chart-wrap{display:grid;gap:18px}
+.recovery-banner{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1px solid var(--border);border-radius:16px;padding:14px 16px;background:#faf8fb;margin-bottom:14px}
+.recovery-circle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:24px;line-height:1;color:#fff;flex-shrink:0}
+.recovery-circle .score-lbl{font-size:10px;font-weight:600;margin-top:2px;opacity:.85}
+.recovery-circle.excellent{background:var(--teal)}.recovery-circle.good{background:#5a8a8e}.recovery-circle.fair{background:#a07828}.recovery-circle.low{background:var(--rose)}.recovery-circle.none{background:var(--neutral)}
+.recovery-info h4{margin:0 0 4px 0;font-size:15px}.recovery-info p{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
+.recovery-factors{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rfactor{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted)}
+.rfactor.good{color:var(--good);background:#eef8f5;border-color:#cfe8df}.rfactor.bad{color:var(--bad);background:#fbf0f3;border-color:#ecd2da}
+.chart-section{display:grid;gap:18px}
 .chart-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .chart-title{font-weight:700}
 .chart-sub{font-size:12px;color:var(--muted);margin-bottom:6px}
 .chart-box{border:1px solid var(--border);border-radius:16px;padding:10px;background:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.chart-svg{width:100%;height:300px;display:block;touch-action:pan-y}
+.chart-svg{display:block;height:300px;touch-action:pan-y}
 .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin:4px 0 8px}
 .legend-item{display:inline-flex;align-items:center;gap:5px}
 .swatch{width:11px;height:11px;border-radius:999px;display:inline-block}
 .range-select{width:auto;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font:inherit;font-size:12px;background:#fff;color:var(--text)}
-.chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#221b29;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 8px 20px rgba(34,27,41,.25);display:none;max-width:200px}
 .history-item{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fcfafc;margin-bottom:8px}
 .history-date{font-weight:700;font-size:15px;margin-bottom:6px}
 .history-entry{border-top:1px solid var(--border);padding:8px 0 4px}
@@ -84,126 +123,89 @@ h1{margin:0 0 4px 0;font-size:28px} h3{margin:0} .version{font-size:12px;color:v
 .history-metrics{display:flex;flex-wrap:wrap;gap:6px}
 .metric{background:#f6f0f7;border:1px solid var(--border);padding:4px 8px;border-radius:999px;font-size:12px;white-space:nowrap}
 .history-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px}
-.history-btn-edit{border:1px solid var(--border);border-radius:999px;background:#fff;padding:5px 12px;font:inherit;font-size:12px;color:var(--text);cursor:pointer}
-.history-btn-delete{border:1px solid var(--border);border-radius:999px;background:#fff;padding:5px 12px;font:inherit;font-size:12px;color:var(--bad);cursor:pointer}
-.history-btn-edit:hover{background:#f3edf7}.history-btn-delete:hover{background:#fbf0f3}
-.modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:16px;z-index:1000}
-.modal-backdrop.open{display:flex}
-.modal{width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;position:sticky;top:0;background:#fff;padding-bottom:8px;border-bottom:1px solid var(--border);z-index:1}
-form{display:grid;gap:14px}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
-input,textarea,select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;background:#fff;color:var(--text)}
-input[type=number]{-moz-appearance:textfield}
-textarea{min-height:90px;resize:vertical}
-.switch-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);border-radius:14px;padding:12px;background:#fcfafc}
-.helper{font-size:12px;color:var(--muted);line-height:1.4;margin:0}
-.entry-type-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
-.entry-type-btn{border:1px solid var(--border);border-radius:999px;padding:10px 16px;background:#fff;color:var(--text)}
-.entry-type-btn.active{background:var(--plum);color:#fff;border-color:var(--plum)}
-.field-error{display:none;color:#b00020;font-size:12px;margin-top:4px}
-.field-invalid input{border-color:#d44!important;background:#fff7f7}
-.field-invalid .field-error{display:block}
-.status-banner{font-size:12px;color:var(--muted)}
-.dropzone{border:2px dashed var(--border);border-radius:14px;padding:20px;background:#fcfafc;text-align:center;cursor:pointer;transition:background .15s}
-.dropzone:hover,.dropzone.drag-over{background:#f3edf7;border-color:var(--plum)}
-.dropzone h4{margin:0 0 6px 0}.dropzone p{font-size:12px;color:var(--muted);margin:0}
-.ingest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-.ingest-field{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:12px;color:var(--muted)}
-.ingest-field b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
-.parse-status{font-size:12px;padding:10px 14px;border-radius:10px;background:#f3edf7;color:var(--plum)}
-.parse-status.error{background:#fbf0f3;color:var(--bad)}.parse-status.success{background:#eef8f5;color:var(--good)}
 
-/* ── Mobile nav (hidden on desktop) ── */
-.mobile-nav{display:none}
-.mobile-header{display:none}
+/* ── Mobile only ── */
+.mobile-wrap{display:none}
 
-/* ── Mobile styles ── */
 @media(max-width:768px){
-  body{background:#f7f4f8;padding-bottom:var(--nav-h)}
+  body{padding-bottom:var(--nav-h)}
+  .desktop-wrap{display:none}
 
-  /* Hide desktop elements */
-  .wrap > div:first-child{display:none} /* h1/version */
-  .wrap > .stats{display:none}
-  .wrap > .card:has(#baselineCards){display:none}
-  .wrap > .card.topbar{display:none}
-
-  .wrap{margin:0;padding:0;gap:0;display:block}
-  .card{border-radius:0;border-left:none;border-right:none;box-shadow:none;border-top:none;border-bottom:1px solid var(--border);padding:14px 16px}
-
-  /* Mobile header */
+  /* Mobile app shell */
+  .mobile-wrap{display:block}
   .mobile-header{
     display:flex;justify-content:space-between;align-items:center;
     background:var(--plum);color:#fff;padding:14px 16px;
     position:sticky;top:0;z-index:100;
   }
   .mobile-header h2{margin:0;font-size:18px;font-weight:700}
-  .mobile-header-right{display:flex;gap:8px;align-items:center}
-  .mobile-header-btn{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:600}
+  .mobile-header-btn{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
 
-  /* Mobile stats row */
-  .mobile-stats{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-    padding:12px 16px;background:#fff;border-bottom:1px solid var(--border);
-  }
-  .mobile-stat{
-    background:#faf8fb;border:1px solid var(--border);
-    border-radius:12px;padding:10px 8px;text-align:center;
-  }
-  .mobile-stat .ms-label{font-size:10px;color:var(--muted);white-space:nowrap}
-  .mobile-stat .ms-value{font-size:18px;font-weight:700;color:var(--text);line-height:1.2;margin-top:2px}
-  .mobile-stat.goal-met .ms-value{color:var(--teal)}
-  .mobile-stat.goal-close .ms-value{color:#a07828}
+  /* Summary strip */
+  .mobile-summary{background:#fff;border-bottom:1px solid var(--border);padding:10px 12px 8px}
+  .mobile-summary-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .mobile-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .mobile-stat{background:#faf8fb;border:1px solid var(--border);border-radius:10px;padding:8px 6px;text-align:center}
+  .mobile-stat .ms-label{font-size:9px;color:var(--muted);line-height:1.2}
+  .mobile-stat .ms-value{font-size:16px;font-weight:700;color:var(--text);line-height:1.2;margin-top:1px}
+  .mobile-stat.goal-met .ms-value{color:var(--teal)}.mobile-stat.goal-close .ms-value{color:#a07828}
 
-  /* Mobile baselines row */
-  .mobile-baselines{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-    padding:12px 16px 10px;background:#fff;border-bottom:1px solid var(--border);
-  }
-  .mobile-baseline{
-    background:#faf8fb;border:1px solid var(--border);
-    border-radius:12px;padding:10px 8px;text-align:center;
-  }
-  .mobile-baseline .mb-label{font-size:10px;color:var(--muted);white-space:nowrap}
-  .mobile-baseline .mb-value{font-size:16px;font-weight:700;color:var(--text);line-height:1.2;margin-top:2px}
-  .mobile-bl-date{font-size:10px;color:var(--muted);padding:4px 16px 10px;background:#fff;border-bottom:1px solid var(--border)}
+  /* Baselines strip */
+  .mobile-baselines{background:#fff;border-bottom:1px solid var(--border);padding:10px 12px 8px}
+  .mobile-baselines-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .mobile-baselines-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .mobile-baseline{background:#faf8fb;border:1px solid var(--border);border-radius:10px;padding:8px 6px;text-align:center}
+  .mobile-baseline .mb-label{font-size:9px;color:var(--muted);line-height:1.2}
+  .mobile-baseline .mb-value{font-size:16px;font-weight:700;color:var(--text);line-height:1.2;margin-top:1px}
+  .mobile-bl-date{font-size:10px;color:var(--muted);margin-top:6px}
 
-  /* Tab panels */
-  .tab-panel{display:none!important}
-  .tab-panel.active{display:block!important}
+  /* Mobile tab content */
+  .mobile-tab{display:none}.mobile-tab.active{display:block}
 
-  /* Today section */
-  #todayTab .card:first-child{padding:0;background:transparent;border:none}
-  #todayTab .card:first-child .section-title{display:none}
-  #recoveryBanner .recovery-banner{
-    border-radius:0;border-left:none;border-right:none;border-top:none;
-    margin-bottom:0;padding:14px 16px;
-  }
-  .today-grid{grid-template-columns:1fr!important;gap:0}
-  .today-slot{border-radius:0;border-left:none;border-right:none;border-top:none;padding:14px 16px}
-  .today-slot h4{font-size:16px}
-  .today-slot-title button{
-    background:var(--plum);color:#fff;border:none;border-radius:999px;
-    padding:8px 16px;font-size:13px;font-weight:600;min-height:36px;
-  }
-  .prominent-value{font-size:28px}
-  .secondary-value{font-size:20px}
+  /* Today tab */
+  .mobile-recovery{padding:12px 14px;background:#fff;border-bottom:1px solid var(--border)}
+  .mobile-recovery .recovery-banner{margin-bottom:0;border-radius:12px}
+  .mobile-today-slot{background:#fff;border-bottom:1px solid var(--border);padding:14px 16px}
+  .mobile-today-slot h4{margin:0 0 10px 0;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+  .mobile-today-slot h4 button{background:var(--plum);color:#fff;border:none;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:600}
+  .mobile-prominent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+  .mobile-prominent-metric{border:1px solid var(--border);border-radius:12px;padding:10px 8px;background:#faf8fb;text-align:center}
+  .mobile-prominent-label{font-size:10px;color:var(--muted)}
+  .mobile-prominent-value{font-size:26px;font-weight:700;line-height:1.1;margin-top:2px}
+  .mobile-prominent-delta{font-size:10px;margin-top:3px}
+  .mobile-secondary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+  .mobile-secondary-metric{border:1px solid var(--border);border-radius:10px;padding:8px 6px;background:#faf8fb;text-align:center}
+  .mobile-secondary-label{font-size:10px;color:var(--muted)}
+  .mobile-secondary-value{font-size:18px;font-weight:700;line-height:1.2;margin-top:2px}
+  .mobile-sauna-main{font-size:32px;font-weight:700;margin-bottom:4px}
+  .mobile-sauna-sub{font-size:13px;color:var(--muted);margin-bottom:10px}
 
-  /* Charts */
-  #todayTab .card.chart-wrap{padding:14px 0 14px 16px}
-  .chart-box{border-radius:12px;margin-right:16px}
-  .chart-svg{width:800px;min-width:800px;height:220px}
-  .legend{padding-right:16px}
-  .chart-header{padding-right:16px}
+  /* Charts tab */
+  .mobile-charts{padding:14px 0 14px 14px}
+  .mobile-chart-block{margin-bottom:20px;padding-right:14px}
+  .mobile-chart-title{font-weight:700;font-size:15px;margin-bottom:4px}
+  .mobile-chart-sub{font-size:11px;color:var(--muted);margin-bottom:6px}
+  .mobile-chart-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);margin-bottom:8px}
+  .mobile-chart-box{border:1px solid var(--border);border-radius:12px;padding:8px;background:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .mobile-chart-svg{display:block;height:200px;width:600px;touch-action:pan-x}
+  .mobile-range-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-right:14px}
+  .mobile-range-label{font-size:12px;color:var(--muted)}
+  .mobile-range-select{flex:1;padding:10px 12px;border-radius:999px;border:1px solid var(--border);font:inherit;font-size:14px;background:#fff;color:var(--text)}
 
-  /* History */
-  #historyTab .card{padding:0;background:transparent;border:none}
-  #historyTab .section-title{padding:14px 16px 10px;background:#fff;border-bottom:1px solid var(--border);margin-bottom:0}
-  .history-item{border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0;padding:12px 16px}
-  .history-entry-head button{min-height:34px;padding:6px 12px;font-size:12px}
+  /* History tab */
+  .mobile-history-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+  .mobile-history-head h3{font-size:16px}
+  .mobile-history-actions{display:flex;gap:8px}
+  .mobile-history-list{padding:0}
+  .mobile-history-item{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px}
+  .mobile-history-date{font-weight:700;font-size:14px;color:var(--muted);margin-bottom:8px}
+  .mobile-history-entry{padding:8px 0 4px;border-top:1px solid var(--border)}
+  .mobile-history-entry:first-of-type{border-top:none;padding-top:0}
+  .mobile-history-type{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+  .mobile-history-metrics{display:flex;flex-wrap:wrap;gap:5px}
+  .mobile-history-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px}
 
-  /* Mobile bottom nav */
+  /* Bottom nav */
   .mobile-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;
     height:var(--nav-h);background:#fff;border-top:1px solid var(--border);
@@ -216,91 +218,172 @@ textarea{min-height:90px;resize:vertical}
   }
   .mobile-nav-btn .nav-icon{font-size:22px;line-height:1}
   .mobile-nav-btn.active{color:var(--plum)}
-  .mobile-nav-btn.add-btn{
-    flex:0 0 64px;
-  }
+  .mobile-nav-add-wrap{flex:0 0 72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
   .mobile-nav-add{
-    width:48px;height:48px;border-radius:50%;background:var(--plum);
+    width:50px;height:50px;border-radius:50%;background:var(--plum);border:none;
     display:flex;align-items:center;justify-content:center;
-    font-size:26px;color:#fff;line-height:1;margin-bottom:2px;
+    font-size:28px;color:#fff;line-height:1;
     box-shadow:0 4px 12px rgba(111,63,116,.4);
   }
-
-  /* Modal — full screen on mobile */
-  .modal-backdrop{padding:0;align-items:flex-end}
-  .modal{width:100%;max-height:95vh;border-radius:20px 20px 0 0;padding:0}
-  .modal-head{padding:16px 16px 12px;border-radius:20px 20px 0 0}
-  .modal-head h3{font-size:17px}
-  .modal form{padding:0 16px 32px}
-  .modal form .entry-type-bar{margin-top:4px}
-  .modal form .grid2{grid-template-columns:1fr 1fr}
-  input,select,textarea{font-size:16px!important;padding:14px 12px}/* prevent iOS zoom */
-  .entry-type-btn{padding:12px 16px;font-size:15px;min-height:44px}
-  .switch-row{padding:14px}
-  button[type=submit]{min-height:48px;font-size:16px;font-weight:700}
-
-  /* Inbox modal */
-  #ingestModal .modal form{padding:0 16px 32px}
-}
-
-@media(min-width:769px){
-  .mobile-header,.mobile-nav,.mobile-stats,.mobile-baselines,.mobile-bl-date{display:none!important}
+  .mobile-nav-add-label{font-size:10px;color:var(--plum);font-weight:600}
 }
 </style>
 </head>
 <body>
 
-<!-- ── Mobile header ── -->
-<div class="mobile-header">
-  <h2>Recovery Tracker</h2>
-  <div class="mobile-header-right">
-    <button class="mobile-header-btn" id="openIngestBtnMobile">📷</button>
+<!-- ═══════════════════════════════════════════════════
+     MOBILE
+════════════════════════════════════════════════════ -->
+<div class="mobile-wrap">
+  <div class="mobile-header">
+    <h2>Recovery Tracker</h2>
+    <button class="mobile-header-btn" id="openIngestBtnMobile">📷 Inbox</button>
   </div>
+
+  <div class="mobile-summary">
+    <div class="mobile-summary-title">Summary</div>
+    <div class="mobile-stats-grid" id="mobileStats"></div>
+  </div>
+
+  <div class="mobile-baselines">
+    <div class="mobile-baselines-title">Baselines</div>
+    <div class="mobile-baselines-grid" id="mobileBaselines"></div>
+    <div class="mobile-bl-date" id="mobileBlDate"></div>
+  </div>
+
+  <!-- Today tab -->
+  <div class="mobile-tab active" id="mobileToday">
+    <div class="mobile-recovery" id="mobileRecoveryBanner"></div>
+    <div id="mobileTodaySlots"></div>
+  </div>
+
+  <!-- Charts tab -->
+  <div class="mobile-tab" id="mobileCharts">
+    <div class="mobile-charts">
+      <div class="mobile-range-row">
+        <span class="mobile-range-label">Range</span>
+        <select id="mobileRangeFilter" class="mobile-range-select">
+          <option value="7" selected>7 days</option>
+          <option value="28">4 weeks</option>
+          <option value="90">90 days</option>
+          <option value="180">6 months</option>
+          <option value="365">12 months</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+      <div class="mobile-chart-block">
+        <div class="mobile-chart-title">Primary recovery</div>
+        <div class="mobile-chart-legend">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6f3f74;margin-right:4px"></span>Sleep</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2f6f73;margin-right:4px"></span>HRV</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3c2f46;margin-right:4px"></span>RHR</span>
+        </div>
+        <div class="mobile-chart-box"><svg id="mobilePrimaryChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div class="mobile-chart-block">
+        <div class="mobile-chart-title">Supplemental</div>
+        <div class="mobile-chart-legend">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#c27ba0;margin-right:4px"></span>Body Battery</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#9f8aa9;margin-right:4px"></span>Resp</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#d26f86;margin-right:4px"></span>SpO2</span>
+        </div>
+        <div class="mobile-chart-box"><svg id="mobileSupplementalChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div class="mobile-chart-block">
+        <div class="mobile-chart-title">How you felt</div>
+        <div class="mobile-chart-legend">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#8f4f7c;margin-right:4px"></span>Energy</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#b06a7f;margin-right:4px"></span>Stress</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2f6f73;margin-right:4px"></span>Soreness</span>
+        </div>
+        <div class="mobile-chart-box"><svg id="mobileSubjectiveChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div class="mobile-chart-block" id="mobileWeightChartBlock" style="display:none">
+        <div class="mobile-chart-title">Weight</div>
+        <div class="mobile-chart-box"><svg id="mobileWeightChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History tab -->
+  <div class="mobile-tab" id="mobileHistory">
+    <div class="mobile-history-head">
+      <h3>History</h3>
+      <div class="mobile-history-actions">
+        <button class="pill-btn" id="mobileCleanupBtn" style="font-size:12px;padding:6px 10px">🧹 Clean</button>
+        <button class="pill-btn primary" id="mobileHistoryAddBtn" style="font-size:12px;padding:6px 12px">+ Add</button>
+      </div>
+    </div>
+    <div class="mobile-history-list" id="mobileHistoryList"></div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="mobile-nav">
+    <button class="mobile-nav-btn active" data-tab="mobileToday">
+      <span class="nav-icon">🏠</span>Today
+    </button>
+    <button class="mobile-nav-btn" data-tab="mobileCharts">
+      <span class="nav-icon">📈</span>Charts
+    </button>
+    <button class="mobile-nav-btn" data-tab="mobileHistory">
+      <span class="nav-icon">📋</span>History
+    </button>
+    <div class="mobile-nav-add-wrap">
+      <button class="mobile-nav-add" id="mobileAddBtn">+</button>
+      <span class="mobile-nav-add-label">Add</span>
+    </div>
+  </nav>
 </div>
 
-<!-- ── Mobile stats row ── -->
-<div class="mobile-stats" id="mobileStats"></div>
-
-<!-- ── Mobile baselines ── -->
-<div class="mobile-baselines" id="mobileBaselines"></div>
-<div class="mobile-bl-date" id="mobileBlDate"></div>
-
-<!-- ── Desktop wrap ── -->
-<div class="wrap">
-  <div>
-    <h1>Sauna Recovery Tracker</h1>
-    <div class="version">version v27</div>
+<!-- ═══════════════════════════════════════════════════
+     DESKTOP
+════════════════════════════════════════════════════ -->
+<div class="desktop-wrap">
+  <div class="desktop-header">
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v27</div></div>
+    <div style="display:flex;gap:8px">
+      <button class="pill-btn" id="openIngestBtn">📷 Screenshot Inbox</button>
+      <button class="pill-btn primary" id="openEntryBtn">+ Add Entry</button>
+    </div>
   </div>
 
-  <div class="stats" id="stats"></div>
+  <!-- Summary -->
+  <div class="card">
+    <div class="section-title" style="margin-bottom:10px"><h3>Summary</h3></div>
+    <div class="stats-grid" id="desktopStats"></div>
+  </div>
 
+  <!-- Baselines -->
   <div class="card">
     <div class="section-title" style="margin-bottom:10px">
       <h3>Baselines</h3>
-      <div class="status-banner" id="garminStatus">—</div>
+      <div style="font-size:12px;color:var(--muted)" id="garminStatus">—</div>
     </div>
-    <div class="baselines" id="baselineCards"></div>
+    <div class="baselines-grid" id="baselineCards"></div>
   </div>
 
-  <div class="card topbar">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="todayTab">Today & Trends</button>
-      <button class="tab-btn" data-tab="historyTab">History</button>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="pill-btn" id="openIngestBtn">Screenshot Inbox</button>
-      <button class="pill-btn primary" id="openEntryBtn">Add / Edit</button>
+  <!-- Tabs -->
+  <div class="card" style="padding:12px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div class="desktop-tabs">
+        <button class="desktop-tab-btn active" data-dtab="dtodayTab">Today</button>
+        <button class="desktop-tab-btn" data-dtab="dchartsTab">Charts</button>
+        <button class="desktop-tab-btn" data-dtab="dhistoryTab">History</button>
+      </div>
     </div>
   </div>
 
-  <div id="todayTab" class="tab-panel active">
+  <!-- Today tab -->
+  <div class="desktop-tab-panel active" id="dtodayTab">
     <div class="card">
-      <div class="section-title"><h3>Today</h3></div>
-      <div id="recoveryBanner"></div>
+      <div id="desktopRecoveryBanner"></div>
       <div class="today-grid" id="todayGrid"></div>
     </div>
+  </div>
 
-    <div class="card chart-wrap">
+  <!-- Charts tab -->
+  <div class="desktop-tab-panel" id="dchartsTab">
+    <div class="card chart-section">
       <div>
         <div class="chart-header">
           <div>
@@ -324,7 +407,7 @@ textarea{min-height:90px;resize:vertical}
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>HRV</span>
           <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
         </div>
-        <div class="chart-box"><svg id="primaryChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="primaryChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">Supplemental recovery</div>
@@ -333,7 +416,7 @@ textarea{min-height:90px;resize:vertical}
           <span class="legend-item"><span class="swatch" style="background:#9f8aa9"></span>Respiration</span>
           <span class="legend-item"><span class="swatch" style="background:#d26f86"></span>Pulse Ox</span>
         </div>
-        <div class="chart-box"><svg id="supplementalChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="supplementalChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">How you felt</div>
@@ -344,46 +427,29 @@ textarea{min-height:90px;resize:vertical}
           <span class="legend-item"><span class="swatch" style="background:#8a78a8"></span>Self Sleep</span>
           <span class="legend-item"><span class="swatch" style="background:#b9a5c9"></span>Joint Stiffness</span>
         </div>
-        <div class="chart-box"><svg id="subjectiveChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="subjectiveChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div id="weightChartSection" style="display:none">
         <div class="chart-title">Weight</div>
-        <div class="legend"><span class="legend-item"><span class="swatch" style="background:#7a6a9a"></span>Weight (lbs)</span></div>
-        <div class="chart-box"><svg id="weightChart" class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
+        <div class="chart-box"><svg id="weightChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
     </div>
   </div>
 
-  <div id="historyTab" class="tab-panel">
+  <!-- History tab -->
+  <div class="desktop-tab-panel" id="dhistoryTab">
     <div class="card">
       <div class="section-title">
         <h3>History</h3>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button id="cleanupBtn">🧹 Remove Garmin duplicates</button>
-          <button id="historyAddBtn">Add entry</button>
+        <div style="display:flex;gap:8px">
+          <button id="cleanupBtn" class="pill-btn">🧹 Remove Garmin duplicates</button>
+          <button id="historyAddBtn" class="pill-btn primary">+ Add entry</button>
         </div>
       </div>
       <div id="historyList"></div>
     </div>
   </div>
 </div>
-
-<!-- ── Mobile bottom nav ── -->
-<nav class="mobile-nav">
-  <button class="mobile-nav-btn active" data-mobile-tab="todayTab">
-    <span class="nav-icon">🏠</span>Today
-  </button>
-  <button class="mobile-nav-btn" data-mobile-tab="chartsSection">
-    <span class="nav-icon">📈</span>Charts
-  </button>
-  <button class="mobile-nav-btn" data-mobile-tab="historyTab">
-    <span class="nav-icon">📋</span>History
-  </button>
-  <button class="mobile-nav-btn add-btn" id="mobileAddBtn">
-    <div class="mobile-nav-add">+</div>
-    <span style="font-size:10px;color:var(--plum);font-weight:600">Add</span>
-  </button>
-</nav>
 
 <!-- Entry modal -->
 <div class="modal-backdrop" id="entryModal">
@@ -392,36 +458,38 @@ textarea{min-height:90px;resize:vertical}
       <h3 id="entryModalTitle">Add entry</h3>
       <button id="closeEntryBtn">Close</button>
     </div>
-    <form id="entryForm">
-      <div class="entry-type-bar">
-        <button type="button" class="entry-type-btn active" data-entry-type="morning">🌅 Morning</button>
-        <button type="button" class="entry-type-btn" data-entry-type="bedtime">🌙 Bedtime</button>
-        <button type="button" class="entry-type-btn" data-entry-type="sauna">🔥 Sauna</button>
-      </div>
-      <div class="grid2">
-        <div><label for="date">Date</label><input id="date" type="date" required /></div>
-        <div id="saunaMinutesWrap"><label for="saunaMinutes">Sauna minutes</label><input id="saunaMinutes" type="number" min="1" max="120" inputmode="numeric" /><div class="field-error">Use 1–120</div></div>
-        <div id="sleepScoreWrap"><label for="sleepScore">Sleep score</label><input id="sleepScore" type="number" min="0" max="100" inputmode="numeric" /><div class="field-error">Use 0–100</div></div>
-        <div id="sleepSelfWrap"><label for="sleepSelf">Self sleep (1–10)</label><input id="sleepSelf" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-        <div id="hrvWrap"><label for="hrv">HRV</label><input id="hrv" type="number" min="1" max="200" inputmode="numeric" /><div class="field-error">Use 1–200</div></div>
-        <div id="restingHrWrap"><label for="restingHr">Resting HR</label><input id="restingHr" type="number" min="30" max="120" inputmode="numeric" /><div class="field-error">Use 30–120</div></div>
-        <div id="bodyBatteryWrap"><label for="bodyBattery">Body Battery</label><input id="bodyBattery" type="number" min="0" max="100" inputmode="numeric" /><div class="field-error">Use 0–100</div></div>
-        <div id="respirationWrap"><label for="respiration">Respiration</label><input id="respiration" type="number" min="5" max="30" step="0.1" inputmode="decimal" /><div class="field-error">Use 5–30</div></div>
-        <div id="pulseOxWrap"><label for="pulseOx">Pulse Ox</label><input id="pulseOx" type="number" min="70" max="100" inputmode="numeric" /><div class="field-error">Use 70–100</div></div>
-        <div id="weightWrap"><label for="weight">Weight (lbs)</label><input id="weight" type="number" min="50" max="500" step="0.1" inputmode="decimal" /><div class="field-error">Use 50–500</div></div>
-        <div id="energyWrap"><label for="energy">Energy (1–10)</label><input id="energy" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-        <div id="stressWrap"><label for="stress">Stress (1–10)</label><input id="stress" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-        <div id="muscleSorenessWrap"><label for="muscleSoreness">Muscle soreness</label><input id="muscleSoreness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-        <div id="jointSorenessWrap"><label for="jointSoreness">Joint soreness</label><input id="jointSoreness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-        <div id="jointStiffnessWrap"><label for="jointStiffness">Joint stiffness</label><input id="jointStiffness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
-      </div>
-      <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px" /></div>
-      <div id="notesWrap"><label for="notes">Notes</label><textarea id="notes"></textarea></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button type="submit" class="pill-btn primary" style="flex:1">Save</button>
-        <button type="button" id="cancelEditBtn">Cancel</button>
-      </div>
-    </form>
+    <div class="modal-body">
+      <form id="entryForm">
+        <div class="entry-type-bar">
+          <button type="button" class="entry-type-btn active" data-entry-type="morning">🌅 Morning</button>
+          <button type="button" class="entry-type-btn" data-entry-type="bedtime">🌙 Bedtime</button>
+          <button type="button" class="entry-type-btn" data-entry-type="sauna">🔥 Sauna</button>
+        </div>
+        <div class="grid2">
+          <div><label for="date">Date</label><input id="date" type="date" required /></div>
+          <div id="saunaMinutesWrap"><label for="saunaMinutes">Sauna minutes</label><input id="saunaMinutes" type="number" min="1" max="120" inputmode="numeric" /><div class="field-error">Use 1–120</div></div>
+          <div id="sleepScoreWrap"><label for="sleepScore">Sleep score</label><input id="sleepScore" type="number" min="0" max="100" inputmode="numeric" /><div class="field-error">Use 0–100</div></div>
+          <div id="sleepSelfWrap"><label for="sleepSelf">Self sleep (1–10)</label><input id="sleepSelf" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+          <div id="hrvWrap"><label for="hrv">HRV</label><input id="hrv" type="number" min="1" max="200" inputmode="numeric" /><div class="field-error">Use 1–200</div></div>
+          <div id="restingHrWrap"><label for="restingHr">Resting HR</label><input id="restingHr" type="number" min="30" max="120" inputmode="numeric" /><div class="field-error">Use 30–120</div></div>
+          <div id="bodyBatteryWrap"><label for="bodyBattery">Body Battery</label><input id="bodyBattery" type="number" min="0" max="100" inputmode="numeric" /><div class="field-error">Use 0–100</div></div>
+          <div id="respirationWrap"><label for="respiration">Respiration</label><input id="respiration" type="number" min="5" max="30" step="0.1" inputmode="decimal" /><div class="field-error">Use 5–30</div></div>
+          <div id="pulseOxWrap"><label for="pulseOx">Pulse Ox</label><input id="pulseOx" type="number" min="70" max="100" inputmode="numeric" /><div class="field-error">Use 70–100</div></div>
+          <div id="weightWrap"><label for="weight">Weight (lbs)</label><input id="weight" type="number" min="50" max="500" step="0.1" inputmode="decimal" /><div class="field-error">Use 50–500</div></div>
+          <div id="energyWrap"><label for="energy">Energy (1–10)</label><input id="energy" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+          <div id="stressWrap"><label for="stress">Stress (1–10)</label><input id="stress" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+          <div id="muscleSorenessWrap"><label for="muscleSoreness">Muscle soreness</label><input id="muscleSoreness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+          <div id="jointSorenessWrap"><label for="jointSoreness">Joint soreness</label><input id="jointSoreness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+          <div id="jointStiffnessWrap"><label for="jointStiffness">Joint stiffness</label><input id="jointStiffness" type="number" min="1" max="10" step="1" inputmode="numeric" /><div class="field-error">Use 1–10</div></div>
+        </div>
+        <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px" /></div>
+        <div id="notesWrap"><label for="notes">Notes</label><textarea id="notes"></textarea></div>
+        <div style="display:flex;gap:8px">
+          <button type="submit" class="pill-btn primary" style="flex:1;min-height:48px;font-size:16px;font-weight:700">Save</button>
+          <button type="button" id="cancelEditBtn" class="pill-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -429,7 +497,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="modal-backdrop" id="ingestModal">
   <div class="modal">
     <div class="modal-head"><h3>Screenshot Inbox</h3><button id="closeIngestBtn">Close</button></div>
-    <div style="display:grid;gap:14px;padding:0 16px 32px">
+    <div class="modal-body" style="display:grid;gap:14px">
       <div>
         <label for="apiKeyInput">Anthropic API key <span style="font-weight:400;color:var(--muted)">(saved locally)</span></label>
         <input id="apiKeyInput" type="password" placeholder="sk-ant-..." autocomplete="off" />
@@ -439,20 +507,20 @@ textarea{min-height:90px;resize:vertical}
         <p>Drag and drop, or use the button below</p>
         <input id="screenshotInput" type="file" accept="image/*" capture="environment" style="display:none" />
       </div>
-      <button type="button" class="pill-btn primary" style="width:100%" onclick="document.getElementById('screenshotInput').click()">📷 Choose photo / file</button>
+      <button type="button" class="pill-btn primary" style="width:100%;min-height:48px" onclick="document.getElementById('screenshotInput').click()">📷 Choose photo / file</button>
       <div id="parseStatus" style="display:none" class="parse-status"></div>
       <div class="grid2">
         <div><label for="ingestDate">Date for entry</label><input id="ingestDate" type="date" /></div>
       </div>
       <div class="ingest-grid">
-        <div class="ingest-field">Sleep score<b id="ingestSleep">—</b></div>
+        <div class="ingest-field">Sleep<b id="ingestSleep">—</b></div>
         <div class="ingest-field">HRV<b id="ingestHrv">—</b></div>
-        <div class="ingest-field">Resting HR<b id="ingestRhr">—</b></div>
-        <div class="ingest-field">Body Battery<b id="ingestBb">—</b></div>
-        <div class="ingest-field">Respiration<b id="ingestResp">—</b></div>
-        <div class="ingest-field">Pulse Ox<b id="ingestSpo2">—</b></div>
+        <div class="ingest-field">RHR<b id="ingestRhr">—</b></div>
+        <div class="ingest-field">Body Bat.<b id="ingestBb">—</b></div>
+        <div class="ingest-field">Resp<b id="ingestResp">—</b></div>
+        <div class="ingest-field">SpO2<b id="ingestSpo2">—</b></div>
       </div>
-      <button id="sendToEntry" type="button" class="pill-btn primary" style="width:100%">Send to entry form</button>
+      <button id="sendToEntry" type="button" class="pill-btn primary" style="width:100%;min-height:48px">Send to entry form</button>
     </div>
   </div>
 </div>
@@ -460,11 +528,11 @@ textarea{min-height:90px;resize:vertical}
 <div id="chartTooltip" class="chart-tooltip"></div>
 
 <script>
-// ─── Local date helper ────────────────────────────────────────────────────────
-function localDateStr(d){const dt=d||new Date();return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;}
+// ─── Local date ───────────────────────────────────────────────────────────────
+function localDateStr(d){const dt=d||new Date();return`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;}
 const todayStr=localDateStr();
 
-// ─── Constants & state ────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 const STORAGE_KEY='sauna-recovery-tracker-v17';
 const API_KEY_STORAGE='sauna-tracker-api-key';
 const GARMIN_PATH='data/garmin_daily_summary.json';
@@ -472,13 +540,15 @@ const SAUNA_WEEKLY_GOAL=4;
 const SUPABASE_URL='https://gnggxqvmcatqholjxtsz.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImduZ2d4cXZtY2F0cWhvbGp4dHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjgxOTYsImV4cCI6MjA4OTQ0NDE5Nn0.LZEPVQ5dPpkSihLMiQJLB2vX5oQEpuaSEpz-Mckxe1I';
 const SB_HEADERS={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`};
-let entries=[],garminHistory=[],chartRange='7';
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let entries=[],garminHistory=[],chartRange='7',mobileChartRange='7';
 let baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null,pulseOx:null,bodyBatteryMorningHigh:null,respiration:null};
 let baselineRange={start:null,end:null};
 let ingestDraft={date:todayStr,sleepScore:'',hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:''};
 let editingId=null,currentEntryType='morning';
 
-// ─── Seed data ────────────────────────────────────────────────────────────────
+// ─── Seed ─────────────────────────────────────────────────────────────────────
 const seedEntries=[
   {id:'seed-2026-03-09-am',date:'2026-03-09',entryType:'morning',timeOfDay:'morning',saunaMinutes:'',sleepScore:'',sleepSelf:10,hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:'',weight:'',energy:7,stress:3,muscleSoreness:3,jointSoreness:0,jointStiffness:1,redLightUsed:false,notes:'Baseline entry. Burn Boot Camp at 4:30pm.'},
   {id:'seed-2026-03-11-am',date:'2026-03-11',entryType:'morning',timeOfDay:'morning',saunaMinutes:'',sleepScore:72,sleepSelf:3,hrv:31,restingHr:63,bodyBattery:40,respiration:'',pulseOx:'',weight:'',energy:8,stress:5,muscleSoreness:5,jointSoreness:4,jointStiffness:1,redLightUsed:false,notes:'Traveling, poor sleep, morning workout, midday neck/upper-back pain.'},
@@ -486,20 +556,16 @@ const seedEntries=[
 ];
 
 // ─── Field config ─────────────────────────────────────────────────────────────
-const TYPE_FIELDS={
-  morning:['sleepSelfWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','jointStiffnessWrap','notesWrap'],
-  bedtime:['energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','jointStiffnessWrap','notesWrap'],
-  sauna:['saunaMinutesWrap','redLightWrap','notesWrap']
-};
+const TYPE_FIELDS={morning:['sleepSelfWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','jointStiffnessWrap','notesWrap'],bedtime:['energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','jointStiffnessWrap','notesWrap'],sauna:['saunaMinutesWrap','redLightWrap','notesWrap']};
 const ALL_FIELD_WRAPS=['saunaMinutesWrap','sleepScoreWrap','sleepSelfWrap','hrvWrap','restingHrWrap','bodyBatteryWrap','respirationWrap','pulseOxWrap','weightWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','jointStiffnessWrap','redLightWrap','notesWrap'];
 const FIELD_RULES={sleepSelf:{min:1,max:10},energy:{min:1,max:10},stress:{min:1,max:10},muscleSoreness:{min:1,max:10},jointSoreness:{min:1,max:10},jointStiffness:{min:1,max:10},sleepScore:{min:0,max:100},hrv:{min:1,max:200},restingHr:{min:30,max:120},bodyBattery:{min:0,max:100},respiration:{min:5,max:30},pulseOx:{min:70,max:100},saunaMinutes:{min:1,max:120},weight:{min:50,max:500}};
 
 // ─── Supabase ─────────────────────────────────────────────────────────────────
 function entryToRow(e){return{id:e.id,date:e.date,entry_type:e.entryType,time_of_day:e.timeOfDay,sauna_minutes:e.saunaMinutes===''?null:e.saunaMinutes,sleep_score:e.sleepScore===''?null:e.sleepScore,sleep_self:e.sleepSelf===''?null:e.sleepSelf,hrv:e.hrv===''?null:e.hrv,resting_hr:e.restingHr===''?null:e.restingHr,body_battery:e.bodyBattery===''?null:e.bodyBattery,respiration:e.respiration===''?null:e.respiration,pulse_ox:e.pulseOx===''?null:e.pulseOx,weight:e.weight===''?null:e.weight,energy:e.energy===''?null:e.energy,stress:e.stress===''?null:e.stress,muscle_soreness:e.muscleSoreness===''?null:e.muscleSoreness,joint_soreness:e.jointSoreness===''?null:e.jointSoreness,joint_stiffness:e.jointStiffness===''?null:e.jointStiffness,red_light_used:!!e.redLightUsed,notes:e.notes||'',updated_at:new Date().toISOString()};}
 function rowToEntry(r){return{id:r.id,date:r.date,entryType:r.entry_type||'morning',timeOfDay:r.time_of_day||'morning',saunaMinutes:r.sauna_minutes??'',sleepScore:r.sleep_score??'',sleepSelf:r.sleep_self??'',hrv:r.hrv??'',restingHr:r.resting_hr??'',bodyBattery:r.body_battery??'',respiration:r.respiration??'',pulseOx:r.pulse_ox??'',weight:r.weight??'',energy:r.energy??'',stress:r.stress??'',muscleSoreness:r.muscle_soreness??'',jointSoreness:r.joint_soreness??'',jointStiffness:r.joint_stiffness??'',redLightUsed:!!r.red_light_used,notes:r.notes||''};}
-async function sbFetchAll(){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?select=*&order=date.desc`,{headers:SB_HEADERS});if(!res.ok)throw new Error(`Supabase fetch failed: ${res.status}`);return(await res.json()).map(rowToEntry);}
-async function sbUpsert(entry){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries`,{method:'POST',headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(entryToRow(entry))});if(!res.ok)throw new Error(`Supabase upsert failed: ${res.status}`);}
-async function sbDelete(id){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?id=eq.${id}`,{method:'DELETE',headers:SB_HEADERS});if(!res.ok)throw new Error(`Supabase delete failed: ${res.status}`);}
+async function sbFetchAll(){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?select=*&order=date.desc`,{headers:SB_HEADERS});if(!res.ok)throw new Error(`${res.status}`);return(await res.json()).map(rowToEntry);}
+async function sbUpsert(entry){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries`,{method:'POST',headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(entryToRow(entry))});if(!res.ok)throw new Error(`${res.status}`);}
+async function sbDelete(id){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?id=eq.${id}`,{method:'DELETE',headers:SB_HEADERS});if(!res.ok)throw new Error(`${res.status}`);}
 function loadLocalFallback(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return structuredClone(seedEntries);try{const p=JSON.parse(raw);return Array.isArray(p)&&p.length?p:structuredClone(seedEntries);}catch{return structuredClone(seedEntries);}}
 function migrateEntries(arr){arr.forEach(e=>{if(!e.entryType)e.entryType=e.timeOfDay==='post_sauna'?'bedtime':(e.saunaMinutes!==''&&e.saunaMinutes!=null?'sauna':'morning');if(e.weight===undefined)e.weight='';['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness'].forEach(k=>{if(e[k]!==''&&e[k]!=null)e[k]=Math.max(1,Math.min(10,Number(e[k])));});});}
 
@@ -508,6 +574,7 @@ const isBlank=v=>v===''||v==null||v===false;
 const fmt=v=>isBlank(v)?'—':v;
 const round1=v=>v==null?null:Math.round(v*10)/10;
 const longDate=v=>new Date(v+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const shortDate=v=>new Date(v+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 function avgNum(vals){const v=vals.filter(x=>x!==''&&x!=null&&!isNaN(Number(x))).map(Number);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;}
 function avg(vals){const n=avgNum(vals);return n==null?'—':Math.round(n);}
@@ -532,8 +599,7 @@ function computeBaselines(){
 
 // ─── Recovery score ───────────────────────────────────────────────────────────
 function computeRecoveryScore(entry){
-  if(!entry)return null;
-  const pts=[],wts=[];
+  if(!entry)return null;const pts=[],wts=[];
   if(!isBlank(entry.sleepScore)){pts.push(Number(entry.sleepScore)/100);wts.push(2.5);}
   if(!isBlank(entry.hrv)&&baselineValues.hrvTypicalLow!=null){const{hrvTypicalLow:lo,hrvTypicalHigh:hi}=baselineValues,range=hi-lo;pts.push(Math.max(0,Math.min(1,range>0?(Number(entry.hrv)-lo)/range:Number(entry.hrv)>=lo?.8:.3)));wts.push(2.5);}
   if(!isBlank(entry.restingHr)&&baselineValues.restingHr!=null){pts.push(Math.max(0,Math.min(1,.65-(Number(entry.restingHr)-baselineValues.restingHr)*.06)));wts.push(2);}
@@ -553,151 +619,132 @@ function recoveryFactors(entry){
   if(!isBlank(entry.stress)){const v=Number(entry.stress);f.push({label:`Stress ${v}/10`,cls:v<=4?'good':v<=6?'':'bad'});}
   return f;
 }
+function recoveryBannerHtml(entry){
+  const score=computeRecoveryScore(entry),{label,cls}=recoveryMeta(score),factors=recoveryFactors(entry);
+  const desc=score==null?'Add a morning entry to see your recovery score.':`Composite score from ${factors.length} metric${factors.length===1?'':'s'}.`;
+  return`<div class="recovery-banner"><div class="recovery-circle ${cls}">${score??'?'}<span class="score-lbl">${label}</span></div><div class="recovery-info"><h4>Recovery Score</h4><p>${desc}</p>${factors.length?`<div class="recovery-factors">${factors.map(f=>`<span class="rfactor ${f.cls}">${f.label}</span>`).join('')}</div>`:''}</div></div>`;
+}
 
-// ─── Delta chip ───────────────────────────────────────────────────────────────
+// ─── Delta ────────────────────────────────────────────────────────────────────
 function deltaChip(kind,value,baseline){
-  if(isBlank(value))return'<span class="delta neutral">—</span>';
-  const v=Number(value);
+  if(isBlank(value))return'<span class="delta neutral">—</span>';const v=Number(value);
   if(kind==='range'){if(!baseline||baseline.low==null)return'<span class="delta neutral">—</span>';return v>=baseline.low&&v<=baseline.high?'<span class="delta good">in range</span>':`<span class="delta bad">${v<baseline.low?'below':'above'} range</span>`;}
-  if(isBlank(baseline))return'<span class="delta neutral">—</span>';
-  const b=Number(baseline),diff=v-b,thresh=b<=10?.6:b<=60?2:3;
+  if(isBlank(baseline))return'<span class="delta neutral">—</span>';const b=Number(baseline),diff=v-b,thresh=b<=10?.6:b<=60?2:3;
   if(Math.abs(diff)<thresh)return'<span class="delta neutral">near base</span>';
   if(kind==='higher_better')return diff>0?'<span class="delta good">above base</span>':'<span class="delta bad">below base</span>';
   if(kind==='lower_better')return diff<0?'<span class="delta good">below base</span>':'<span class="delta bad">above base</span>';
   return'<span class="delta neutral">—</span>';
 }
 
-// ─── Render: Desktop Stats ────────────────────────────────────────────────────
+// ─── Render: Stats ────────────────────────────────────────────────────────────
+function statsItems(){
+  const tw=countSaunaInWeek(0),lw=countSaunaInWeek(-1),total=totalSaunaSessions();
+  return[{label:'This week 🔥',val:`${tw}/${SAUNA_WEEKLY_GOAL}`,cls:tw>=SAUNA_WEEKLY_GOAL?'goal-met':tw>=SAUNA_WEEKLY_GOAL-1?'goal-close':''},{label:'Last week',val:`${lw}/${SAUNA_WEEKLY_GOAL}`,cls:lw>=SAUNA_WEEKLY_GOAL?'goal-met':''},{label:'Total sessions',val:total,cls:''},{label:'Total entries',val:entries.length,cls:''},{label:'Avg sleep',val:avg(entries.map(e=>e.sleepScore)),cls:''},{label:'Avg HRV',val:avg(entries.map(e=>e.hrv)),cls:''}];
+}
 function renderStats(){
-  const thisWeek=countSaunaInWeek(0),lastWeek=countSaunaInWeek(-1),total=totalSaunaSessions();
-  const items=[{label:`This week 🔥`,val:`${thisWeek}/${SAUNA_WEEKLY_GOAL}`,cls:thisWeek>=SAUNA_WEEKLY_GOAL?'goal-met':thisWeek>=SAUNA_WEEKLY_GOAL-1?'goal-close':''},{label:'Last week',val:`${lastWeek}/${SAUNA_WEEKLY_GOAL}`,cls:lastWeek>=SAUNA_WEEKLY_GOAL?'goal-met':''},{label:'Total sessions',val:total,cls:''},{label:'Total entries',val:entries.length,cls:''},{label:'Avg sleep',val:avg(entries.map(e=>e.sleepScore)),cls:''},{label:'Avg HRV',val:avg(entries.map(e=>e.hrv)),cls:''}];
-  document.getElementById('stats').innerHTML=items.map(({label,val,cls})=>`<div class="stat ${cls}">${label}<b>${val}</b></div>`).join('');
+  document.getElementById('desktopStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="stat ${cls}">${label}<b>${val}</b></div>`).join('');
+  document.getElementById('mobileStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="mobile-stat ${cls}"><div class="ms-label">${label}</div><div class="ms-value">${val}</div></div>`).join('');
 }
 
-// ─── Render: Mobile Stats ─────────────────────────────────────────────────────
-function renderMobileStats(){
-  const thisWeek=countSaunaInWeek(0),lastWeek=countSaunaInWeek(-1),total=totalSaunaSessions();
-  const items=[
-    {label:'This week 🔥',val:`${thisWeek}/${SAUNA_WEEKLY_GOAL}`,cls:thisWeek>=SAUNA_WEEKLY_GOAL?'goal-met':thisWeek>=SAUNA_WEEKLY_GOAL-1?'goal-close':''},
-    {label:'Last week',val:`${lastWeek}/${SAUNA_WEEKLY_GOAL}`,cls:lastWeek>=SAUNA_WEEKLY_GOAL?'goal-met':''},
-    {label:'Sessions',val:total,cls:''},
-    {label:'Avg Sleep',val:avg(entries.map(e=>e.sleepScore)),cls:''},
-    {label:'Avg HRV',val:avg(entries.map(e=>e.hrv)),cls:''},
-  ];
-  document.getElementById('mobileStats').innerHTML=items.map(({label,val,cls})=>`<div class="mobile-stat ${cls}"><div class="ms-label">${label}</div><div class="ms-value">${val}</div></div>`).join('');
-}
-
-// ─── Render: Mobile Baselines ─────────────────────────────────────────────────
-function renderMobileBaselines(){
+// ─── Render: Baselines ────────────────────────────────────────────────────────
+function baselineItems(){
   const bv=baselineValues;
-  const cards=[
-    {label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},
-    {label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'},
-    {label:'HRV range',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},
-    {label:'SpO2',value:bv.pulseOx!=null?`${Math.round(bv.pulseOx)}%`:'—'},
-    {label:'Body Bat.',value:bv.bodyBatteryMorningHigh!=null?Math.round(bv.bodyBatteryMorningHigh):'—'},
-  ];
-  document.getElementById('mobileBaselines').innerHTML=cards.map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');
-  const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
-  document.getElementById('mobileBlDate').textContent=baselineRange.start?`Baselines: fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'';
+  return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'SpO2',value:bv.pulseOx!=null?`${Math.round(bv.pulseOx)}%`:'—'},{label:'Body Bat.',value:bv.bodyBatteryMorningHigh!=null?Math.round(bv.bodyBatteryMorningHigh):'—'}];
 }
-
-// ─── Render: Desktop Baselines ────────────────────────────────────────────────
 function renderBaselines(){
-  const bv=baselineValues;
-  const cards=[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)} bpm`:'—'},{label:'HRV range',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'SpO2',value:bv.pulseOx!=null?`${Math.round(bv.pulseOx)}%`:'—'},{label:'Body Battery',value:bv.bodyBatteryMorningHigh!=null?Math.round(bv.bodyBatteryMorningHigh):'—'}];
-  document.getElementById('baselineCards').innerHTML=cards.map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');
   const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
-  document.getElementById('garminStatus').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data loaded';
+  document.getElementById('baselineCards').innerHTML=baselineItems().map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');
+  document.getElementById('garminStatus').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data';
+  document.getElementById('mobileBaselines').innerHTML=baselineItems().map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');
+  document.getElementById('mobileBlDate').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'';
 }
 
-// ─── Render: Recovery banner ──────────────────────────────────────────────────
-function renderRecoveryBanner(){
-  const morning=entries.find(e=>e.date===todayStr&&e.entryType==='morning');
-  const score=computeRecoveryScore(morning);
-  const{label,cls}=recoveryMeta(score);
-  const factors=recoveryFactors(morning);
-  const desc=score==null?'Add a morning entry to see your recovery score.':`Composite score based on ${factors.length} metric${factors.length===1?'':'s'}.`;
-  document.getElementById('recoveryBanner').innerHTML=`<div class="recovery-banner"><div class="recovery-circle ${cls}">${score??'?'}<span class="score-lbl">${label}</span></div><div class="recovery-info"><h4>Recovery Score</h4><p>${desc}</p>${factors.length?`<div class="recovery-factors">${factors.map(f=>`<span class="rfactor ${f.cls}">${f.label}</span>`).join('')}</div>`:''}</div></div>`;
-}
-
-// ─── Render: Today slot ───────────────────────────────────────────────────────
-function renderTodaySlot(type,title){
+// ─── Render: Desktop Today ────────────────────────────────────────────────────
+function desktopTodaySlotHtml(type,title){
   const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);
   const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';
-  if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No ${title.toLowerCase()} entry yet.</div></div>`;
-  if(type==='sauna'){
-    const thisWeek=countSaunaInWeek(0),met=thisWeek>=SAUNA_WEEKLY_GOAL;
-    const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<thisWeek?(met?'goal-met':'filled'):''}"></div>`).join('');
-    return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${thisWeek}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
-  }
+  if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;
+  if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
   const bv=baselineValues;
   const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];
   const secondary=[...(type==='morning'?[{label:'Body Battery',key:'bodyBattery'},{label:'Respiration',key:'respiration'},{label:'Pulse Ox',key:'pulseOx'},{label:'Weight',key:'weight'}]:[]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'},{label:'Jt stiff',key:'jointStiffness'}].filter(x=>!isBlank(entry[x.key]));
   return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>${primary.length?`<div class="prominent-grid">${primary.map(x=>`<div class="prominent-metric"><div class="prominent-top"><span>${x.label}</span>${deltaChip(x.kind,entry[x.key],x.baseline)}</div><div class="prominent-value">${fmt(entry[x.key])}</div><div class="prominent-sub">${x.kind==='range'?`${x.baseline.low??'—'}–${x.baseline.high??'—'}`:x.baseline!=null?`base ${x.baseline}`:''}</div></div>`).join('')}</div>`:''}${secondary.length?`<div class="secondary-grid">${secondary.map(x=>`<div class="secondary-metric"><div class="secondary-head">${x.label}</div><div class="secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:''}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
 }
-
-function renderToday(){
-  renderRecoveryBanner();
-  document.getElementById('todayGrid').innerHTML=renderTodaySlot('morning','Morning')+renderTodaySlot('sauna','Sauna Today')+renderTodaySlot('bedtime','Bedtime');
+function renderDesktopToday(){
+  document.getElementById('desktopRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));
+  document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('morning','Morning')+desktopTodaySlotHtml('sauna','Sauna Today')+desktopTodaySlotHtml('bedtime','Bedtime');
 }
 
-// ─── Render: History ──────────────────────────────────────────────────────────
-function renderHistory(){
-  const holder=document.getElementById('historyList');
-  if(!entries.length){holder.innerHTML='<div style="font-size:13px;color:var(--muted);padding:8px 0">No entries yet.</div>';return;}
-  const byDate=new Map();
-  sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});
-  holder.innerHTML=Array.from(byDate.entries()).map(([date,dayEntries])=>{
+// ─── Render: Mobile Today ─────────────────────────────────────────────────────
+function mobileTodaySlotHtml(type,title){
+  const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);
+  const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';
+  if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;
+  if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
+  const bv=baselineValues;
+  const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];
+  const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'}]:[]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'},{label:'Jt stiff',key:'jointStiffness'}].filter(x=>!isBlank(entry[x.key]));
+  const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>{const chip=deltaChip(x.kind,entry[x.key],x.baseline);return`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${chip}</div></div>`;}).join('')}</div>`:'';
+  const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';
+  return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
+}
+function renderMobileToday(){
+  document.getElementById('mobileRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));
+  document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('morning','Morning')+mobileTodaySlotHtml('sauna','Sauna Today')+mobileTodaySlotHtml('bedtime','Bedtime');
+}
+
+// ─── Render: History (shared) ─────────────────────────────────────────────────
+function historyItemsHtml(isMobile=false){
+  if(!entries.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No entries yet.</div>';
+  const byDate=new Map();sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});
+  return Array.from(byDate.entries()).map(([date,dayEntries])=>{
     const eHtml=dayEntries.map(entry=>{
       const type=entry.entryType||'morning',icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙',lbl=type==='morning'?'Morning':type==='sauna'?'Sauna':'Bedtime';
       const m=[];
-      if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);
-      if(!isBlank(entry.hrv))m.push(`📉 HRV ${entry.hrv}`);
-      if(!isBlank(entry.restingHr))m.push(`❤️ RHR ${entry.restingHr}`);
-      if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);
-      if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);
-      if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);
-      if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight} lbs`);
-      if(!isBlank(entry.energy))m.push(`⚡ Energy ${entry.energy}`);
-      if(!isBlank(entry.stress))m.push(`🧠 Stress ${entry.stress}`);
-      if(!isBlank(entry.muscleSoreness))m.push(`💪 Muscle ${entry.muscleSoreness}`);
-      if(!isBlank(entry.jointSoreness))m.push(`🦴 Joint ${entry.jointSoreness}`);
-      if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);
-      if(entry.redLightUsed)m.push('🔴 Red light');
-      return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span><div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div></div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:'<div style="font-size:12px;color:var(--muted)">No metrics logged</div>'}${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
+      if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);if(!isBlank(entry.hrv))m.push(`📉 ${entry.hrv}`);if(!isBlank(entry.restingHr))m.push(`❤️ ${entry.restingHr}`);if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight}`);if(!isBlank(entry.energy))m.push(`⚡ ${entry.energy}`);if(!isBlank(entry.stress))m.push(`🧠 ${entry.stress}`);if(!isBlank(entry.muscleSoreness))m.push(`💪 ${entry.muscleSoreness}`);if(!isBlank(entry.jointSoreness))m.push(`🦴 ${entry.jointSoreness}`);if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);if(entry.redLightUsed)m.push('🔴');
+      if(isMobile)return`<div class="mobile-history-entry"><div class="mobile-history-type"><span>${icon} ${lbl}</span><div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div></div>${m.length?`<div class="mobile-history-metrics history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="mobile-history-note history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
+      return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span><div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div></div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;
     }).join('');
+    if(isMobile)return`<div class="mobile-history-item"><div class="mobile-history-date">${shortDate(date)}</div>${eHtml}</div>`;
     return`<div class="history-item"><div class="history-date">${longDate(date)}</div>${eHtml}</div>`;
   }).join('');
 }
+function renderHistory(){
+  document.getElementById('historyList').innerHTML=historyItemsHtml(false);
+  document.getElementById('mobileHistoryList').innerHTML=historyItemsHtml(true);
+}
 
 // ─── Charts ───────────────────────────────────────────────────────────────────
-function filterByRange(rows){if(chartRange==='all'||!rows.length)return rows;const latest=rows.reduce((m,r)=>r.date>m?r.date:m,rows[0].date);const cutoff=new Date(latest.slice(0,10)+'T12:00:00');cutoff.setDate(cutoff.getDate()-Number(chartRange));return rows.filter(r=>new Date(r.date.slice(0,10)+'T12:00:00')>=cutoff);}
-function xAxisStep(){return{'7':1,'28':4,'90':10,'180':20,'365':40,'all':90}[chartRange]??4;}
+function filterByRange(rows,range){if(range==='all'||!rows.length)return rows;const latest=rows.reduce((m,r)=>r.date>m?r.date:m,rows[0].date);const cutoff=new Date(latest.slice(0,10)+'T12:00:00');cutoff.setDate(cutoff.getDate()-Number(range));return rows.filter(r=>new Date(r.date.slice(0,10)+'T12:00:00')>=cutoff);}
+function xStep(range){return{'7':1,'28':4,'90':10,'180':20,'365':40,'all':90}[range]??4;}
 function dateParts(key){const dt=new Date(key.split('-').slice(0,3).join('-')+'T12:00:00');return{top:dt.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase(),bottom:dt.toLocaleDateString('en-US',{month:'short'}).toUpperCase()+' '+dt.getDate()};}
 function autoYRange(datasets){const vals=datasets.flatMap(ds=>ds.data.map(r=>Number(r.value))).filter(v=>!isNaN(v));if(!vals.length)return{yMin:0,yMax:100};const mn=Math.min(...vals),mx=Math.max(...vals),pad=Math.max((mx-mn)*.12,2);return{yMin:Math.floor(mn-pad),yMax:Math.ceil(mx+pad)};}
-function drawChart(svgId,datasets,yMinIn,yMaxIn){
+
+function drawChart(svgId,datasets,yMinIn,yMaxIn,range){
   const svg=document.getElementById(svgId);if(!svg)return;
-  const sets=datasets.map(ds=>({...ds,data:filterByRange(ds.data)}));
+  const sets=datasets.map(ds=>({...ds,data:filterByRange(ds.data,range)}));
   const keyMap=new Map();sets.forEach(ds=>ds.data.forEach(r=>keyMap.set(r.date,true)));
   const data=Array.from(keyMap.keys()).sort().map(d=>({date:d}));
   if(!data.length){svg.innerHTML='';return;}
   const{yMin,yMax}=yMinIn==null?autoYRange(sets):{yMin:yMinIn,yMax:yMaxIn};
-  const W=900,H=300,L=58,R=24,T=14,B=48,pW=W-L-R,pH=H-T-B;
+  // detect mobile svg (600 wide) vs desktop (900 wide)
+  const vb=svg.getAttribute('viewBox')||'0 0 900 300';
+  const W=parseInt(vb.split(' ')[2]),H=parseInt(vb.split(' ')[3]);
+  const L=48,R=16,T=12,B=40,pW=W-L-R,pH=H-T-B;
   const xp=i=>data.length===1?L+pW/2:L+i*pW/(data.length-1);
   const yp=v=>T+pH-((v-yMin)/(yMax-yMin))*pH;
   let out='';
-  for(let i=0;i<=4;i++){const v=yMax-(yMax-yMin)/4*i,gy=T+pH/4*i;out+=`<line x1="${L}" y1="${gy}" x2="${W-R}" y2="${gy}" stroke="#ece4f0" stroke-width="1"/>`;out+=`<text x="${L-8}" y="${gy+4}" text-anchor="end" font-size="11" fill="#6f6277">${Math.round(v*10)/10}</text>`;}
+  for(let i=0;i<=4;i++){const v=yMax-(yMax-yMin)/4*i,gy=T+pH/4*i;out+=`<line x1="${L}" y1="${gy}" x2="${W-R}" y2="${gy}" stroke="#ece4f0" stroke-width="1"/>`;out+=`<text x="${L-6}" y="${gy+4}" text-anchor="end" font-size="10" fill="#6f6277">${Math.round(v*10)/10}</text>`;}
   sets.forEach(s=>{
     const lkp=new Map(s.data.map(r=>[r.date,r.value]));
     const pts=data.map((d,i)=>{if(!lkp.has(d.date))return null;const v=Number(lkp.get(d.date));return[xp(i),yp(v),v,i];});
     let path='';pts.forEach(pt=>{if(!pt)return;const prev=pts.slice(0,pt[3]).some(Boolean);path+=`${prev?' L ':'M '}${pt[0]} ${pt[1]}`;});
     if(path)out+=`<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dash?`stroke-dasharray="${s.dash}"`:''} stroke-linecap="round" stroke-linejoin="round" opacity="${s.opacity||1}"/>`;
     let lastLY=-999;
-    pts.forEach(pt=>{if(!pt)return;const[x,y,v,idx]=pt;out+=`<circle cx="${x}" cy="${y}" r="5" fill="${s.color}" class="chart-pt" data-label="${escapeHtml(s.label||'')}" data-date="${data[idx].date.slice(0,10)}" data-value="${v}" style="cursor:pointer"/>`;if(s.showLabels!==false&&Math.abs(y-lastLY)>=22){out+=`<text x="${x}" y="${y-9}" text-anchor="middle" font-size="10" fill="${s.color}">${v}</text>`;lastLY=y;}});
+    pts.forEach(pt=>{if(!pt)return;const[x,y,v,idx]=pt;out+=`<circle cx="${x}" cy="${y}" r="5" fill="${s.color}" class="chart-pt" data-label="${escapeHtml(s.label||'')}" data-date="${data[idx].date.slice(0,10)}" data-value="${v}" style="cursor:pointer"/>`;if(s.showLabels!==false&&Math.abs(y-lastLY)>=20){out+=`<text x="${x}" y="${y-8}" text-anchor="middle" font-size="9" fill="${s.color}">${v}</text>`;lastLY=y;}});
   });
-  const step=xAxisStep(),shownDates=new Set();
-  data.forEach((d,i)=>{const dateOnly=d.date.slice(0,10),{top,bottom}=dateParts(d.date),show=(i%step===0)||i===data.length-1;if(!show||shownDates.has(dateOnly))return;shownDates.add(dateOnly);out+=`<text x="${xp(i)}" y="${H-24}" text-anchor="middle" font-size="11" fill="#6f6277">${top}</text>`;out+=`<text x="${xp(i)}" y="${H-9}" text-anchor="middle" font-size="11" fill="#6f6277">${bottom}</text>`;});
+  const step=xStep(range),shownDates=new Set();
+  data.forEach((d,i)=>{const dateOnly=d.date.slice(0,10),{top,bottom}=dateParts(d.date),show=(i%step===0)||i===data.length-1;if(!show||shownDates.has(dateOnly))return;shownDates.add(dateOnly);out+=`<text x="${xp(i)}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6f6277">${top}</text>`;out+=`<text x="${xp(i)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#6f6277">${bottom}</text>`;});
   svg.innerHTML=out;
   const tt=document.getElementById('chartTooltip');
   svg.querySelectorAll('.chart-pt').forEach(pt=>{
@@ -706,33 +753,56 @@ function drawChart(svgId,datasets,yMinIn,yMaxIn){
     pt.addEventListener('pointerleave',()=>{tt.style.display='none';pt.setAttribute('r','5');});
   });
 }
-function renderCharts(){
+
+function getChartDatasets(){
   const sa=sortedAsc(),mKey=e=>`${e.date}-${e.timeOfDay||'other'}`,ms=k=>sa.filter(e=>!isBlank(e[k])).map(e=>({date:mKey(e),value:Number(e[k])})),gs=k=>garminHistory.filter(r=>r[k]!=null).map(r=>({date:r.date,value:r[k]}));
-  drawChart('primaryChart',[{label:'Sleep (Garmin)',color:'#6f3f74',width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:'#6f3f74',width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:'#2f6f73',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:'#2f6f73',dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:'#3c2f46',width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:'#3c2f46',width:3,data:ms('restingHr')}],0,100);
-  drawChart('supplementalChart',[{label:'Body Battery (Garmin)',color:'#c27ba0',dash:'4 4',width:1.5,opacity:.14,showLabels:false,data:gs('bodyBatteryHigh')},{label:'Body Battery',color:'#c27ba0',dash:'4 4',width:3,data:ms('bodyBattery')},{label:'Respiration (Garmin)',color:'#9f8aa9',dash:'2 4',width:1.5,opacity:.14,showLabels:false,data:gs('respiration')},{label:'Respiration',color:'#9f8aa9',dash:'2 4',width:3,data:ms('respiration')},{label:'Pulse Ox (Garmin)',color:'#d26f86',dash:'10 5',width:1.5,opacity:.14,showLabels:false,data:gs('pulseOx')},{label:'Pulse Ox',color:'#d26f86',width:3,data:ms('pulseOx')}],0,100);
-  drawChart('subjectiveChart',[{label:'Energy',color:'#8f4f7c',width:3,data:ms('energy')},{label:'Stress',color:'#b06a7f',dash:'10 3',width:3,data:ms('stress')},{label:'Avg soreness',color:'#2f6f73',dash:'6 4',width:3,data:sa.map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},{label:'Self Sleep',color:'#8a78a8',dash:'4 4',width:3,data:ms('sleepSelf')},{label:'Joint Stiffness',color:'#b9a5c9',dash:'2 2',width:3,data:ms('jointStiffness')}],0,10);
-  const garminWeight=gs('weight'),manualWeight=ms('weight'),hasWeight=garminWeight.length||manualWeight.length;
-  document.getElementById('weightChartSection').style.display=hasWeight?'':'none';
-  if(hasWeight)drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:garminWeight},{label:'Weight',color:'#7a6a9a',width:3,data:manualWeight}],null,null);
+  return{
+    primary:[{label:'Sleep (Garmin)',color:'#6f3f74',width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:'#6f3f74',width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:'#2f6f73',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:'#2f6f73',dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:'#3c2f46',width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:'#3c2f46',width:3,data:ms('restingHr')}],
+    supplemental:[{label:'Body Battery (Garmin)',color:'#c27ba0',dash:'4 4',width:1.5,opacity:.14,showLabels:false,data:gs('bodyBatteryHigh')},{label:'Body Battery',color:'#c27ba0',dash:'4 4',width:3,data:ms('bodyBattery')},{label:'Respiration (Garmin)',color:'#9f8aa9',dash:'2 4',width:1.5,opacity:.14,showLabels:false,data:gs('respiration')},{label:'Respiration',color:'#9f8aa9',dash:'2 4',width:3,data:ms('respiration')},{label:'Pulse Ox (Garmin)',color:'#d26f86',dash:'10 5',width:1.5,opacity:.14,showLabels:false,data:gs('pulseOx')},{label:'Pulse Ox',color:'#d26f86',width:3,data:ms('pulseOx')}],
+    subjective:[{label:'Energy',color:'#8f4f7c',width:3,data:ms('energy')},{label:'Stress',color:'#b06a7f',dash:'10 3',width:3,data:ms('stress')},{label:'Avg soreness',color:'#2f6f73',dash:'6 4',width:3,data:sa.map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},{label:'Self Sleep',color:'#8a78a8',dash:'4 4',width:3,data:ms('sleepSelf')},{label:'Joint Stiffness',color:'#b9a5c9',dash:'2 2',width:3,data:ms('jointStiffness')}],
+    weight:{garmin:gs('weight'),manual:ms('weight')}
+  };
+}
+function renderDesktopCharts(){
+  const d=getChartDatasets();
+  drawChart('primaryChart',d.primary,0,100,chartRange);
+  drawChart('supplementalChart',d.supplemental,0,100,chartRange);
+  drawChart('subjectiveChart',d.subjective,0,10,chartRange);
+  const hw=d.weight.garmin.length||d.weight.manual.length;
+  document.getElementById('weightChartSection').style.display=hw?'':'none';
+  if(hw)drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,chartRange);
+}
+function renderMobileCharts(){
+  const d=getChartDatasets();
+  drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);
+  drawChart('mobileSupplementalChart',d.supplemental,0,100,mobileChartRange);
+  drawChart('mobileSubjectiveChart',d.subjective,0,10,mobileChartRange);
+  const hw=d.weight.garmin.length||d.weight.manual.length;
+  document.getElementById('mobileWeightChartBlock').style.display=hw?'':'none';
+  if(hw)drawChart('mobileWeightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,mobileChartRange);
 }
 
-function renderAll(){renderStats();renderMobileStats();renderBaselines();renderMobileBaselines();renderToday();renderHistory();renderCharts();}
+// ─── Render all ───────────────────────────────────────────────────────────────
+function renderAll(){
+  renderStats();renderBaselines();
+  renderDesktopToday();renderMobileToday();
+  renderHistory();
+  renderDesktopCharts();
+  // only render mobile charts if that tab is active
+  if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();
+}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
-function setTab(id){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));
-  if(id==='todayTab')setTimeout(renderCharts,0);
+function setDesktopTab(id){
+  document.querySelectorAll('.desktop-tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.dtab===id));
+  document.querySelectorAll('.desktop-tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  if(id==='dchartsTab')setTimeout(renderDesktopCharts,0);
 }
 function setMobileTab(id){
-  document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.mobileTab===id));
-  if(id==='chartsSection'){
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='todayTab'));
-    document.querySelector('.card.chart-wrap')?.scrollIntoView({behavior:'smooth'});
-  } else {
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));
-  }
-  if(id==='todayTab')setTimeout(renderCharts,0);
+  document.querySelectorAll('.mobile-tab').forEach(t=>t.classList.toggle('active',t.id===id));
+  document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  if(id==='mobileCharts')setTimeout(renderMobileCharts,0);
+  window.scrollTo(0,0);
 }
 
 // ─── Modals ───────────────────────────────────────────────────────────────────
@@ -740,11 +810,7 @@ const openModal=id=>document.getElementById(id).classList.add('open');
 const closeModal=id=>document.getElementById(id).classList.remove('open');
 
 // ─── Entry form ───────────────────────────────────────────────────────────────
-function setEntryType(type){
-  currentEntryType=type;
-  document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.toggle('active',b.dataset.entryType===type));
-  ALL_FIELD_WRAPS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=TYPE_FIELDS[type]?.includes(id)?'':'none';});
-}
+function setEntryType(type){currentEntryType=type;document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.toggle('active',b.dataset.entryType===type));ALL_FIELD_WRAPS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=TYPE_FIELDS[type]?.includes(id)?'':'none';});}
 function validateField(id){const el=document.getElementById(id),rule=FIELD_RULES[id];if(!el||!rule)return true;const wrap=el.closest('div');if(!wrap||wrap.style.display==='none'){wrap?.classList.remove('field-invalid');return true;}if(!el.value){wrap.classList.remove('field-invalid');return true;}const n=Number(el.value),ok=!isNaN(n)&&n>=rule.min&&n<=rule.max;wrap.classList.toggle('field-invalid',!ok);return ok;}
 function validateForm(){const ok=Object.keys(FIELD_RULES).every(id=>validateField(id));const btn=document.querySelector('#entryForm button[type="submit"]');if(btn)btn.disabled=!ok;return ok;}
 function resetForm(){editingId=null;document.getElementById('entryModalTitle').textContent='Add entry';document.getElementById('entryForm').reset();document.getElementById('date').value=todayStr;setEntryType('morning');validateForm();}
@@ -756,7 +822,20 @@ window.startEdit=startEdit;
 function removeEntry(id){if(!confirm('Delete this entry?'))return;entries=entries.filter(e=>e.id!==id);sbDelete(id).catch(err=>console.warn('Supabase delete failed:',err));renderAll();}
 window.removeEntry=removeEntry;
 
-// ─── Screenshot inbox ─────────────────────────────────────────────────────────
+// ─── Cleanup ──────────────────────────────────────────────────────────────────
+async function runCleanup(){
+  if(!garminHistory.length){alert('No Garmin data loaded.');return;}
+  const garminDates=new Set(garminHistory.map(r=>r.date));
+  const GF=['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx','weight'];
+  const SF=['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness','notes','redLightUsed'];
+  let stripped=0,deleted=0;const toDelete=[];
+  entries=entries.filter(entry=>{if(entry.entryType!=='morning'||!garminDates.has(entry.date))return true;GF.forEach(k=>{entry[k]='';});const has=SF.some(k=>!isBlank(entry[k]));if(!has){deleted++;toDelete.push(entry.id);return false;}stripped++;return true;});
+  for(const id of toDelete)await sbDelete(id).catch(console.warn);
+  for(const entry of entries)await sbUpsert(entry).catch(console.warn);
+  renderAll();alert(`Done! Removed ${deleted} empty duplicates, cleaned ${stripped} entries.`);
+}
+
+// ─── Screenshot ───────────────────────────────────────────────────────────────
 function renderIngestDraft(){document.getElementById('ingestDate').value=ingestDraft.date||todayStr;document.getElementById('ingestSleep').textContent=ingestDraft.sleepScore||'—';document.getElementById('ingestHrv').textContent=ingestDraft.hrv||'—';document.getElementById('ingestRhr').textContent=ingestDraft.restingHr||'—';document.getElementById('ingestBb').textContent=ingestDraft.bodyBattery||'—';document.getElementById('ingestResp').textContent=ingestDraft.respiration||'—';document.getElementById('ingestSpo2').textContent=ingestDraft.pulseOx||'—';}
 function setParseStatus(msg,type=''){const el=document.getElementById('parseStatus');el.textContent=msg;el.className=`parse-status${type?' '+type:''}`;el.style.display=msg?'block':'none';}
 async function parseScreenshot(file){
@@ -766,7 +845,7 @@ async function parseScreenshot(file){
   const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=()=>rej(new Error('Read failed'));r.readAsDataURL(file);});
   setParseStatus('Sending to Claude…');
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:file.type||'image/jpeg',data:b64}},{type:'text',text:`Extract Garmin Connect metrics from this screenshot. Respond ONLY with a JSON object, no markdown fences:\n{"sleepScore":number|null,"hrv":number|null,"restingHr":number|null,"bodyBattery":number|null,"respiration":number|null,"pulseOx":number|null,"date":"YYYY-MM-DD"|null}\nUse null for any value not visible.`}]}]})});
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:file.type||'image/jpeg',data:b64}},{type:'text',text:`Extract Garmin Connect metrics from this screenshot. Respond ONLY with a JSON object, no markdown:\n{"sleepScore":number|null,"hrv":number|null,"restingHr":number|null,"bodyBattery":number|null,"respiration":number|null,"pulseOx":number|null,"date":"YYYY-MM-DD"|null}`}]}]})});
     if(!resp.ok){const err=await resp.json().catch(()=>({}));throw new Error(err.error?.message||`HTTP ${resp.status}`);}
     const data=await resp.json();const text=data.content?.find(b=>b.type==='text')?.text||'';const parsed=JSON.parse(text.replace(/```json|```/g,'').trim());
     ingestDraft={date:parsed.date||document.getElementById('ingestDate').value||todayStr,sleepScore:parsed.sleepScore??'',hrv:parsed.hrv??'',restingHr:parsed.restingHr??'',bodyBattery:parsed.bodyBattery??'',respiration:parsed.respiration??'',pulseOx:parsed.pulseOx??''};
@@ -776,12 +855,13 @@ async function parseScreenshot(file){
 function sendDraftToEntry(){resetForm();document.getElementById('date').value=ingestDraft.date||todayStr;['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx'].forEach(k=>{if(ingestDraft[k]!==''&&ingestDraft[k]!=null){const el=document.getElementById(k);if(el)el.value=ingestDraft[k];}});closeModal('ingestModal');openModal('entryModal');}
 
 // ─── Event listeners ──────────────────────────────────────────────────────────
-document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+document.querySelectorAll('.desktop-tab-btn').forEach(b=>b.addEventListener('click',()=>setDesktopTab(b.dataset.dtab)));
+document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(b=>b.addEventListener('click',()=>setMobileTab(b.dataset.tab)));
 document.querySelectorAll('.entry-type-btn').forEach(b=>b.addEventListener('click',()=>setEntryType(b.dataset.entryType)));
-document.querySelectorAll('.mobile-nav-btn[data-mobile-tab]').forEach(b=>b.addEventListener('click',()=>setMobileTab(b.dataset.mobileTab)));
 document.getElementById('mobileAddBtn').addEventListener('click',()=>{resetForm();openModal('entryModal');});
 document.getElementById('openEntryBtn').addEventListener('click',()=>{resetForm();openModal('entryModal');});
 document.getElementById('historyAddBtn').addEventListener('click',()=>{resetForm();openModal('entryModal');});
+document.getElementById('mobileHistoryAddBtn').addEventListener('click',()=>{resetForm();openModal('entryModal');});
 document.getElementById('closeEntryBtn').addEventListener('click',()=>closeModal('entryModal'));
 document.getElementById('cancelEditBtn').addEventListener('click',()=>closeModal('entryModal'));
 document.getElementById('openIngestBtn').addEventListener('click',()=>{renderIngestDraft();openModal('ingestModal');});
@@ -789,7 +869,10 @@ document.getElementById('openIngestBtnMobile').addEventListener('click',()=>{ren
 document.getElementById('closeIngestBtn').addEventListener('click',()=>closeModal('ingestModal'));
 document.getElementById('sendToEntry').addEventListener('click',sendDraftToEntry);
 document.getElementById('ingestDate').addEventListener('change',e=>{ingestDraft.date=e.target.value;});
-document.getElementById('rangeFilter').addEventListener('change',e=>{chartRange=e.target.value;renderCharts();});
+document.getElementById('rangeFilter').addEventListener('change',e=>{chartRange=e.target.value;renderDesktopCharts();});
+document.getElementById('mobileRangeFilter').addEventListener('change',e=>{mobileChartRange=e.target.value;renderMobileCharts();});
+document.getElementById('cleanupBtn').addEventListener('click',runCleanup);
+document.getElementById('mobileCleanupBtn').addEventListener('click',runCleanup);
 document.getElementById('apiKeyInput').addEventListener('change',e=>localStorage.setItem(API_KEY_STORAGE,e.target.value.trim()));
 document.getElementById('screenshotInput').addEventListener('change',e=>{const f=e.target.files?.[0];if(f)parseScreenshot(f);});
 const dz=document.getElementById('dropzone');
@@ -801,32 +884,19 @@ document.getElementById('entryForm').addEventListener('submit',async e=>{
   e.preventDefault();if(!validateForm()){alert('Fix highlighted fields before saving.');return;}
   const data=getFormData();const idx=entries.findIndex(x=>x.id===data.id);
   if(idx>=0)entries[idx]=data;else entries.unshift(data);
-  try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed, keeping local:',err);}
+  try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}
   closeModal('entryModal');renderAll();
-});
-document.getElementById('cleanupBtn').addEventListener('click',async()=>{
-  if(!garminHistory.length){alert('No Garmin data loaded — nothing to clean up.');return;}
-  const garminDates=new Set(garminHistory.map(r=>r.date));
-  const GARMIN_FIELDS=['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx','weight'];
-  const SUBJECTIVE_FIELDS=['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness','notes','redLightUsed'];
-  let stripped=0,deleted=0;const toDelete=[];
-  entries=entries.filter(entry=>{if(entry.entryType!=='morning'||!garminDates.has(entry.date))return true;GARMIN_FIELDS.forEach(k=>{entry[k]='';});const hasSubjective=SUBJECTIVE_FIELDS.some(k=>!isBlank(entry[k]));if(!hasSubjective){deleted++;toDelete.push(entry.id);return false;}stripped++;return true;});
-  for(const id of toDelete){await sbDelete(id).catch(console.warn);}
-  for(const entry of entries){await sbUpsert(entry).catch(console.warn);}
-  renderAll();alert(`Done! Removed ${deleted} empty duplicate entries, cleaned Garmin fields from ${stripped} entries that had subjective data.`);
 });
 Object.keys(FIELD_RULES).forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',validateForm);el.addEventListener('blur',validateForm);}});
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-window.addEventListener('resize',renderCharts);
+window.addEventListener('resize',()=>{renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();});
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init(){
   try{const r=await fetch(GARMIN_PATH,{cache:'no-store'});if(!r.ok)throw 0;garminHistory=await r.json();}catch{garminHistory=[];}
   computeBaselines();
-  try{
-    entries=await sbFetchAll();
-    if(!entries.length){const local=loadLocalFallback();migrateEntries(local);for(const e of local){await sbUpsert(e);}entries=local;}
-  }catch(err){console.warn('Supabase unavailable, using localStorage:',err);entries=loadLocalFallback();migrateEntries(entries);}
+  try{entries=await sbFetchAll();if(!entries.length){const local=loadLocalFallback();migrateEntries(local);for(const e of local)await sbUpsert(e);entries=local;}}
+  catch(err){console.warn('Supabase unavailable:',err);entries=loadLocalFallback();migrateEntries(entries);}
   const savedKey=localStorage.getItem(API_KEY_STORAGE);if(savedKey)document.getElementById('apiKeyInput').value=savedKey;
   renderAll();
 }
