@@ -329,7 +329,7 @@ const GARMIN_PATH = 'data/garmin_daily_summary.json';
 const SAUNA_WEEKLY_GOAL = 4;
 const SUPABASE_URL = 'https://gnggxqvmcatqholjxtsz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImduZ2d4cXZtY2F0cWhvbGp4dHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjgxOTYsImV4cCI6MjA4OTQ0NDE5Nn0.LZEPVQ5dPpkSihLMiQJLB2vX5oQEpuaSEpz-Mckxe1I';
-const SB_HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` };
+const SB_HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=representation' };
 
 let entries = [], garminHistory = [], chartRange = '7';
 let baselineValues = { sleepScore:null, restingHr:null, hrvTypicalLow:null, hrvTypicalHigh:null, pulseOx:null, bodyBatteryMorningHigh:null, respiration:null };
@@ -401,8 +401,7 @@ async function sbFetchAll() {
 }
 async function sbUpsert(entry) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/entries`, {
-    method: 'POST',
-    headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
+    method: 'POST', headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
     body: JSON.stringify(entryToRow(entry))
   });
   if (!res.ok) throw new Error(`Supabase upsert failed: ${res.status}`);
