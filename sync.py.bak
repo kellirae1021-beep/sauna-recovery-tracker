@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
 """
-sync.py — Garmin Connect → garmin JSON
----------------------------------------
-Fetches recent health metrics from Garmin Connect and writes to
-data/garmin_daily_summary.json (Kelli) or data/garmin_elliott.json (Elliott).
+sync.py — Garmin Connect → garmin_daily_summary.json
+-----------------------------------------------------
+Fetches recent health metrics from Garmin Connect and merges them
+into data/garmin_daily_summary.json in the format expected by the
+Sauna Recovery Tracker.
 
 Setup:
     pip install garminconnect python-dotenv
 
-Credentials — add to .env file:
-    GARMIN_EMAIL=kelli@example.com
-    GARMIN_PASSWORD=kellipassword
-    GARMIN_EMAIL_ELLIOTT=elliott@example.com
-    GARMIN_PASSWORD_ELLIOTT=elliottpassword
+First run:
+    python sync.py --days 90
 
-Usage:
-    python3 sync.py                        # Kelli, last 7 days
-    python3 sync.py --user Elliott         # Elliott, last 7 days
-    python3 sync.py --days 90              # Kelli, backfill 90 days
-    python3 sync.py --user Elliott --days 90
-    python3 sync.py --force                # re-fetch existing dates
+Subsequent runs (cron / daily):
+    python sync.py
+    # defaults to last 7 days, only fills gaps
+
+Credentials — create a .env file in the same folder:
+    GARMIN_EMAIL=you@example.com
+    GARMIN_PASSWORD=yourpassword
+
+Token cache is stored in .garmin_tokens.json so you won't be
+re-prompted for MFA on every run.
 """
 
 import argparse
@@ -30,7 +32,22 @@ import time
 from datetime import date, timedelta
 from pathlib import Path
 
-# ── Third-party ────────────────────────────────────────────────────────────────
+# ── User config ───────────────────────────────────────────────────────────────
+USER_CONFIG = {
+    'Kelli': {
+        'email_env': 'GARMIN_EMAIL',
+        'password_env': 'GARMIN_PASSWORD',
+        'output_file': Path('data/garmin_daily_summary.json'),
+        'token_file': Path('.garmin_tokens.json'),
+    },
+    'Elliott': {
+        'email_env': 'GARMIN_EMAIL_ELLIOTT',
+        'password_env': 'GARMIN_PASSWORD_ELLIOTT',
+        'output_file': Path('data/garmin_elliott.json'),
+        'token_file': Path('.garmin_tokens_elliott.json'),
+    },
+}
+
 try:
     from garminconnect import Garmin, GarminConnectAuthenticationError
 except ImportError:
@@ -42,26 +59,11 @@ try:
 except ImportError:
     pass
 
-# ── User config ────────────────────────────────────────────────────────────────
-USER_CONFIG = {
-    'Kelli': {
-        'email_env':    'GARMIN_EMAIL',
-        'password_env': 'GARMIN_PASSWORD',
-        'output_file':  Path('data/garmin_daily_summary.json'),
-        'token_file':   Path('.garmin_tokens.json'),
-    },
-    'Elliott': {
-        'email_env':    'GARMIN_EMAIL_ELLIOTT',
-        'password_env': 'GARMIN_PASSWORD_ELLIOTT',
-        'output_file':  Path('data/garmin_elliott.json'),
-        'token_file':   Path('.garmin_tokens_elliott.json'),
-    },
-}
-
+# ── Config ────────────────────────────────────────────────────────────────────
 RETRY_DELAY = 2
 MAX_RETRIES = 3
 
-# ── Auth ───────────────────────────────────────────────────────────────────────
+# ── Auth ──────────────────────────────────────────────────────────────────────
 def get_client(user_cfg: dict) -> Garmin:
     email    = os.environ.get(user_cfg['email_env'], '').strip()
     password = os.environ.get(user_cfg['password_env'], '').strip()
@@ -81,7 +83,7 @@ def get_client(user_cfg: dict) -> Garmin:
             print("✓ Logged in via cached tokens")
             return client
         except Exception:
-            print("Token cache expired — logging in fresh…")
+            print("Token cache expired or invalid — logging in fresh…")
 
     try:
         client.login()
@@ -92,8 +94,10 @@ def get_client(user_cfg: dict) -> Garmin:
 
     return client
 
-# ── Fetch helpers ──────────────────────────────────────────────────────────────
+
+# ── Fetch helpers ─────────────────────────────────────────────────────────────
 def safe_get(fn, *args, label="", retries=MAX_RETRIES):
+    """Call a Garmin API function with retry on rate-limit / transient errors."""
     for attempt in range(retries):
         try:
             return fn(*args)
@@ -112,21 +116,25 @@ def safe_get(fn, *args, label="", retries=MAX_RETRIES):
 
 
 def fetch_day(client: Garmin, d: date) -> dict:
+    """Fetch all relevant metrics for a single date and return a merged record."""
     ds = d.isoformat()
     record: dict = {"date": ds}
 
+    # ── Stats (resting HR, average stress, body battery) ─────────────────────
     stats = safe_get(client.get_stats, ds, label=f"stats {ds}")
     if stats:
         rhr = stats.get("restingHeartRate") or stats.get("minHeartRate")
         if rhr:
             record["restingHr"] = int(rhr)
 
+        # Body battery: Garmin returns max charged value for the day
         bb_list = safe_get(client.get_body_battery, ds, ds, label=f"body battery {ds}")
         if bb_list:
-            highs = [r.get("charged") for r in bb_list if r.get("charged")]
+            highs = [r.get("charged") or r.get("bodyBatteryDuringSleep") for r in bb_list if r.get("charged")]
             if highs:
                 record["bodyBatteryHigh"] = int(max(highs))
 
+    # ── Sleep ─────────────────────────────────────────────────────────────────
     sleep = safe_get(client.get_sleep_data, ds, label=f"sleep {ds}")
     if sleep:
         daily = sleep.get("dailySleepDTO") or {}
@@ -138,6 +146,7 @@ def fetch_day(client: Garmin, d: date) -> dict:
         if score is not None:
             record["sleepScore"] = int(score)
 
+    # ── HRV ───────────────────────────────────────────────────────────────────
     hrv = safe_get(client.get_hrv_data, ds, label=f"HRV {ds}")
     if hrv:
         summary = hrv.get("hrvSummary") or {}
@@ -145,34 +154,40 @@ def fetch_day(client: Garmin, d: date) -> dict:
         if val:
             record["hrv"] = round(float(val), 1)
 
+    # ── Respiration ───────────────────────────────────────────────────────────
     resp = safe_get(client.get_respiration_data, ds, label=f"respiration {ds}")
     if resp:
         avg_r = resp.get("avgWakingRespirationValue") or resp.get("avgSleepRespirationValue")
         if avg_r:
             record["respiration"] = round(float(avg_r), 1)
 
+    # ── Pulse Ox ──────────────────────────────────────────────────────────────
     spo2 = safe_get(client.get_spo2_data, ds, label=f"SpO2 {ds}")
     if spo2:
-        reading_list = spo2.get("continuousReadingDTOList") or []
         val = (
             spo2.get("averageSpO2")
-            or (reading_list[0].get("spO2Reading") if reading_list else None)
+            or spo2.get("continuousReadingDTOList", [{}])[0].get("spO2Reading")
         )
         if val:
             record["pulseOx"] = round(float(val), 1)
 
+    # ── Weight (manual log) ───────────────────────────────────────────────────
     weight_data = safe_get(client.get_body_composition, ds, ds, label=f"weight {ds}")
     if weight_data:
         entries = weight_data.get("dateWeightList") or []
         if entries:
-            kg = entries[-1].get("weight")
+            kg = entries[-1].get("weight")  # Garmin stores in grams(!) or kg
             if kg:
+                # Garmin API returns grams for some endpoints, kg for others
+                # Heuristic: if value > 500, it's probably grams
                 kg_val = kg / 1000 if kg > 500 else kg
-                record["weight"] = round(kg_val * 2.20462, 1)
+                lbs = round(kg_val * 2.20462, 1)
+                record["weight"] = lbs
 
     return record
 
-# ── Helpers ────────────────────────────────────────────────────────────────────
+
+# ── Date range helpers ────────────────────────────────────────────────────────
 def date_range(start: date, end: date):
     d = start
     while d <= end:
@@ -180,7 +195,7 @@ def date_range(start: date, end: date):
         d += timedelta(days=1)
 
 
-def load_existing(output_file: Path) -> list:
+def load_existing(output_file: Path) -> list[dict]:
     if output_file.exists():
         try:
             return json.loads(output_file.read_text())
@@ -188,19 +203,14 @@ def load_existing(output_file: Path) -> list:
             pass
     return []
 
-
-def save_records(records: list, output_file: Path):
+def save_records(records: list[dict], output_file: Path):
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    output_file.write_text(
-        json.dumps(sorted(records, key=lambda r: r["date"]), indent=2)
-    )
+    output_file.write_text(json.dumps(sorted(records, key=lambda r: r["date"]), indent=2))
 
-# ── Main ───────────────────────────────────────────────────────────────────────
+
+# ── Main ──────────────────────────────────────────────────────────────────────
 def main():
-    parser = argparse.ArgumentParser(description="Sync Garmin Connect → JSON")
-    parser.add_argument("--user", type=str, default="Kelli",
-                        choices=list(USER_CONFIG.keys()),
-                        help="Which user to sync (default: Kelli)")
+    parser = argparse.ArgumentParser(description="Sync Garmin Connect → garmin_daily_summary.json")
     parser.add_argument("--days", type=int, default=7,
                         help="How many days back to fetch (default: 7)")
     parser.add_argument("--start", type=str, default=None,
@@ -211,16 +221,12 @@ def main():
                         help="Re-fetch dates that already exist in the JSON")
     args = parser.parse_args()
 
-    user_cfg    = USER_CONFIG[args.user]
-    output_file = user_cfg['output_file']
-
     end_date   = date.fromisoformat(args.end) if args.end else date.today()
     start_date = date.fromisoformat(args.start) if args.start else end_date - timedelta(days=args.days - 1)
 
-    print(f"User: {args.user}")
     print(f"Fetching {start_date} → {end_date}  ({(end_date - start_date).days + 1} days)")
 
-    existing     = load_existing(output_file)
+    existing     = load_existing()
     existing_map = {r["date"]: r for r in existing}
     dates_needed = [
         d for d in date_range(start_date, end_date)
@@ -233,7 +239,7 @@ def main():
 
     print(f"  {len(dates_needed)} date(s) to fetch")
 
-    client = get_client(user_cfg)
+    client = get_client()
 
     fetched = 0
     for d in dates_needed:
@@ -246,11 +252,12 @@ def main():
         else:
             print("no data")
         fetched += 1
+        # Polite delay between days to avoid hammering the API
         if fetched < len(dates_needed):
             time.sleep(0.5)
 
-    save_records(list(existing_map.values()), output_file)
-    print(f"\n✓ Saved {len(existing_map)} total records → {output_file}")
+    save_records(list(existing_map.values()))
+    print(f"\n✓ Saved {len(existing_map)} total records → {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

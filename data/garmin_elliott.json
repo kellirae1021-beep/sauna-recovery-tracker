@@ -1,0 +1,535 @@
+[
+  {
+    "date": "2025-12-23",
+    "restingHr": 58,
+    "bodyBatteryHigh": 16,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2025-12-24",
+    "restingHr": 58,
+    "bodyBatteryHigh": 61,
+    "pulseOx": 90.0
+  },
+  {
+    "date": "2025-12-25",
+    "restingHr": 55,
+    "bodyBatteryHigh": 48,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2025-12-26",
+    "restingHr": 54,
+    "bodyBatteryHigh": 61,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2025-12-27",
+    "restingHr": 57,
+    "bodyBatteryHigh": 75,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2025-12-28",
+    "restingHr": 58,
+    "bodyBatteryHigh": 35,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2025-12-29",
+    "restingHr": 54,
+    "bodyBatteryHigh": 62,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2025-12-30",
+    "restingHr": 56,
+    "bodyBatteryHigh": 36,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2025-12-31",
+    "restingHr": 60,
+    "bodyBatteryHigh": 4,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-01",
+    "restingHr": 60,
+    "bodyBatteryHigh": 8,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-02",
+    "restingHr": 57,
+    "bodyBatteryHigh": 38,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-03",
+    "restingHr": 62,
+    "bodyBatteryHigh": 56,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-04",
+    "restingHr": 58,
+    "bodyBatteryHigh": 35,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-05",
+    "restingHr": 56,
+    "bodyBatteryHigh": 34,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-06",
+    "restingHr": 63,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-07",
+    "restingHr": 59,
+    "bodyBatteryHigh": 30,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-08",
+    "restingHr": 63,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-09",
+    "restingHr": 64,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-01-10",
+    "restingHr": 63,
+    "bodyBatteryHigh": 2,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-11",
+    "restingHr": 56,
+    "bodyBatteryHigh": 72,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-12",
+    "restingHr": 54,
+    "bodyBatteryHigh": 78,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-13",
+    "restingHr": 55,
+    "bodyBatteryHigh": 60,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-01-14",
+    "restingHr": 55,
+    "bodyBatteryHigh": 58,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-15",
+    "restingHr": 55,
+    "bodyBatteryHigh": 62,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-16",
+    "restingHr": 60,
+    "bodyBatteryHigh": 14,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-01-17",
+    "restingHr": 53,
+    "bodyBatteryHigh": 77,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-18",
+    "restingHr": 54,
+    "bodyBatteryHigh": 62,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-19",
+    "restingHr": 50,
+    "bodyBatteryHigh": 58,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-20",
+    "restingHr": 56
+  },
+  {
+    "date": "2026-01-21",
+    "restingHr": 59,
+    "bodyBatteryHigh": 4,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-22",
+    "restingHr": 59,
+    "bodyBatteryHigh": 2,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-23",
+    "restingHr": 54,
+    "bodyBatteryHigh": 82,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-24",
+    "restingHr": 52,
+    "bodyBatteryHigh": 74,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-25",
+    "restingHr": 52,
+    "bodyBatteryHigh": 37,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-01-26",
+    "restingHr": 58,
+    "bodyBatteryHigh": 56,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-01-27",
+    "restingHr": 56,
+    "bodyBatteryHigh": 48,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-01-28",
+    "restingHr": 55,
+    "bodyBatteryHigh": 49,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-29",
+    "restingHr": 54,
+    "bodyBatteryHigh": 58,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-30",
+    "restingHr": 56,
+    "bodyBatteryHigh": 39,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-01-31",
+    "restingHr": 53,
+    "bodyBatteryHigh": 62,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-02-01",
+    "restingHr": 54,
+    "bodyBatteryHigh": 67,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-02",
+    "restingHr": 51,
+    "bodyBatteryHigh": 1
+  },
+  {
+    "date": "2026-02-03",
+    "restingHr": 58,
+    "bodyBatteryHigh": 3
+  },
+  {
+    "date": "2026-02-04",
+    "restingHr": 54,
+    "bodyBatteryHigh": 9,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-02-05",
+    "restingHr": 54,
+    "bodyBatteryHigh": 27,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-06",
+    "restingHr": 52,
+    "bodyBatteryHigh": 41,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-07",
+    "restingHr": 53,
+    "bodyBatteryHigh": 36,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-08",
+    "restingHr": 57,
+    "bodyBatteryHigh": 50,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-09",
+    "restingHr": 57,
+    "bodyBatteryHigh": 43,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-10",
+    "restingHr": 54,
+    "bodyBatteryHigh": 35,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-11",
+    "restingHr": 59,
+    "bodyBatteryHigh": 2,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-12",
+    "restingHr": 55,
+    "bodyBatteryHigh": 48,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-13",
+    "restingHr": 56,
+    "bodyBatteryHigh": 27,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-14",
+    "restingHr": 54,
+    "bodyBatteryHigh": 54,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-15",
+    "restingHr": 55,
+    "bodyBatteryHigh": 36,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-16",
+    "restingHr": 50,
+    "bodyBatteryHigh": 65,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-17",
+    "restingHr": 54,
+    "bodyBatteryHigh": 55,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-18",
+    "restingHr": 56,
+    "bodyBatteryHigh": 40,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-19",
+    "restingHr": 56,
+    "bodyBatteryHigh": 47,
+    "pulseOx": 90.0
+  },
+  {
+    "date": "2026-02-20",
+    "restingHr": 55,
+    "bodyBatteryHigh": 22,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-21",
+    "restingHr": 52,
+    "bodyBatteryHigh": 51,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-22",
+    "restingHr": 53,
+    "bodyBatteryHigh": 37,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-23",
+    "restingHr": 51,
+    "bodyBatteryHigh": 69,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-24",
+    "restingHr": 55,
+    "bodyBatteryHigh": 32,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-25",
+    "restingHr": 58,
+    "bodyBatteryHigh": 1,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-02-26",
+    "restingHr": 55,
+    "bodyBatteryHigh": 44,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-02-27",
+    "restingHr": 54,
+    "bodyBatteryHigh": 62,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-02-28",
+    "restingHr": 53,
+    "bodyBatteryHigh": 66,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-01",
+    "restingHr": 53,
+    "bodyBatteryHigh": 66,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-02",
+    "restingHr": 59,
+    "bodyBatteryHigh": 2,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-03-03",
+    "restingHr": 57,
+    "bodyBatteryHigh": 15,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-04",
+    "restingHr": 54,
+    "bodyBatteryHigh": 44,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-03-05",
+    "restingHr": 56,
+    "bodyBatteryHigh": 60,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-06",
+    "restingHr": 54,
+    "bodyBatteryHigh": 32,
+    "pulseOx": 91.0
+  },
+  {
+    "date": "2026-03-07",
+    "restingHr": 51,
+    "bodyBatteryHigh": 57,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-08",
+    "restingHr": 59,
+    "bodyBatteryHigh": 58,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-09",
+    "restingHr": 55,
+    "bodyBatteryHigh": 40,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-10",
+    "restingHr": 59,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-11",
+    "restingHr": 55,
+    "bodyBatteryHigh": 14,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-03-12",
+    "restingHr": 56,
+    "bodyBatteryHigh": 33,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-13",
+    "restingHr": 60,
+    "bodyBatteryHigh": 4,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-14",
+    "restingHr": 55,
+    "bodyBatteryHigh": 52,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-15",
+    "restingHr": 56,
+    "bodyBatteryHigh": 50,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-16",
+    "restingHr": 52,
+    "bodyBatteryHigh": 80,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-17",
+    "restingHr": 54,
+    "bodyBatteryHigh": 53,
+    "pulseOx": 92.0
+  },
+  {
+    "date": "2026-03-18",
+    "restingHr": 54,
+    "bodyBatteryHigh": 57,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-19",
+    "restingHr": 57,
+    "bodyBatteryHigh": 15,
+    "pulseOx": 93.0
+  },
+  {
+    "date": "2026-03-20",
+    "restingHr": 54,
+    "bodyBatteryHigh": 55,
+    "pulseOx": 90.0
+  },
+  {
+    "date": "2026-03-21",
+    "restingHr": 59,
+    "bodyBatteryHigh": 1,
+    "pulseOx": 90.0
+  },
+  {
+    "date": "2026-03-22",
+    "restingHr": 58,
+    "bodyBatteryHigh": 33,
+    "pulseOx": 92.0,
+    "weight": 178.0
+  }
+]
