@@ -18298,5 +18298,23 @@
     "hrv": 33.0,
     "respiration": 13.0,
     "pulseOx": 97.0
+  },
+  {
+    "date": "2026-03-21",
+    "restingHr": 61,
+    "bodyBatteryHigh": 47,
+    "sleepScore": 81,
+    "hrv": 33.0,
+    "respiration": 16.0,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-03-22",
+    "restingHr": 61,
+    "bodyBatteryHigh": 30,
+    "sleepScore": 61,
+    "hrv": 33.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
   }
 ]

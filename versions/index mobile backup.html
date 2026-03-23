@@ -54,22 +54,11 @@ textarea{min-height:90px;resize:vertical}
 .parse-status.error{background:#fbf0f3;color:var(--bad)}.parse-status.success{background:#eef8f5;color:var(--good)}
 .chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#221b29;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 8px 20px rgba(34,27,41,.25);display:none;max-width:200px}
 
-/* User switcher */
-.user-switcher{display:flex;gap:4px;background:rgba(255,255,255,.15);border-radius:999px;padding:3px}
-.user-btn{border:none;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);background:transparent;cursor:pointer;transition:all .15s}
-.user-btn.active{background:#fff;color:var(--plum)}
-.compare-toggle{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);padding:6px 12px;border:1px solid var(--border);border-radius:999px;background:#fff;cursor:pointer}
-.compare-toggle.on{color:var(--plum);border-color:var(--plum);background:#f3edf7}
-.compare-dot{width:10px;height:10px;border-radius:50%;background:#e07b5a;display:inline-block}
-
-/* Desktop */
+/* ── Desktop ── */
 .desktop-wrap{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;gap:14px}
 .desktop-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .desktop-header h1{margin:0 0 4px 0;font-size:28px}
 .version{font-size:12px;color:var(--muted)}
-.desktop-user-bar{display:flex;gap:8px;align-items:center}
-.desktop-user-btn{border:1px solid var(--border);border-radius:999px;background:#fff;padding:8px 18px;font:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
-.desktop-user-btn.active{background:var(--plum);color:#fff;border-color:var(--plum)}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .stat{background:#faf8fb;border:1px solid var(--border);padding:12px;border-radius:12px;font-size:12px;color:var(--muted)}
 .stat b{display:block;color:var(--text);font-size:20px;line-height:1.1;margin-top:3px}
@@ -123,7 +112,7 @@ textarea{min-height:90px;resize:vertical}
 .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin:4px 0 8px}
 .legend-item{display:inline-flex;align-items:center;gap:5px}
 .swatch{width:11px;height:11px;border-radius:999px;display:inline-block}
-.milestone-note{font-size:11px;color:var(--plum);display:flex;align-items:center;gap:5px}
+.milestone-legend{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--plum)}
 .range-select{width:auto;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font:inherit;font-size:12px;background:#fff;color:var(--text)}
 .history-item{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fcfafc;margin-bottom:8px}
 .history-date{font-weight:700;font-size:15px;margin-bottom:6px}
@@ -134,14 +123,13 @@ textarea{min-height:90px;resize:vertical}
 .metric{background:#f6f0f7;border:1px solid var(--border);padding:4px 8px;border-radius:999px;font-size:12px;white-space:nowrap}
 .history-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px}
 
-/* Mobile */
+/* ── Mobile ── */
 .mobile-wrap{display:none}
 @media(max-width:768px){
   body{padding-bottom:var(--nav-h)}
   .desktop-wrap{display:none}
   .mobile-wrap{display:block}
-  .mobile-header{display:flex;flex-direction:column;gap:8px;background:var(--plum);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:100}
-  .mobile-header-top{display:flex;justify-content:space-between;align-items:center}
+  .mobile-header{display:flex;justify-content:space-between;align-items:center;background:var(--plum);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:100}
   .mobile-header h2{margin:0;font-size:18px;font-weight:700}
   .mobile-header-btn{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
   .mobile-summary{background:#fff;border-bottom:1px solid var(--border);padding:10px 12px 8px}
@@ -181,10 +169,9 @@ textarea{min-height:90px;resize:vertical}
   .mobile-chart-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);margin-bottom:8px}
   .mobile-chart-box{border:1px solid var(--border);border-radius:12px;padding:8px;background:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch}
   .mobile-chart-svg{display:block;height:200px;width:600px;touch-action:pan-x}
-  .mobile-range-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-right:14px}
+  .mobile-range-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-right:14px}
   .mobile-range-label{font-size:12px;color:var(--muted)}
   .mobile-range-select{flex:1;padding:10px 12px;border-radius:999px;border:1px solid var(--border);font:inherit;font-size:14px;background:#fff;color:var(--text)}
-  .mobile-chart-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-right:14px;flex-wrap:wrap;gap:8px}
   .mobile-history-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
   .mobile-history-head h3{font-size:16px}
   .mobile-history-actions{display:flex;gap:8px}
@@ -212,14 +199,8 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ MOBILE ══════════════════════════════════════════════════════════════ -->
 <div class="mobile-wrap">
   <div class="mobile-header">
-    <div class="mobile-header-top">
-      <h2>Recovery Tracker</h2>
-      <button class="mobile-header-btn" id="openIngestBtnMobile">📷 Inbox</button>
-    </div>
-    <div class="user-switcher" id="mobileUserSwitcher">
-      <button class="user-btn active" data-user="Kelli">Kelli</button>
-      <button class="user-btn" data-user="Elliott">Elliott</button>
-    </div>
+    <h2>Recovery Tracker</h2>
+    <button class="mobile-header-btn" id="openIngestBtnMobile">📷 Inbox</button>
   </div>
   <div class="mobile-summary">
     <div class="mobile-summary-title">Summary</div>
@@ -238,29 +219,24 @@ textarea{min-height:90px;resize:vertical}
 
   <div class="mobile-tab" id="mobileCharts">
     <div class="mobile-charts">
-      <div class="mobile-chart-controls">
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="mobile-range-label">Range</span>
-          <select id="mobileRangeFilter" class="mobile-range-select" style="flex:none;width:auto">
-            <option value="7" selected>7 days</option>
-            <option value="28">4 weeks</option>
-            <option value="90">90 days</option>
-            <option value="180">6 months</option>
-            <option value="365">12 months</option>
-            <option value="all">All</option>
-          </select>
-        </div>
-        <button class="compare-toggle" id="mobileCompareBtn">
-          <span class="compare-dot"></span> Compare Elliott
-        </button>
+      <div class="mobile-range-row">
+        <span class="mobile-range-label">Range</span>
+        <select id="mobileRangeFilter" class="mobile-range-select">
+          <option value="7" selected>7 days</option>
+          <option value="28">4 weeks</option>
+          <option value="90">90 days</option>
+          <option value="180">6 months</option>
+          <option value="365">12 months</option>
+          <option value="all">All</option>
+        </select>
       </div>
-      <div style="font-size:11px;color:var(--plum);padding:0 0 10px 0;display:flex;align-items:center;gap:5px">
+      <div style="font-size:11px;color:var(--plum);padding:0 0 10px 0;display:flex;align-items:center;gap:6px">
         <span style="display:inline-block;width:2px;height:14px;background:var(--plum);border-radius:1px"></span>
-        Vertical line = first sauna (Mar 19)
+        Vertical line = first sauna session (Mar 19)
       </div>
       <div class="mobile-chart-block">
         <div class="mobile-chart-title">Primary recovery</div>
-        <div class="mobile-chart-legend" id="mobilePrimaryLegend">
+        <div class="mobile-chart-legend">
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6f3f74;margin-right:3px"></span>Sleep</span>
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2f6f73;margin-right:3px"></span>HRV</span>
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3c2f46;margin-right:3px"></span>RHR</span>
@@ -335,11 +311,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="desktop-wrap">
   <div class="desktop-header">
     <div><h1>Sauna Recovery Tracker</h1><div class="version">version v27</div></div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <div class="desktop-user-bar">
-        <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
-        <button class="desktop-user-btn" data-user="Elliott">Elliott</button>
-      </div>
+    <div style="display:flex;gap:8px">
       <button class="pill-btn" id="openIngestBtn">📷 Screenshot Inbox</button>
       <button class="pill-btn primary" id="openEntryBtn">+ Add Entry</button>
     </div>
@@ -374,15 +346,11 @@ textarea{min-height:90px;resize:vertical}
 
   <div class="desktop-tab-panel" id="dchartsTab">
     <div class="card chart-section">
+      <!-- Range + milestone legend -->
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:4px">
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-          <div class="milestone-note">
-            <span style="display:inline-block;width:2px;height:16px;background:var(--plum);border-radius:1px"></span>
-            Vertical line = first sauna (Mar 19)
-          </div>
-          <button class="compare-toggle" id="desktopCompareBtn">
-            <span class="compare-dot"></span> Compare Elliott
-          </button>
+        <div class="milestone-legend">
+          <span style="display:inline-block;width:2px;height:16px;background:var(--plum);border-radius:1px"></span>
+          Vertical line = first sauna session (Mar 19)
         </div>
         <div style="display:flex;align-items:center;gap:6px">
           <label for="rangeFilter" style="font-size:12px;color:var(--muted);margin:0">Range</label>
@@ -396,16 +364,18 @@ textarea{min-height:90px;resize:vertical}
           </select>
         </div>
       </div>
+      <!-- Primary -->
       <div>
         <div class="chart-title">Primary recovery</div>
-        <div class="chart-sub">Newest data on left. Faint lines = Garmin history.</div>
-        <div class="legend" id="desktopPrimaryLegend">
+        <div class="chart-sub">Manual entries overlaid on Garmin history. Newest data on left.</div>
+        <div class="legend">
           <span class="legend-item"><span class="swatch" style="background:#6f3f74"></span>Sleep</span>
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>HRV</span>
           <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
         </div>
         <div class="chart-box"><svg id="primaryChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <!-- Supplemental -->
       <div>
         <div class="chart-title">Supplemental recovery</div>
         <div class="legend">
@@ -415,6 +385,7 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="chart-box"><svg id="supplementalChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <!-- How you felt - Morning -->
       <div>
         <div class="chart-title">How you felt · Morning</div>
         <div class="legend">
@@ -422,18 +393,22 @@ textarea{min-height:90px;resize:vertical}
           <span class="legend-item"><span class="swatch" style="background:#b06a7f"></span>Stress</span>
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>Avg soreness</span>
           <span class="legend-item"><span class="swatch" style="background:#8a78a8"></span>Self Sleep</span>
+          <span class="legend-item"><span class="swatch" style="background:#b9a5c9"></span>Joint Stiffness</span>
         </div>
         <div class="chart-box"><svg id="morningSubjectiveChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <!-- How you felt - Bedtime -->
       <div>
         <div class="chart-title">How you felt · Bedtime</div>
         <div class="legend">
           <span class="legend-item"><span class="swatch" style="background:#8f4f7c"></span>Energy</span>
           <span class="legend-item"><span class="swatch" style="background:#b06a7f"></span>Stress</span>
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>Avg soreness</span>
+          <span class="legend-item"><span class="swatch" style="background:#b9a5c9"></span>Joint Stiffness</span>
         </div>
         <div class="chart-box"><svg id="bedtimeSubjectiveChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <!-- Sauna -->
       <div>
         <div class="chart-title">Sauna sessions</div>
         <div class="legend">
@@ -442,6 +417,7 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="chart-box"><svg id="saunaBarChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <!-- Weight (conditional) -->
       <div id="weightChartSection" style="display:none">
         <div class="chart-title">Weight</div>
         <div class="chart-box"><svg id="weightChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
@@ -517,7 +493,7 @@ textarea{min-height:90px;resize:vertical}
   </div>
 </div>
 
-<!-- Screenshot inbox -->
+<!-- Screenshot inbox modal -->
 <div class="modal-backdrop" id="ingestModal">
   <div class="modal">
     <div class="modal-head"><h3>Screenshot Inbox</h3><button id="closeIngestBtn">Close</button></div>
@@ -543,35 +519,20 @@ textarea{min-height:90px;resize:vertical}
 <div id="chartTooltip" class="chart-tooltip"></div>
 
 <script>
-// ─── Users & Garmin paths ─────────────────────────────────────────────────────
-const USERS = ['Kelli','Elliott'];
-const GARMIN_PATHS = { Kelli:'data/garmin_daily_summary.json', Elliott:'data/garmin_elliott.json' };
-const SAUNA_START_DATE = '2026-03-19';
-// Elliott's sauna start — update this once he logs his first session
-const ELLIOTT_SAUNA_START = null;
-// Elliott's Garmin color overrides for compare mode
-const COMPARE_COLORS = { sleepScore:'#b06a7f', hrv:'#7a9a7a', restingHr:'#7a7a9a', bodyBatteryHigh:'#d4a0b0', respiration:'#b4a0c8', pulseOx:'#e08a9a' };
-
+// ─── Constants ────────────────────────────────────────────────────────────────
+const SAUNA_START_DATE = '2026-03-19'; // static milestone — never changes
 function localDateStr(d){const dt=d||new Date();return`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;}
 const todayStr=localDateStr();
-
-// ─── Constants ────────────────────────────────────────────────────────────────
 const STORAGE_KEY='sauna-recovery-tracker-v17';
-const USER_KEY='srt-active-user';
 const API_KEY_STORAGE='sauna-tracker-api-key';
+const GARMIN_PATH='data/garmin_daily_summary.json';
 const SAUNA_WEEKLY_GOAL=4;
 const SUPABASE_URL='https://gnggxqvmcatqholjxtsz.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImduZ2d4cXZtY2F0cWhvbGp4dHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjgxOTYsImV4cCI6MjA4OTQ0NDE5Nn0.LZEPVQ5dPpkSihLMiQJLB2vX5oQEpuaSEpz-Mckxe1I';
 const SB_HEADERS={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`};
 
 // ─── State ────────────────────────────────────────────────────────────────────
-let activeUser = localStorage.getItem(USER_KEY) || 'Kelli';
-let compareMode = false;
-let allEntries = [];        // all users
-let entries = [];           // active user only
-let garminHistory = [];     // active user's Garmin
-let compareGarminHistory = []; // other user's Garmin (compare mode)
-let chartRange='7', mobileChartRange='7';
+let entries=[],garminHistory=[],chartRange='7',mobileChartRange='7';
 let baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null,pulseOx:null,bodyBatteryMorningHigh:null,respiration:null};
 let baselineRange={start:null,end:null};
 let ingestDraft={date:todayStr,sleepScore:'',hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:''};
@@ -579,9 +540,9 @@ let editingId=null,currentEntryType='morning';
 
 // ─── Seed ─────────────────────────────────────────────────────────────────────
 const seedEntries=[
-  {id:'seed-2026-03-09-am',date:'2026-03-09',entryType:'morning',timeOfDay:'morning',userName:'Kelli',saunaMinutes:'',sleepScore:'',sleepSelf:10,hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:'',weight:'',energy:7,stress:3,muscleSoreness:3,jointSoreness:0,redLightUsed:false,bootcampTime:'',bootcampType:'',notes:'Baseline entry.'},
-  {id:'seed-2026-03-11-am',date:'2026-03-11',entryType:'morning',timeOfDay:'morning',userName:'Kelli',saunaMinutes:'',sleepScore:72,sleepSelf:3,hrv:31,restingHr:63,bodyBattery:40,respiration:'',pulseOx:'',weight:'',energy:8,stress:5,muscleSoreness:5,jointSoreness:4,redLightUsed:false,bootcampTime:'',bootcampType:'',notes:'Traveling, poor sleep.'},
-  {id:'seed-2026-03-12-am',date:'2026-03-12',entryType:'morning',timeOfDay:'morning',userName:'Kelli',saunaMinutes:'',sleepScore:66,sleepSelf:'',hrv:34,restingHr:62,bodyBattery:'',respiration:15.5,pulseOx:95,weight:'',energy:'',stress:8,muscleSoreness:'',jointSoreness:'',redLightUsed:false,bootcampTime:'',bootcampType:'',notes:''}
+  {id:'seed-2026-03-09-am',date:'2026-03-09',entryType:'morning',timeOfDay:'morning',saunaMinutes:'',sleepScore:'',sleepSelf:10,hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:'',weight:'',energy:7,stress:3,muscleSoreness:3,jointSoreness:0,jointStiffness:1,redLightUsed:false,bootcampTime:'',bootcampType:'',notes:'Baseline entry.'},
+  {id:'seed-2026-03-11-am',date:'2026-03-11',entryType:'morning',timeOfDay:'morning',saunaMinutes:'',sleepScore:72,sleepSelf:3,hrv:31,restingHr:63,bodyBattery:40,respiration:'',pulseOx:'',weight:'',energy:8,stress:5,muscleSoreness:5,jointSoreness:4,jointStiffness:1,redLightUsed:false,bootcampTime:'',bootcampType:'',notes:'Traveling, poor sleep, morning workout.'},
+  {id:'seed-2026-03-12-am',date:'2026-03-12',entryType:'morning',timeOfDay:'morning',saunaMinutes:'',sleepScore:66,sleepSelf:'',hrv:34,restingHr:62,bodyBattery:'',respiration:15.5,pulseOx:95,weight:'',energy:'',stress:8,muscleSoreness:'',jointSoreness:'',jointStiffness:'',redLightUsed:false,bootcampTime:'',bootcampType:'',notes:''}
 ];
 
 // ─── Field config ─────────────────────────────────────────────────────────────
@@ -594,48 +555,13 @@ const ALL_FIELD_WRAPS=['saunaMinutesWrap','sleepScoreWrap','sleepSelfWrap','hrvW
 const FIELD_RULES={sleepSelf:{min:1,max:10},energy:{min:1,max:10},stress:{min:1,max:10},muscleSoreness:{min:1,max:10},jointSoreness:{min:1,max:10},sleepScore:{min:0,max:100},hrv:{min:1,max:200},restingHr:{min:30,max:120},bodyBattery:{min:0,max:100},respiration:{min:5,max:30},pulseOx:{min:70,max:100},saunaMinutes:{min:1,max:120},weight:{min:50,max:500}};
 
 // ─── Supabase ─────────────────────────────────────────────────────────────────
-function entryToRow(e){return{id:e.id,date:e.date,entry_type:e.entryType,time_of_day:e.timeOfDay,user_name:e.userName||activeUser,sauna_minutes:e.saunaMinutes===''?null:e.saunaMinutes,sleep_score:e.sleepScore===''?null:e.sleepScore,sleep_self:e.sleepSelf===''?null:e.sleepSelf,hrv:e.hrv===''?null:e.hrv,resting_hr:e.restingHr===''?null:e.restingHr,body_battery:e.bodyBattery===''?null:e.bodyBattery,respiration:e.respiration===''?null:e.respiration,pulse_ox:e.pulseOx===''?null:e.pulseOx,weight:e.weight===''?null:e.weight,energy:e.energy===''?null:e.energy,stress:e.stress===''?null:e.stress,muscle_soreness:e.muscleSoreness===''?null:e.muscleSoreness,joint_soreness:e.jointSoreness===''?null:e.jointSoreness,red_light_used:!!e.redLightUsed,bootcamp_time:e.bootcampTime||null,bootcamp_type:e.bootcampType||null,notes:e.notes||'',updated_at:new Date().toISOString()};}
-function rowToEntry(r){return{id:r.id,date:r.date,entryType:r.entry_type||'morning',timeOfDay:r.time_of_day||'morning',userName:r.user_name||'Kelli',saunaMinutes:r.sauna_minutes??'',sleepScore:r.sleep_score??'',sleepSelf:r.sleep_self??'',hrv:r.hrv??'',restingHr:r.resting_hr??'',bodyBattery:r.body_battery??'',respiration:r.respiration??'',pulseOx:r.pulse_ox??'',weight:r.weight??'',energy:r.energy??'',stress:r.stress??'',muscleSoreness:r.muscle_soreness??'',jointSoreness:r.joint_soreness??'',redLightUsed:!!r.red_light_used,bootcampTime:r.bootcamp_time||'',bootcampType:r.bootcamp_type||'',notes:r.notes||''};}
+function entryToRow(e){return{id:e.id,date:e.date,entry_type:e.entryType,time_of_day:e.timeOfDay,sauna_minutes:e.saunaMinutes===''?null:e.saunaMinutes,sleep_score:e.sleepScore===''?null:e.sleepScore,sleep_self:e.sleepSelf===''?null:e.sleepSelf,hrv:e.hrv===''?null:e.hrv,resting_hr:e.restingHr===''?null:e.restingHr,body_battery:e.bodyBattery===''?null:e.bodyBattery,respiration:e.respiration===''?null:e.respiration,pulse_ox:e.pulseOx===''?null:e.pulseOx,weight:e.weight===''?null:e.weight,energy:e.energy===''?null:e.energy,stress:e.stress===''?null:e.stress,muscle_soreness:e.muscleSoreness===''?null:e.muscleSoreness,joint_soreness:e.jointSoreness===''?null:e.jointSoreness,joint_stiffness:e.jointStiffness===''?null:e.jointStiffness,red_light_used:!!e.redLightUsed,bootcamp_time:e.bootcampTime||null,bootcamp_type:e.bootcampType||null,notes:e.notes||'',updated_at:new Date().toISOString()};}
+function rowToEntry(r){return{id:r.id,date:r.date,entryType:r.entry_type||'morning',timeOfDay:r.time_of_day||'morning',saunaMinutes:r.sauna_minutes??'',sleepScore:r.sleep_score??'',sleepSelf:r.sleep_self??'',hrv:r.hrv??'',restingHr:r.resting_hr??'',bodyBattery:r.body_battery??'',respiration:r.respiration??'',pulseOx:r.pulse_ox??'',weight:r.weight??'',energy:r.energy??'',stress:r.stress??'',muscleSoreness:r.muscle_soreness??'',jointSoreness:r.joint_soreness??'',jointStiffness:r.joint_stiffness??'',redLightUsed:!!r.red_light_used,bootcampTime:r.bootcamp_time||'',bootcampType:r.bootcamp_type||'',notes:r.notes||''};}
 async function sbFetchAll(){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?select=*&order=date.desc`,{headers:SB_HEADERS});if(!res.ok)throw new Error(`${res.status}`);return(await res.json()).map(rowToEntry);}
 async function sbUpsert(entry){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries`,{method:'POST',headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(entryToRow(entry))});if(!res.ok)throw new Error(`${res.status}`);}
 async function sbDelete(id){const res=await fetch(`${SUPABASE_URL}/rest/v1/entries?id=eq.${id}`,{method:'DELETE',headers:SB_HEADERS});if(!res.ok)throw new Error(`${res.status}`);}
 function loadLocalFallback(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return structuredClone(seedEntries);try{const p=JSON.parse(raw);return Array.isArray(p)&&p.length?p:structuredClone(seedEntries);}catch{return structuredClone(seedEntries);}}
-function migrateEntries(arr){arr.forEach(e=>{if(!e.entryType)e.entryType=e.timeOfDay==='post_sauna'?'bedtime':(e.saunaMinutes!==''&&e.saunaMinutes!=null?'sauna':'morning');if(e.weight===undefined)e.weight='';if(e.bootcampTime===undefined)e.bootcampTime='';if(e.bootcampType===undefined)e.bootcampType='';if(!e.userName)e.userName='Kelli';['sleepSelf','energy','stress','muscleSoreness','jointSoreness'].forEach(k=>{if(e[k]!==''&&e[k]!=null)e[k]=Math.max(1,Math.min(10,Number(e[k])));});});}
-
-// ─── User switching ───────────────────────────────────────────────────────────
-function setActiveUser(user){
-  activeUser=user;
-  localStorage.setItem(USER_KEY,user);
-  entries=allEntries.filter(e=>e.userName===user);
-  // Update UI switchers
-  document.querySelectorAll('[data-user]').forEach(b=>b.classList.toggle('active',b.dataset.user===user));
-  // Load Garmin for this user
-  loadGarminForUser(user).then(()=>{computeBaselines();renderAll();});
-}
-async function loadGarminForUser(user){
-  const path=GARMIN_PATHS[user]||GARMIN_PATHS.Kelli;
-  try{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw 0;garminHistory=await r.json();}catch{garminHistory=[];}
-  // Load compare user's Garmin too if needed
-  if(compareMode){
-    const other=USERS.find(u=>u!==user);
-    const otherPath=GARMIN_PATHS[other]||'';
-    try{const r=await fetch(otherPath,{cache:'no-store'});if(!r.ok)throw 0;compareGarminHistory=await r.json();}catch{compareGarminHistory=[];}
-  }
-}
-function toggleCompare(){
-  compareMode=!compareMode;
-  document.querySelectorAll('.compare-toggle').forEach(b=>b.classList.toggle('on',compareMode));
-  const other=USERS.find(u=>u!==activeUser);
-  document.querySelectorAll('.compare-toggle').forEach(b=>{b.innerHTML=`<span class="compare-dot"></span> ${compareMode?'Hide':'Compare'} ${other}`;});
-  if(compareMode){
-    const otherPath=GARMIN_PATHS[other]||'';
-    fetch(otherPath,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{compareGarminHistory=d;renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}).catch(()=>{compareGarminHistory=[];renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();});
-  } else {
-    compareGarminHistory=[];
-    renderDesktopCharts();
-    if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();
-  }
-}
+function migrateEntries(arr){arr.forEach(e=>{if(!e.entryType)e.entryType=e.timeOfDay==='post_sauna'?'bedtime':(e.saunaMinutes!==''&&e.saunaMinutes!=null?'sauna':'morning');if(e.weight===undefined)e.weight='';if(e.bootcampTime===undefined)e.bootcampTime='';if(e.bootcampType===undefined)e.bootcampType='';['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness'].forEach(k=>{if(e[k]!==''&&e[k]!=null)e[k]=Math.max(1,Math.min(10,Number(e[k])));});});}
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
 const isBlank=v=>v===''||v==null||v===false;
@@ -671,7 +597,7 @@ function computeBaselines(){
 function computeRecoveryScore(entry){if(!entry)return null;const pts=[],wts=[];if(!isBlank(entry.sleepScore)){pts.push(Number(entry.sleepScore)/100);wts.push(2.5);}if(!isBlank(entry.hrv)&&baselineValues.hrvTypicalLow!=null){const{hrvTypicalLow:lo,hrvTypicalHigh:hi}=baselineValues,range=hi-lo;pts.push(Math.max(0,Math.min(1,range>0?(Number(entry.hrv)-lo)/range:Number(entry.hrv)>=lo?.8:.3)));wts.push(2.5);}if(!isBlank(entry.restingHr)&&baselineValues.restingHr!=null){pts.push(Math.max(0,Math.min(1,.65-(Number(entry.restingHr)-baselineValues.restingHr)*.06)));wts.push(2);}if(!isBlank(entry.bodyBattery)){pts.push(Number(entry.bodyBattery)/100);wts.push(1.5);}if(!isBlank(entry.energy)){pts.push((Number(entry.energy)-1)/9);wts.push(1);}if(!isBlank(entry.stress)){pts.push(1-(Number(entry.stress)-1)/9);wts.push(1);}if(!pts.length)return null;return Math.round(pts.reduce((s,p,i)=>s+p*wts[i],0)/wts.reduce((a,b)=>a+b,0)*100);}
 function recoveryMeta(score){if(score==null)return{label:'No data',cls:'none'};if(score>=80)return{label:'Excellent',cls:'excellent'};if(score>=65)return{label:'Good',cls:'good'};if(score>=45)return{label:'Fair',cls:'fair'};return{label:'Low',cls:'low'};}
 function recoveryFactors(entry){if(!entry)return[];const f=[];if(!isBlank(entry.sleepScore)){const v=Number(entry.sleepScore);f.push({label:`Sleep ${v}`,cls:v>=75?'good':v>=55?'':'bad'});}if(!isBlank(entry.hrv)&&baselineValues.hrvTypicalLow!=null){const v=Number(entry.hrv),inR=v>=baselineValues.hrvTypicalLow&&v<=baselineValues.hrvTypicalHigh;f.push({label:`HRV ${v}`,cls:inR||v>baselineValues.hrvTypicalHigh?'good':'bad'});}if(!isBlank(entry.restingHr)&&baselineValues.restingHr!=null){const d=Number(entry.restingHr)-baselineValues.restingHr;f.push({label:`RHR ${entry.restingHr}`,cls:d<=0?'good':d<=3?'':'bad'});}if(!isBlank(entry.energy)){const v=Number(entry.energy);f.push({label:`Energy ${v}/10`,cls:v>=7?'good':v>=5?'':'bad'});}if(!isBlank(entry.stress)){const v=Number(entry.stress);f.push({label:`Stress ${v}/10`,cls:v<=4?'good':v<=6?'':'bad'});}return f;}
-function recoveryBannerHtml(entry){const score=computeRecoveryScore(entry),{label,cls}=recoveryMeta(score),factors=recoveryFactors(entry);const desc=score==null?'Add a morning entry to see your recovery score.':`Composite score from ${factors.length} metric${factors.length===1?'':'s'}.`;return`<div class="recovery-banner"><div class="recovery-circle ${cls}">${score??'?'}<span class="score-lbl">${label}</span></div><div class="recovery-info"><h4>Recovery Score · ${activeUser}</h4><p>${desc}</p>${factors.length?`<div class="recovery-factors">${factors.map(f=>`<span class="rfactor ${f.cls}">${f.label}</span>`).join('')}</div>`:''}</div></div>`;}
+function recoveryBannerHtml(entry){const score=computeRecoveryScore(entry),{label,cls}=recoveryMeta(score),factors=recoveryFactors(entry);const desc=score==null?'Add a morning entry to see your recovery score.':`Composite score from ${factors.length} metric${factors.length===1?'':'s'}.`;return`<div class="recovery-banner"><div class="recovery-circle ${cls}">${score??'?'}<span class="score-lbl">${label}</span></div><div class="recovery-info"><h4>Recovery Score</h4><p>${desc}</p>${factors.length?`<div class="recovery-factors">${factors.map(f=>`<span class="rfactor ${f.cls}">${f.label}</span>`).join('')}</div>`:''}</div></div>`;}
 
 // ─── Delta ────────────────────────────────────────────────────────────────────
 function deltaChip(kind,value,baseline){if(isBlank(value))return'<span class="delta neutral">—</span>';const v=Number(value);if(kind==='range'){if(!baseline||baseline.low==null)return'<span class="delta neutral">—</span>';return v>=baseline.low&&v<=baseline.high?'<span class="delta good">in range</span>':`<span class="delta bad">${v<baseline.low?'below':'above'} range</span>`;}if(isBlank(baseline))return'<span class="delta neutral">—</span>';const b=Number(baseline),diff=v-b,thresh=b<=10?.6:b<=60?2:3;if(Math.abs(diff)<thresh)return'<span class="delta neutral">near base</span>';if(kind==='higher_better')return diff>0?'<span class="delta good">above base</span>':'<span class="delta bad">below base</span>';if(kind==='lower_better')return diff<0?'<span class="delta good">below base</span>':'<span class="delta bad">above base</span>';return'<span class="delta neutral">—</span>';}
@@ -685,11 +611,12 @@ function renderStats(){document.getElementById('desktopStats').innerHTML=statsIt
 function baselineItems(){const bv=baselineValues;return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'SpO2',value:bv.pulseOx!=null?`${Math.round(bv.pulseOx)}%`:'—'},{label:'Body Bat.',value:bv.bodyBatteryMorningHigh!=null?Math.round(bv.bodyBatteryMorningHigh):'—'}];}
 function renderBaselines(){const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';document.getElementById('baselineCards').innerHTML=baselineItems().map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');document.getElementById('garminStatus').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data';document.getElementById('mobileBaselines').innerHTML=baselineItems().map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');document.getElementById('mobileBlDate').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'';;}
 
-// ─── Today slots ──────────────────────────────────────────────────────────────
-function desktopTodaySlotHtml(type,title){const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Battery',key:'bodyBattery'},{label:'Respiration',key:'respiration'},{label:'Pulse Ox',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const bootcamp=type==='bedtime'?bootcampBadgeHtml(entry):'';return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>${primary.length?`<div class="prominent-grid">${primary.map(x=>`<div class="prominent-metric"><div class="prominent-top"><span>${x.label}</span>${deltaChip(x.kind,entry[x.key],x.baseline)}</div><div class="prominent-value">${fmt(entry[x.key])}</div><div class="prominent-sub">${x.kind==='range'?`${x.baseline.low??'—'}–${x.baseline.high??'—'}`:x.baseline!=null?`base ${x.baseline}`:''}</div></div>`).join('')}</div>`:''}${secondary.length?`<div class="secondary-grid">${secondary.map(x=>`<div class="secondary-metric"><div class="secondary-head">${x.label}</div><div class="secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:''}${bootcamp}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
+// ─── Desktop Today ────────────────────────────────────────────────────────────
+function desktopTodaySlotHtml(type,title){const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];  const secondary=[...(type==='morning'?[{label:'Body Battery',key:'bodyBattery'},{label:'Respiration',key:'respiration'},{label:'Pulse Ox',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint soreness',key:'jointSoreness'}]:[{label:'Joint soreness',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const bootcamp=type==='bedtime'?bootcampBadgeHtml(entry):'';return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>${primary.length?`<div class="prominent-grid">${primary.map(x=>`<div class="prominent-metric"><div class="prominent-top"><span>${x.label}</span>${deltaChip(x.kind,entry[x.key],x.baseline)}</div><div class="prominent-value">${fmt(entry[x.key])}</div><div class="prominent-sub">${x.kind==='range'?`${x.baseline.low??'—'}–${x.baseline.high??'—'}`:x.baseline!=null?`base ${x.baseline}`:''}</div></div>`).join('')}</div>`:''}${secondary.length?`<div class="secondary-grid">${secondary.map(x=>`<div class="secondary-metric"><div class="secondary-head">${x.label}</div><div class="secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:''}${bootcamp}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
 function renderDesktopToday(){document.getElementById('desktopRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('morning','Morning')+desktopTodaySlotHtml('sauna','Sauna Today')+desktopTodaySlotHtml('bedtime','Bedtime');}
 
-function mobileTodaySlotHtml(type,title){const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${deltaChip(x.kind,entry[x.key],x.baseline)}</div></div>`).join('')}</div>`:'';const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';const bootcamp=type==='bedtime'?bootcampBadgeHtml(entry):'';return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${bootcamp}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
+// ─── Mobile Today ─────────────────────────────────────────────────────────────
+function mobileTodaySlotHtml(type,title){const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);const icon=type==='morning'?'🌅':type==='sauna'?'🔥':'🌙';if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}].filter(x=>!isBlank(entry[x.key])):[];  const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${deltaChip(x.kind,entry[x.key],x.baseline)}</div></div>`).join('')}</div>`:'';const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';const bootcamp=type==='bedtime'?bootcampBadgeHtml(entry):'';return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${bootcamp}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
 function renderMobileToday(){document.getElementById('mobileRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('morning','Morning')+mobileTodaySlotHtml('sauna','Sauna Today')+mobileTodaySlotHtml('bedtime','Bedtime');}
 
 // ─── History ──────────────────────────────────────────────────────────────────
@@ -701,8 +628,8 @@ function filterByRange(rows,range){if(range==='all'||!rows.length)return rows;co
 function xStep(range){return{'7':1,'28':4,'90':10,'180':20,'365':40,'all':90}[range]??4;}
 function dateParts(key){const dt=new Date(key.split('-').slice(0,3).join('-')+'T12:00:00');return{top:dt.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase(),bottom:dt.toLocaleDateString('en-US',{month:'short'}).toUpperCase()+' '+dt.getDate()};}
 function autoYRange(datasets){const vals=datasets.flatMap(ds=>ds.data.map(r=>Number(r.value))).filter(v=>!isNaN(v));if(!vals.length)return{yMin:0,yMax:100};const mn=Math.min(...vals),mx=Math.max(...vals),pad=Math.max((mx-mn)*.12,2);return{yMin:Math.floor(mn-pad),yMax:Math.ceil(mx+pad)};}
-const MILESTONE = SAUNA_START_DATE;
 
+// Line chart — newest LEFT, with optional milestone line
 function drawChart(svgId,datasets,yMinIn,yMaxIn,range){
   const svg=document.getElementById(svgId);if(!svg)return;
   const sets=datasets.map(ds=>({...ds,data:filterByRange(ds.data,range)}));
@@ -717,9 +644,18 @@ function drawChart(svgId,datasets,yMinIn,yMaxIn,range){
   const yp=v=>T+pH-((v-yMin)/(yMax-yMin))*pH;
   let out='';
   for(let i=0;i<=4;i++){const v=yMax-(yMax-yMin)/4*i,gy=T+pH/4*i;out+=`<line x1="${L}" y1="${gy}" x2="${W-R}" y2="${gy}" stroke="#ece4f0" stroke-width="1"/>`;out+=`<text x="${L-6}" y="${gy+4}" text-anchor="end" font-size="10" fill="#6f6277">${Math.round(v*10)/10}</text>`;}
-  // Milestone line
-  const mi=data.findIndex(d=>d.date.slice(0,10)===MILESTONE);
-  if(mi>=0){const mx=xp(mi);out+=`<line x1="${mx}" y1="${T}" x2="${mx}" y2="${T+pH}" stroke="#6f3f74" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>`;const lx=mi<data.length*0.85?mx+5:mx-5,anchor=mi<data.length*0.85?'start':'end';out+=`<text x="${lx}" y="${T+12}" text-anchor="${anchor}" font-size="9" fill="#6f3f74" font-weight="600">First sauna</text>`;}
+
+  // Milestone line — find x position of SAUNA_START_DATE in data array
+  const milestoneIdx=data.findIndex(d=>d.date.slice(0,10)===SAUNA_START_DATE);
+  if(milestoneIdx>=0){
+    const mx=xp(milestoneIdx);
+    out+=`<line x1="${mx}" y1="${T}" x2="${mx}" y2="${T+pH}" stroke="#6f3f74" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>`;
+    // Label above the line — shift left if near right edge
+    const labelX=milestoneIdx<data.length*0.85?mx+5:mx-5;
+    const anchor=milestoneIdx<data.length*0.85?'start':'end';
+    out+=`<text x="${labelX}" y="${T+12}" text-anchor="${anchor}" font-size="9" fill="#6f3f74" font-weight="600">First sauna</text>`;
+  }
+
   sets.forEach(s=>{
     const lkp=new Map(s.data.map(r=>[r.date,r.value]));
     const pts=data.map((d,i)=>{if(!lkp.has(d.date))return null;const v=Number(lkp.get(d.date));return[xp(i),yp(v),v,i];});
@@ -739,71 +675,76 @@ function drawChart(svgId,datasets,yMinIn,yMaxIn,range){
   });
 }
 
-function drawSaunaChart(svgId,range){const svg=document.getElementById(svgId);if(!svg)return;const sessions=entries.filter(e=>(e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0))&&!isBlank(e.saunaMinutes)).map(e=>({date:e.date,minutes:Number(e.saunaMinutes),redLight:!!e.redLightUsed}));const filtered=filterByRange(sessions.map(s=>({...s,value:s.minutes})),range);const data=[...filtered].sort((a,b)=>b.date.localeCompare(a.date));const vb=svg.getAttribute('viewBox')||'0 0 900 300';const W=parseInt(vb.split(' ')[2]),H=parseInt(vb.split(' ')[3]);const L=48,R=16,T=12,B=40,pW=W-L-R,pH=H-T-B;if(!data.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#9a8fa1" font-size="13">No sauna sessions in this range</text>`;return;}const maxMin=Math.max(...data.map(d=>d.minutes),20);const barW=Math.max(Math.min(pW/Math.max(data.length,1)*0.55,48),6);const xp=i=>data.length===1?L+pW/2:L+i*pW/(data.length-1);const yp=v=>T+pH-(v/maxMin)*pH;let out='';[0,15,30,45,60].filter(v=>v<=maxMin*1.15).forEach(v=>{const gy=yp(v);out+=`<line x1="${L}" y1="${gy}" x2="${W-R}" y2="${gy}" stroke="#ece4f0" stroke-width="1"/>`;out+=`<text x="${L-6}" y="${gy+4}" text-anchor="end" font-size="10" fill="#6f6277">${v}m</text>`;});data.forEach((d,i)=>{const x=xp(i),barH=(d.minutes/maxMin)*pH,barY=T+pH-barH;const color=d.redLight?'#6f3f74':'#c4a8c8';out+=`<rect x="${x-barW/2}" y="${barY}" width="${barW}" height="${barH}" fill="${color}" rx="3"/>`;if(barH>18)out+=`<text x="${x}" y="${barY-4}" text-anchor="middle" font-size="9" fill="${color}">${d.minutes}</text>`;const{top,bottom}=dateParts(d.date);out+=`<text x="${x}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6f6277">${top}</text>`;out+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="9" fill="#6f6277">${bottom}</text>`;});svg.innerHTML=out;}
+// Sauna bar chart
+function drawSaunaChart(svgId,range){
+  const svg=document.getElementById(svgId);if(!svg)return;
+  const sessions=entries.filter(e=>(e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0))&&!isBlank(e.saunaMinutes)).map(e=>({date:e.date,minutes:Number(e.saunaMinutes),redLight:!!e.redLightUsed}));
+  const filtered=filterByRange(sessions.map(s=>({...s,value:s.minutes})),range);
+  const data=[...filtered].sort((a,b)=>b.date.localeCompare(a.date));
+  const vb=svg.getAttribute('viewBox')||'0 0 900 300';
+  const W=parseInt(vb.split(' ')[2]),H=parseInt(vb.split(' ')[3]);
+  const L=48,R=16,T=12,B=40,pW=W-L-R,pH=H-T-B;
+  if(!data.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#9a8fa1" font-size="13">No sauna sessions in this range</text>`;return;}
+  const maxMin=Math.max(...data.map(d=>d.minutes),20);
+  const barW=Math.max(Math.min(pW/Math.max(data.length,1)*0.55,48),6);
+  const xp=i=>data.length===1?L+pW/2:L+i*pW/(data.length-1);
+  const yp=v=>T+pH-(v/maxMin)*pH;
+  let out='';
+  [0,15,30,45,60].filter(v=>v<=maxMin*1.15).forEach(v=>{const gy=yp(v);out+=`<line x1="${L}" y1="${gy}" x2="${W-R}" y2="${gy}" stroke="#ece4f0" stroke-width="1"/>`;out+=`<text x="${L-6}" y="${gy+4}" text-anchor="end" font-size="10" fill="#6f6277">${v}m</text>`;});
+  data.forEach((d,i)=>{const x=xp(i),barH=(d.minutes/maxMin)*pH,barY=T+pH-barH;const color=d.redLight?'#6f3f74':'#c4a8c8';out+=`<rect x="${x-barW/2}" y="${barY}" width="${barW}" height="${barH}" fill="${color}" rx="3"/>`;if(barH>18)out+=`<text x="${x}" y="${barY-4}" text-anchor="middle" font-size="9" fill="${color}">${d.minutes}</text>`;const{top,bottom}=dateParts(d.date);out+=`<text x="${x}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6f6277">${top}</text>`;out+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="9" fill="#6f6277">${bottom}</text>`;});
+  svg.innerHTML=out;
+}
 
-function getChartDatasets(range){
+function getChartDatasets(){
   const sa=sortedAsc();
   const mKey=e=>`${e.date}-${e.timeOfDay||'other'}`;
   const ms=(k,type)=>sa.filter(e=>!isBlank(e[k])&&(!type||e.entryType===type)).map(e=>({date:mKey(e),value:Number(e[k])}));
-  const gs=(k,hist)=>(hist||garminHistory).filter(r=>r[k]!=null).map(r=>({date:r.date,value:r[k]}));
-  // Compare user's entries
-  const other=USERS.find(u=>u!==activeUser);
-  const otherEntries=compareMode?allEntries.filter(e=>e.userName===other):[];
-  const otherSa=[...otherEntries].sort((a,b)=>a.date.localeCompare(b.date));
-  const oms=(k,type)=>otherSa.filter(e=>!isBlank(e[k])&&(!type||e.entryType===type)).map(e=>({date:`${e.date}-${e.timeOfDay||'other'}`,value:Number(e[k])}));
-  const primary=[
-    {label:`Sleep (Garmin)`,color:'#6f3f74',width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},
-    {label:'Sleep',color:'#6f3f74',width:3,data:ms('sleepScore')},
-    {label:`HRV (Garmin)`,color:'#2f6f73',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},
-    {label:'HRV',color:'#2f6f73',dash:'8 4',width:3,data:ms('hrv')},
-    {label:`RHR (Garmin)`,color:'#3c2f46',width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},
-    {label:'RHR',color:'#3c2f46',width:3,data:ms('restingHr')},
-    ...(compareMode?[
-      {label:`${other} Sleep (Garmin)`,color:COMPARE_COLORS.sleepScore,width:1.5,opacity:.14,showLabels:false,dash:'4 2',data:gs('sleepScore',compareGarminHistory)},
-      {label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},
-      {label:`${other} HRV (Garmin)`,color:COMPARE_COLORS.hrv,width:1.5,opacity:.14,showLabels:false,dash:'4 2',data:gs('hrv',compareGarminHistory)},
-      {label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},
-      {label:`${other} RHR (Garmin)`,color:COMPARE_COLORS.restingHr,width:1.5,opacity:.14,showLabels:false,dash:'4 2',data:gs('restingHr',compareGarminHistory)},
-      {label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')},
-    ]:[])
-  ];
-  const supplemental=[
-    {label:'Body Battery (Garmin)',color:'#c27ba0',dash:'4 4',width:1.5,opacity:.14,showLabels:false,data:gs('bodyBatteryHigh')},
-    {label:'Body Battery',color:'#c27ba0',dash:'4 4',width:3,data:ms('bodyBattery')},
-    {label:'Respiration (Garmin)',color:'#9f8aa9',dash:'2 4',width:1.5,opacity:.14,showLabels:false,data:gs('respiration')},
-    {label:'Respiration',color:'#9f8aa9',dash:'2 4',width:3,data:ms('respiration')},
-    {label:'Pulse Ox (Garmin)',color:'#d26f86',dash:'10 5',width:1.5,opacity:.14,showLabels:false,data:gs('pulseOx')},
-    {label:'Pulse Ox',color:'#d26f86',width:3,data:ms('pulseOx')},
-    ...(compareMode?[
-      {label:`${other} Body Battery`,color:COMPARE_COLORS.bodyBatteryHigh,width:2,opacity:.6,dash:'4 2',data:oms('bodyBattery')},
-      {label:`${other} Respiration`,color:COMPARE_COLORS.respiration,width:2,opacity:.6,dash:'4 2',data:oms('respiration')},
-      {label:`${other} Pulse Ox`,color:COMPARE_COLORS.pulseOx,width:2,opacity:.6,dash:'4 2',data:oms('pulseOx')},
-    ]:[])
-  ];
+  const gs=k=>garminHistory.filter(r=>r[k]!=null).map(r=>({date:r.date,value:r[k]}));
+  // Morning subjective
   const morningSubjective=[
     {label:'Energy',color:'#8f4f7c',width:3,data:ms('energy','morning')},
     {label:'Stress',color:'#b06a7f',dash:'10 3',width:3,data:ms('stress','morning')},
     {label:'Avg soreness',color:'#2f6f73',dash:'6 4',width:3,data:sa.filter(e=>e.entryType==='morning').map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},
     {label:'Self Sleep',color:'#8a78a8',dash:'4 4',width:3,data:ms('sleepSelf','morning')},
-    ...(compareMode?[
-      {label:`${other} Energy`,color:'#c47ba0',width:2,opacity:.6,dash:'4 2',data:oms('energy','morning')},
-      {label:`${other} Stress`,color:'#d09a7f',width:2,opacity:.6,dash:'4 2',data:oms('stress','morning')},
-    ]:[])
+    {label:'Joint Stiffness',color:'#b9a5c9',dash:'2 2',width:3,data:ms('jointStiffness','morning')},
   ];
+  // Bedtime subjective
   const bedtimeSubjective=[
     {label:'Energy',color:'#8f4f7c',width:3,data:ms('energy','bedtime')},
     {label:'Stress',color:'#b06a7f',dash:'10 3',width:3,data:ms('stress','bedtime')},
     {label:'Avg soreness',color:'#2f6f73',dash:'6 4',width:3,data:sa.filter(e=>e.entryType==='bedtime').map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},
-    ...(compareMode?[
-      {label:`${other} Energy`,color:'#c47ba0',width:2,opacity:.6,dash:'4 2',data:oms('energy','bedtime')},
-      {label:`${other} Stress`,color:'#d09a7f',width:2,opacity:.6,dash:'4 2',data:oms('stress','bedtime')},
-    ]:[])
+    {label:'Joint Stiffness',color:'#b9a5c9',dash:'2 2',width:3,data:ms('jointStiffness','bedtime')},
   ];
-  return{primary,supplemental,morningSubjective,bedtimeSubjective,weight:{garmin:gs('weight'),manual:ms('weight')}};
+  return{
+    primary:[{label:'Sleep (Garmin)',color:'#6f3f74',width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:'#6f3f74',width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:'#2f6f73',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:'#2f6f73',dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:'#3c2f46',width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:'#3c2f46',width:3,data:ms('restingHr')}],
+    supplemental:[{label:'Body Battery (Garmin)',color:'#c27ba0',dash:'4 4',width:1.5,opacity:.14,showLabels:false,data:gs('bodyBatteryHigh')},{label:'Body Battery',color:'#c27ba0',dash:'4 4',width:3,data:ms('bodyBattery')},{label:'Respiration (Garmin)',color:'#9f8aa9',dash:'2 4',width:1.5,opacity:.14,showLabels:false,data:gs('respiration')},{label:'Respiration',color:'#9f8aa9',dash:'2 4',width:3,data:ms('respiration')},{label:'Pulse Ox (Garmin)',color:'#d26f86',dash:'10 5',width:1.5,opacity:.14,showLabels:false,data:gs('pulseOx')},{label:'Pulse Ox',color:'#d26f86',width:3,data:ms('pulseOx')}],
+    morningSubjective,bedtimeSubjective,
+    weight:{garmin:gs('weight'),manual:ms('weight')}
+  };
 }
 
-function renderDesktopCharts(){const d=getChartDatasets(chartRange);drawChart('primaryChart',d.primary,0,100,chartRange);drawChart('supplementalChart',d.supplemental,0,100,chartRange);drawChart('morningSubjectiveChart',d.morningSubjective,0,10,chartRange);drawChart('bedtimeSubjectiveChart',d.bedtimeSubjective,0,10,chartRange);drawSaunaChart('saunaBarChart',chartRange);const hw=d.weight.garmin.length||d.weight.manual.length;document.getElementById('weightChartSection').style.display=hw?'':'none';if(hw)drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,chartRange);}
-function renderMobileCharts(){const d=getChartDatasets(mobileChartRange);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);drawChart('mobileSupplementalChart',d.supplemental,0,100,mobileChartRange);drawChart('mobileMorningSubjectiveChart',d.morningSubjective,0,10,mobileChartRange);drawChart('mobileBedtimeSubjectiveChart',d.bedtimeSubjective,0,10,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);const hw=d.weight.garmin.length||d.weight.manual.length;document.getElementById('mobileWeightChartBlock').style.display=hw?'':'none';if(hw)drawChart('mobileWeightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,mobileChartRange);}
+function renderDesktopCharts(){
+  const d=getChartDatasets();
+  drawChart('primaryChart',d.primary,0,100,chartRange);
+  drawChart('supplementalChart',d.supplemental,0,100,chartRange);
+  drawChart('morningSubjectiveChart',d.morningSubjective,0,10,chartRange);
+  drawChart('bedtimeSubjectiveChart',d.bedtimeSubjective,0,10,chartRange);
+  drawSaunaChart('saunaBarChart',chartRange);
+  const hw=d.weight.garmin.length||d.weight.manual.length;
+  document.getElementById('weightChartSection').style.display=hw?'':'none';
+  if(hw)drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,chartRange);
+}
+function renderMobileCharts(){
+  const d=getChartDatasets();
+  drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);
+  drawChart('mobileSupplementalChart',d.supplemental,0,100,mobileChartRange);
+  drawChart('mobileMorningSubjectiveChart',d.morningSubjective,0,10,mobileChartRange);
+  drawChart('mobileBedtimeSubjectiveChart',d.bedtimeSubjective,0,10,mobileChartRange);
+  drawSaunaChart('mobileSaunaChart',mobileChartRange);
+  const hw=d.weight.garmin.length||d.weight.manual.length;
+  document.getElementById('mobileWeightChartBlock').style.display=hw?'':'none';
+  if(hw)drawChart('mobileWeightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,mobileChartRange);
+}
 
 function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
 
@@ -819,17 +760,17 @@ const closeModal=id=>document.getElementById(id).classList.remove('open');
 function setEntryType(type){currentEntryType=type;document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.toggle('active',b.dataset.entryType===type));ALL_FIELD_WRAPS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=TYPE_FIELDS[type]?.includes(id)?'':'none';});}
 function validateField(id){const el=document.getElementById(id),rule=FIELD_RULES[id];if(!el||!rule)return true;const wrap=el.closest('div');if(!wrap||wrap.style.display==='none'){wrap?.classList.remove('field-invalid');return true;}if(!el.value){wrap.classList.remove('field-invalid');return true;}const n=Number(el.value),ok=!isNaN(n)&&n>=rule.min&&n<=rule.max;wrap.classList.toggle('field-invalid',!ok);return ok;}
 function validateForm(){const ok=Object.keys(FIELD_RULES).every(id=>validateField(id));const btn=document.querySelector('#entryForm button[type="submit"]');if(btn)btn.disabled=!ok;return ok;}
-function resetForm(){editingId=null;document.getElementById('entryModalTitle').textContent=`Add entry · ${activeUser}`;document.getElementById('entryForm').reset();document.getElementById('date').value=todayStr;document.getElementById('bootcampTime').value='16:30';setEntryType('morning');validateForm();}
-function getFormData(){const num=id=>{const v=document.getElementById(id)?.value;return v===''||v==null?'':Number(v);};const isBedtime=currentEntryType==='bedtime';return{id:editingId||crypto.randomUUID(),date:document.getElementById('date').value,entryType:currentEntryType,timeOfDay:currentEntryType==='morning'?'morning':currentEntryType==='bedtime'?'post_sauna':'other',userName:activeUser,saunaMinutes:num('saunaMinutes'),sleepScore:num('sleepScore'),sleepSelf:num('sleepSelf'),hrv:num('hrv'),restingHr:num('restingHr'),bodyBattery:num('bodyBattery'),respiration:num('respiration'),pulseOx:num('pulseOx'),weight:num('weight'),energy:num('energy'),stress:num('stress'),muscleSoreness:num('muscleSoreness'),jointSoreness:num('jointSoreness'),redLightUsed:document.getElementById('redLightUsed').checked,bootcampTime:isBedtime?document.getElementById('bootcampTime').value||'':'',bootcampType:isBedtime?document.getElementById('bootcampType').value||'':'',notes:document.getElementById('notes').value.trim()};}
+function resetForm(){editingId=null;document.getElementById('entryModalTitle').textContent='Add entry';document.getElementById('entryForm').reset();document.getElementById('date').value=todayStr;document.getElementById('bootcampTime').value='16:30';setEntryType('morning');validateForm();}
+function getFormData(){const num=id=>{const v=document.getElementById(id)?.value;return v===''||v==null?'':Number(v);};return{id:editingId||crypto.randomUUID(),date:document.getElementById('date').value,entryType:currentEntryType,timeOfDay:currentEntryType==='morning'?'morning':currentEntryType==='bedtime'?'post_sauna':'other',saunaMinutes:num('saunaMinutes'),sleepScore:num('sleepScore'),sleepSelf:num('sleepSelf'),hrv:num('hrv'),restingHr:num('restingHr'),bodyBattery:num('bodyBattery'),respiration:num('respiration'),pulseOx:num('pulseOx'),weight:num('weight'),energy:num('energy'),stress:num('stress'),muscleSoreness:num('muscleSoreness'),jointSoreness:num('jointSoreness'),jointStiffness:num('jointStiffness'),redLightUsed:document.getElementById('redLightUsed').checked,bootcampTime:document.getElementById('bootcampTime').value||'',bootcampType:document.getElementById('bootcampType').value||'',notes:document.getElementById('notes').value.trim()};}
 function openSlot(type){resetForm();setEntryType(type);openModal('entryModal');}
 window.openSlot=openSlot;
-function startEdit(id){const e=entries.find(x=>x.id===id);if(!e)return;editingId=id;document.getElementById('entryModalTitle').textContent=`Edit entry · ${e.userName||activeUser}`;['date','saunaMinutes','sleepScore','sleepSelf','hrv','restingHr','bodyBattery','respiration','pulseOx','weight','energy','stress','muscleSoreness','jointSoreness','notes'].forEach(k=>{const el=document.getElementById(k);if(el)el.value=e[k]??'';});document.getElementById('redLightUsed').checked=!!e.redLightUsed;document.getElementById('bootcampTime').value=e.bootcampTime||'';document.getElementById('bootcampType').value=e.bootcampType||'';setEntryType(e.entryType||(e.timeOfDay==='post_sauna'?'bedtime':'morning'));validateForm();openModal('entryModal');}
+function startEdit(id){const e=entries.find(x=>x.id===id);if(!e)return;editingId=id;document.getElementById('entryModalTitle').textContent='Edit entry';['date','saunaMinutes','sleepScore','sleepSelf','hrv','restingHr','bodyBattery','respiration','pulseOx','weight','energy','stress','muscleSoreness','jointSoreness','jointStiffness','notes'].forEach(k=>{const el=document.getElementById(k);if(el)el.value=e[k]??'';});document.getElementById('redLightUsed').checked=!!e.redLightUsed;document.getElementById('bootcampTime').value=e.bootcampTime||'';document.getElementById('bootcampType').value=e.bootcampType||'';setEntryType(e.entryType||(e.timeOfDay==='post_sauna'?'bedtime':'morning'));validateForm();openModal('entryModal');}
 window.startEdit=startEdit;
-function removeEntry(id){if(!confirm('Delete this entry?'))return;allEntries=allEntries.filter(e=>e.id!==id);entries=allEntries.filter(e=>e.userName===activeUser);sbDelete(id).catch(err=>console.warn('Supabase delete failed:',err));renderAll();}
+function removeEntry(id){if(!confirm('Delete this entry?'))return;entries=entries.filter(e=>e.id!==id);sbDelete(id).catch(err=>console.warn('Supabase delete failed:',err));renderAll();}
 window.removeEntry=removeEntry;
 
 // ─── Cleanup ──────────────────────────────────────────────────────────────────
-async function runCleanup(){if(!garminHistory.length){alert('No Garmin data loaded.');return;}const garminDates=new Set(garminHistory.map(r=>r.date));const GF=['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx','weight'];const SF=['sleepSelf','energy','stress','muscleSoreness','jointSoreness','notes','redLightUsed','bootcampTime'];let stripped=0,deleted=0;const toDelete=[];entries=entries.filter(entry=>{if(entry.entryType!=='morning'||!garminDates.has(entry.date))return true;GF.forEach(k=>{entry[k]='';});const has=SF.some(k=>!isBlank(entry[k]));if(!has){deleted++;toDelete.push(entry.id);return false;}stripped++;return true;});allEntries=allEntries.filter(e=>!toDelete.includes(e.id));for(const id of toDelete)await sbDelete(id).catch(console.warn);for(const entry of entries)await sbUpsert(entry).catch(console.warn);renderAll();alert(`Done! Removed ${deleted} empty duplicates, cleaned ${stripped} entries.`);}
+async function runCleanup(){if(!garminHistory.length){alert('No Garmin data loaded.');return;}const garminDates=new Set(garminHistory.map(r=>r.date));const GF=['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx','weight'];const SF=['sleepSelf','energy','stress','muscleSoreness','jointSoreness','jointStiffness','notes','redLightUsed','bootcampTime'];let stripped=0,deleted=0;const toDelete=[];entries=entries.filter(entry=>{if(entry.entryType!=='morning'||!garminDates.has(entry.date))return true;GF.forEach(k=>{entry[k]='';});const has=SF.some(k=>!isBlank(entry[k]));if(!has){deleted++;toDelete.push(entry.id);return false;}stripped++;return true;});for(const id of toDelete)await sbDelete(id).catch(console.warn);for(const entry of entries)await sbUpsert(entry).catch(console.warn);renderAll();alert(`Done! Removed ${deleted} empty duplicates, cleaned ${stripped} entries.`);}
 
 // ─── Screenshot ───────────────────────────────────────────────────────────────
 function renderIngestDraft(){document.getElementById('ingestDate').value=ingestDraft.date||todayStr;document.getElementById('ingestSleep').textContent=ingestDraft.sleepScore||'—';document.getElementById('ingestHrv').textContent=ingestDraft.hrv||'—';document.getElementById('ingestRhr').textContent=ingestDraft.restingHr||'—';document.getElementById('ingestBb').textContent=ingestDraft.bodyBattery||'—';document.getElementById('ingestResp').textContent=ingestDraft.respiration||'—';document.getElementById('ingestSpo2').textContent=ingestDraft.pulseOx||'—';}
@@ -838,9 +779,6 @@ async function parseScreenshot(file){const key=document.getElementById('apiKeyIn
 function sendDraftToEntry(){resetForm();document.getElementById('date').value=ingestDraft.date||todayStr;['sleepScore','hrv','restingHr','bodyBattery','respiration','pulseOx'].forEach(k=>{if(ingestDraft[k]!==''&&ingestDraft[k]!=null){const el=document.getElementById(k);if(el)el.value=ingestDraft[k];}});closeModal('ingestModal');openModal('entryModal');}
 
 // ─── Event listeners ──────────────────────────────────────────────────────────
-document.querySelectorAll('[data-user]').forEach(b=>b.addEventListener('click',()=>setActiveUser(b.dataset.user)));
-document.getElementById('desktopCompareBtn').addEventListener('click',toggleCompare);
-document.getElementById('mobileCompareBtn').addEventListener('click',toggleCompare);
 document.querySelectorAll('.desktop-tab-btn').forEach(b=>b.addEventListener('click',()=>setDesktopTab(b.dataset.dtab)));
 document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(b=>b.addEventListener('click',()=>setMobileTab(b.dataset.tab)));
 document.querySelectorAll('.entry-type-btn').forEach(b=>b.addEventListener('click',()=>setEntryType(b.dataset.entryType)));
@@ -866,27 +804,17 @@ dz.addEventListener('click',()=>document.getElementById('screenshotInput').click
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over');});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag-over');const f=e.dataTransfer.files?.[0];if(f&&f.type.startsWith('image/'))parseScreenshot(f);});
-document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
+document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=entries.findIndex(x=>x.id===data.id);if(idx>=0)entries[idx]=data;else entries.unshift(data);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
 Object.keys(FIELD_RULES).forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',validateForm);el.addEventListener('blur',validateForm);}});
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 window.addEventListener('resize',()=>{renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();});
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init(){
-  // Load active user's Garmin
-  const path=GARMIN_PATHS[activeUser]||GARMIN_PATHS.Kelli;
-  try{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw 0;garminHistory=await r.json();}catch{garminHistory=[];}
+  try{const r=await fetch(GARMIN_PATH,{cache:'no-store'});if(!r.ok)throw 0;garminHistory=await r.json();}catch{garminHistory=[];}
   computeBaselines();
-  // Load all entries
-  try{
-    allEntries=await sbFetchAll();
-    if(!allEntries.length){const local=loadLocalFallback();migrateEntries(local);for(const e of local)await sbUpsert(e);allEntries=local;}
-  }catch(err){console.warn('Supabase unavailable:',err);allEntries=loadLocalFallback();migrateEntries(allEntries);}
-  entries=allEntries.filter(e=>e.userName===activeUser||!e.userName);
-  // Sync UI to active user
-  document.querySelectorAll('[data-user]').forEach(b=>b.classList.toggle('active',b.dataset.user===activeUser));
-  const other=USERS.find(u=>u!==activeUser);
-  document.querySelectorAll('.compare-toggle').forEach(b=>{b.innerHTML=`<span class="compare-dot"></span> Compare ${other}`;});
+  try{entries=await sbFetchAll();if(!entries.length){const local=loadLocalFallback();migrateEntries(local);for(const e of local)await sbUpsert(e);entries=local;}}
+  catch(err){console.warn('Supabase unavailable:',err);entries=loadLocalFallback();migrateEntries(entries);}
   const savedKey=localStorage.getItem(API_KEY_STORAGE);if(savedKey)document.getElementById('apiKeyInput').value=savedKey;
   renderAll();
 }
