@@ -77,7 +77,7 @@ def get_client(user_cfg: dict) -> Garmin:
 
     if token_file.exists():
         try:
-            client.login(token_file.read_text())
+            client.garth.loads(token_file.read_text())
             print("✓ Logged in via cached tokens")
             return client
         except Exception:
@@ -138,7 +138,7 @@ def fetch_day(client: Garmin, d: date) -> dict:
         if score is not None:
             record["sleepScore"] = int(score)
 
-        # Sleep duration and stages (minutes) — used for Elliott
+        # Sleep duration and stages (minutes)
         total_secs = daily.get("sleepTimeSeconds")
         if total_secs:
             record["sleepDuration"] = round(total_secs / 60, 1)
