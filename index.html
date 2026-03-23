@@ -352,7 +352,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v32</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v33</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -801,7 +801,7 @@ function getChartDatasets(){
   const otherSa=[...otherEntries].sort((a,b)=>a.date.localeCompare(b.date));
   const oms=(k,type)=>otherSa.filter(e=>!isBlank(e[k])&&(!type||e.entryType===type)).map(e=>({date:`${e.date}-${e.timeOfDay||'other'}`,value:Number(e[k])}));
   const primaryDatasets=activeUser==='Elliott'
-    ?[{label:'Sleep Dur. (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepDuration')},{label:'Sleep Duration',color:p.p1,width:3,data:ms('sleepDuration')},{label:'Deep Sleep (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDeep')},{label:'Deep Sleep',color:p.p2,dash:'8 4',width:3,data:ms('sleepDeep')},{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} Sleep Dur.`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepDuration')},{label:`${other} Deep Sleep`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('sleepDeep')},{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])]:
+    ?[{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])]:
     [{label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},{label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])];
   return{
     primary:primaryDatasets,
