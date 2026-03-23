@@ -278,6 +278,14 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="mobile-chart-box"><svg id="mobilePrimaryChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
       </div>
+      <div class="mobile-chart-block" id="mobileSleepChartBlock" style="display:none">
+        <div class="mobile-chart-title" id="mobilePrimaryChartTitle">Sleep</div>
+        <div class="mobile-chart-legend" id="mobileSleepLegend">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2c4a6e;margin-right:3px"></span>Sleep Dur.</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3a7a9a;margin-right:3px"></span>Deep Sleep</span>
+        </div>
+        <div class="mobile-chart-box"><svg id="mobileSleepChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
+      </div>
       <div class="mobile-chart-block">
         <div class="mobile-chart-title">Supplemental</div>
         <div class="mobile-chart-legend" id="mobileSupplementalLegend">
@@ -313,7 +321,7 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="mobile-chart-box"><svg id="mobileSaunaChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
       </div>
-      <div class="mobile-chart-block" id="mobileWeightChartBlock" style="display:none">
+      <div class="mobile-chart-block" id="mobileWeightChartBlock">
         <div class="mobile-chart-title">Weight</div>
         <div class="mobile-chart-box"><svg id="mobileWeightChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
       </div>
@@ -344,7 +352,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v30</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v32</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -412,6 +420,14 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="chart-box"><svg id="primaryChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
+      <div id="desktopSleepChartSection" style="display:none">
+        <div class="chart-title" id="desktopPrimaryChartTitle">Sleep</div>
+        <div class="legend" id="desktopSleepLegend">
+          <span class="legend-item"><span class="swatch" style="background:#2c4a6e"></span>Sleep Dur.</span>
+          <span class="legend-item"><span class="swatch" style="background:#3a7a9a"></span>Deep Sleep</span>
+        </div>
+        <div class="chart-box"><svg id="sleepChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
+      </div>
       <div>
         <div class="chart-title">Supplemental recovery</div>
         <div class="legend" id="desktopSupplementalLegend">
@@ -448,7 +464,7 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="chart-box"><svg id="saunaBarChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
-      <div id="weightChartSection" style="display:none">
+      <div id="weightChartSection">
         <div class="chart-title">Weight</div>
         <div class="chart-box"><svg id="weightChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
@@ -621,7 +637,7 @@ const seedEntries=[
 ];
 
 const TYPE_FIELDS={
-  morning:['sleepSelfWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','notesWrap'],
+  morning:['sleepSelfWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','weightWrap','notesWrap'],
   bedtime:['energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','notesWrap'],
   sauna:['saunaMinutesWrap','redLightWrap','notesWrap'],
   workout:['workoutWrap','notesWrap']
@@ -792,32 +808,50 @@ function getChartDatasets(){
     supplemental:[{label:'Body Battery (Garmin)',color:p.s1,dash:'4 4',width:1.5,opacity:.14,showLabels:false,data:gs('bodyBatteryHigh')},{label:'Body Battery',color:p.s1,dash:'4 4',width:3,data:ms('bodyBattery')},{label:'Respiration (Garmin)',color:p.s2,dash:'2 4',width:1.5,opacity:.14,showLabels:false,data:gs('respiration')},{label:'Respiration',color:p.s2,dash:'2 4',width:3,data:ms('respiration')},{label:'Pulse Ox (Garmin)',color:p.s3,dash:'10 5',width:1.5,opacity:.14,showLabels:false,data:gs('pulseOx')},{label:'Pulse Ox',color:p.s3,width:3,data:ms('pulseOx')},...(compareMode?[{label:`${other} Body Battery`,color:COMPARE_COLORS.bodyBatteryHigh,width:2,opacity:.6,dash:'4 2',data:oms('bodyBattery')},{label:`${other} Pulse Ox`,color:COMPARE_COLORS.pulseOx,width:2,opacity:.6,dash:'4 2',data:oms('pulseOx')}]:[])],
     morningSubjective:[{label:'Energy',color:p.subj1,width:3,data:ms('energy','morning')},{label:'Stress',color:p.subj2,dash:'10 3',width:3,data:ms('stress','morning')},{label:'Avg soreness',color:p.subj3,dash:'6 4',width:3,data:sa.filter(e=>e.entryType==='morning').map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},{label:'Self Sleep',color:p.subjSleep,dash:'4 4',width:3,data:ms('sleepSelf','morning')},...(compareMode?[{label:`${other} Energy`,color:'#c47ba0',width:2,opacity:.6,dash:'4 2',data:oms('energy','morning')},{label:`${other} Stress`,color:'#d09a7f',width:2,opacity:.6,dash:'4 2',data:oms('stress','morning')}]:[])],
     bedtimeSubjective:[{label:'Energy',color:p.subj1,width:3,data:ms('energy','bedtime')},{label:'Stress',color:p.subj2,dash:'10 3',width:3,data:ms('stress','bedtime')},{label:'Avg soreness',color:p.subj3,dash:'6 4',width:3,data:sa.filter(e=>e.entryType==='bedtime').map(e=>({date:mKey(e),value:sorenessAvg(e)})).filter(r=>r.value!==''&&r.value!=null)},...(compareMode?[{label:`${other} Energy`,color:'#c47ba0',width:2,opacity:.6,dash:'4 2',data:oms('energy','bedtime')},{label:`${other} Stress`,color:'#d09a7f',width:2,opacity:.6,dash:'4 2',data:oms('stress','bedtime')}]:[])],
+    elliotSleep:[{label:'Sleep Dur. (Garmin)',color:'#2c4a6e',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDuration')},{label:'Sleep Duration',color:'#2c4a6e',width:3,data:ms('sleepDuration')},{label:'Deep Sleep (Garmin)',color:'#3a7a9a',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDeep')},{label:'Deep Sleep',color:'#3a7a9a',dash:'8 4',width:3,data:ms('sleepDeep')}],
     weight:{garmin:gs('weight'),manual:ms('weight')}
   };
 }
 
-function renderChartLegends(){
+function renderChartLegends(d){
   const p=CHART_PALETTE[activeUser]||CHART_PALETTE.Kelli;
+  const hasData=(datasets,label)=>datasets.some(ds=>!ds.label.includes('(Garmin)')&&ds.label===label&&ds.data.length>0);
+  const hasAny=(datasets,label)=>datasets.some(ds=>ds.label===label&&ds.data.length>0);
   const sw=(c,r)=>`<span class="swatch" style="background:${c};${r?'border-radius:2px':''}"></span>`;
   const mSw=(c,r)=>`<span style="display:inline-block;width:10px;height:10px;border-radius:${r?'2px':'50%'};background:${c};margin-right:3px"></span>`;
   const isE=activeUser==='Elliott';
   const p1Label=isE?'Sleep Dur.':'Sleep',p2Label=isE?'Deep Sleep':'HRV';
-  const pLeg=`<span class="legend-item">${sw(p.p1)}${p1Label}</span><span class="legend-item">${sw(p.p2)}${p2Label}</span><span class="legend-item">${sw(p.p3)}RHR</span>`;
-  const sLeg=`<span class="legend-item">${sw(p.s1)}Body Battery</span><span class="legend-item">${sw(p.s2)}Respiration</span><span class="legend-item">${sw(p.s3)}Pulse Ox</span>`;
+  // Primary — only show series that have data
+  const pItems=[];
+  if(hasAny(d.primary,p1Label))pItems.push(`<span class="legend-item">${sw(p.p1)}${p1Label}</span>`);
+  if(hasAny(d.primary,p2Label))pItems.push(`<span class="legend-item">${sw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'RHR'))pItems.push(`<span class="legend-item">${sw(p.p3)}RHR</span>`);
+  const mpItems=[];
+  if(hasAny(d.primary,p1Label))mpItems.push(`<span>${mSw(p.p1)}${p1Label}</span>`);
+  if(hasAny(d.primary,p2Label))mpItems.push(`<span>${mSw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'RHR'))mpItems.push(`<span>${mSw(p.p3)}RHR</span>`);
+  // Supplemental — only show series that have data
+  const sItems=[];
+  if(hasAny(d.supplemental,'Body Battery'))sItems.push(`<span class="legend-item">${sw(p.s1)}Body Battery</span>`);
+  if(hasAny(d.supplemental,'Respiration'))sItems.push(`<span class="legend-item">${sw(p.s2)}Respiration</span>`);
+  if(hasAny(d.supplemental,'Pulse Ox'))sItems.push(`<span class="legend-item">${sw(p.s3)}Pulse Ox</span>`);
+  const msupItems=[];
+  if(hasAny(d.supplemental,'Body Battery'))msupItems.push(`<span>${mSw(p.s1)}Body Battery</span>`);
+  if(hasAny(d.supplemental,'Respiration'))msupItems.push(`<span>${mSw(p.s2)}Resp</span>`);
+  if(hasAny(d.supplemental,'Pulse Ox'))msupItems.push(`<span>${mSw(p.s3)}SpO2</span>`);
+  // Subjective — static (same fields for all users)
   const msLeg=`<span class="legend-item">${sw(p.subj1)}Energy</span><span class="legend-item">${sw(p.subj2)}Stress</span><span class="legend-item">${sw(p.subj3)}Avg soreness</span><span class="legend-item">${sw(p.subjSleep)}Self Sleep</span>`;
   const bsLeg=`<span class="legend-item">${sw(p.subj1)}Energy</span><span class="legend-item">${sw(p.subj2)}Stress</span><span class="legend-item">${sw(p.subj3)}Avg soreness</span>`;
   const saLeg=`<span class="legend-item">${sw(p.saunaOn,true)}Red light on</span><span class="legend-item">${sw(p.saunaOff,true)}No red light</span>`;
-  const mpLeg=`<span>${mSw(p.p1)}${p1Label}</span><span>${mSw(p.p2)}${p2Label}</span><span>${mSw(p.p3)}RHR</span>`;
-  const msupLeg=`<span>${mSw(p.s1)}Body Battery</span><span>${mSw(p.s2)}Resp</span><span>${mSw(p.s3)}SpO2</span>`;
   const mmsLeg=`<span>${mSw(p.subj1)}Energy</span><span>${mSw(p.subj2)}Stress</span><span>${mSw(p.subj3)}Soreness</span>`;
   const mbsLeg=`<span>${mSw(p.subj1)}Energy</span><span>${mSw(p.subj2)}Stress</span><span>${mSw(p.subj3)}Soreness</span>`;
   const msaLeg=`<span>${mSw(p.saunaOn,true)}Red light on</span><span>${mSw(p.saunaOff,true)}No red light</span>`;
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
-  set('desktopPrimaryLegend',pLeg);set('desktopSupplementalLegend',sLeg);set('desktopMornSubjLegend',msLeg);set('desktopBedSubjLegend',bsLeg);set('desktopSaunaLegend',saLeg);
-  set('mobilePrimaryLegend',mpLeg);set('mobileSupplementalLegend',msupLeg);set('mobileMornSubjLegend',mmsLeg);set('mobileBedSubjLegend',mbsLeg);set('mobileSaunaLegend',msaLeg);
+  set('desktopPrimaryLegend',pItems.join(''));set('desktopSupplementalLegend',sItems.join(''));set('desktopMornSubjLegend',msLeg);set('desktopBedSubjLegend',bsLeg);set('desktopSaunaLegend',saLeg);
+  set('mobilePrimaryLegend',mpItems.join(''));set('mobileSupplementalLegend',msupItems.join(''));set('mobileMornSubjLegend',mmsLeg);set('mobileBedSubjLegend',mbsLeg);set('mobileSaunaLegend',msaLeg);
 }
-function renderDesktopCharts(){renderChartLegends();const d=getChartDatasets();drawChart('primaryChart',d.primary,0,100,chartRange);drawChart('supplementalChart',d.supplemental,0,100,chartRange);drawChart('morningSubjectiveChart',d.morningSubjective,0,10,chartRange);drawChart('bedtimeSubjectiveChart',d.bedtimeSubjective,0,10,chartRange);drawSaunaChart('saunaBarChart',chartRange);const hw=d.weight.garmin.length||d.weight.manual.length;document.getElementById('weightChartSection').style.display=hw?'':'none';if(hw)drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,chartRange);}
-function renderMobileCharts(){renderChartLegends();const d=getChartDatasets();drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);drawChart('mobileSupplementalChart',d.supplemental,0,100,mobileChartRange);drawChart('mobileMorningSubjectiveChart',d.morningSubjective,0,10,mobileChartRange);drawChart('mobileBedtimeSubjectiveChart',d.bedtimeSubjective,0,10,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);const hw=d.weight.garmin.length||d.weight.manual.length;document.getElementById('mobileWeightChartBlock').style.display=hw?'':'none';if(hw)drawChart('mobileWeightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,mobileChartRange);}
+function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);const sc=document.getElementById('desktopSleepChartSection');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('sleepChart',d.elliotSleep,null,null,chartRange);drawChart('supplementalChart',d.supplemental,0,100,chartRange);drawChart('morningSubjectiveChart',d.morningSubjective,0,10,chartRange);drawChart('bedtimeSubjectiveChart',d.bedtimeSubjective,0,10,chartRange);drawSaunaChart('saunaBarChart',chartRange);document.getElementById('weightChartSection').style.display='';drawChart('weightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,chartRange);}
+function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);const sc=document.getElementById('mobileSleepChartBlock');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('mobileSleepChart',d.elliotSleep,null,null,mobileChartRange);drawChart('mobileSupplementalChart',d.supplemental,0,100,mobileChartRange);drawChart('mobileMorningSubjectiveChart',d.morningSubjective,0,10,mobileChartRange);drawChart('mobileBedtimeSubjectiveChart',d.bedtimeSubjective,0,10,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);document.getElementById('mobileWeightChartBlock').style.display='';drawChart('mobileWeightChart',[{label:'Weight (Garmin)',color:'#7a6a9a',width:1.5,opacity:.2,showLabels:false,data:d.weight.garmin},{label:'Weight',color:'#7a6a9a',width:3,data:d.weight.manual}],null,null,mobileChartRange);}
 function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
