@@ -3,6 +3,9 @@
     "date": "2025-12-23",
     "restingHr": 58,
     "bodyBatteryHigh": 16,
+    "sleepDuration": 522.0,
+    "sleepDeep": 35.0,
+    "sleepRem": 153.0,
     "pulseOx": 91.0
   },
   {
@@ -15,54 +18,80 @@
     "date": "2025-12-25",
     "restingHr": 55,
     "bodyBatteryHigh": 48,
+    "sleepDuration": 531.0,
+    "sleepRem": 186.0,
     "pulseOx": 93.0
   },
   {
     "date": "2025-12-26",
     "restingHr": 54,
     "bodyBatteryHigh": 61,
+    "sleepDuration": 427.0,
+    "sleepDeep": 41.0,
+    "sleepRem": 102.0,
     "pulseOx": 93.0
   },
   {
     "date": "2025-12-27",
     "restingHr": 57,
     "bodyBatteryHigh": 75,
+    "sleepDuration": 448.0,
+    "sleepDeep": 49.0,
+    "sleepRem": 168.0,
     "pulseOx": 91.0
   },
   {
     "date": "2025-12-28",
     "restingHr": 58,
     "bodyBatteryHigh": 35,
+    "sleepDuration": 553.0,
+    "sleepDeep": 28.0,
+    "sleepRem": 107.0,
     "pulseOx": 92.0
   },
   {
     "date": "2025-12-29",
     "restingHr": 54,
     "bodyBatteryHigh": 62,
+    "sleepDuration": 575.0,
+    "sleepDeep": 47.0,
+    "sleepRem": 149.0,
     "pulseOx": 93.0
   },
   {
     "date": "2025-12-30",
     "restingHr": 56,
     "bodyBatteryHigh": 36,
+    "sleepDuration": 524.0,
+    "sleepDeep": 51.0,
+    "sleepRem": 150.0,
     "pulseOx": 94.0
   },
   {
     "date": "2025-12-31",
     "restingHr": 60,
     "bodyBatteryHigh": 4,
+    "sleepDuration": 610.0,
+    "sleepDeep": 44.0,
+    "sleepRem": 138.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-01",
     "restingHr": 60,
     "bodyBatteryHigh": 8,
+    "sleepDuration": 491.0,
+    "sleepDeep": 26.0,
+    "sleepRem": 89.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-02",
     "restingHr": 57,
     "bodyBatteryHigh": 38,
+    "sleepDuration": 473.0,
+    "sleepDeep": 32.0,
+    "sleepRem": 123.0,
     "pulseOx": 93.0
   },
   {
@@ -81,6 +110,9 @@
     "date": "2026-01-05",
     "restingHr": 56,
     "bodyBatteryHigh": 34,
+    "sleepDuration": 426.0,
+    "sleepDeep": 13.0,
+    "sleepRem": 62.0,
     "pulseOx": 93.0
   },
   {
@@ -92,6 +124,9 @@
     "date": "2026-01-07",
     "restingHr": 59,
     "bodyBatteryHigh": 30,
+    "sleepDuration": 466.0,
+    "sleepDeep": 58.0,
+    "sleepRem": 93.0,
     "pulseOx": 93.0
   },
   {
@@ -114,30 +149,45 @@
     "date": "2026-01-11",
     "restingHr": 56,
     "bodyBatteryHigh": 72,
+    "sleepDuration": 520.0,
+    "sleepDeep": 31.0,
+    "sleepRem": 145.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-12",
     "restingHr": 54,
     "bodyBatteryHigh": 78,
+    "sleepDuration": 545.0,
+    "sleepDeep": 43.0,
+    "sleepRem": 130.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-13",
     "restingHr": 55,
     "bodyBatteryHigh": 60,
+    "sleepDuration": 459.0,
+    "sleepDeep": 50.0,
+    "sleepRem": 112.0,
     "pulseOx": 91.0
   },
   {
     "date": "2026-01-14",
     "restingHr": 55,
     "bodyBatteryHigh": 58,
+    "sleepDuration": 422.0,
+    "sleepDeep": 57.0,
+    "sleepRem": 127.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-01-15",
     "restingHr": 55,
     "bodyBatteryHigh": 62,
+    "sleepDuration": 517.0,
+    "sleepDeep": 90.0,
+    "sleepRem": 159.0,
     "pulseOx": 92.0
   },
   {
@@ -150,18 +200,27 @@
     "date": "2026-01-17",
     "restingHr": 53,
     "bodyBatteryHigh": 77,
+    "sleepDuration": 478.0,
+    "sleepDeep": 67.0,
+    "sleepRem": 143.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-01-18",
     "restingHr": 54,
     "bodyBatteryHigh": 62,
+    "sleepDuration": 510.0,
+    "sleepDeep": 67.0,
+    "sleepRem": 124.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-19",
     "restingHr": 50,
     "bodyBatteryHigh": 58,
+    "sleepDuration": 506.0,
+    "sleepDeep": 59.0,
+    "sleepRem": 128.0,
     "pulseOx": 93.0
   },
   {
@@ -184,60 +243,89 @@
     "date": "2026-01-23",
     "restingHr": 54,
     "bodyBatteryHigh": 82,
+    "sleepDuration": 403.0,
+    "sleepDeep": 57.0,
+    "sleepRem": 85.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-01-24",
     "restingHr": 52,
     "bodyBatteryHigh": 74,
+    "sleepDuration": 508.0,
+    "sleepDeep": 14.0,
+    "sleepRem": 178.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-01-25",
     "restingHr": 52,
     "bodyBatteryHigh": 37,
+    "sleepDuration": 579.0,
+    "sleepDeep": 15.0,
+    "sleepRem": 178.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-01-26",
     "restingHr": 58,
     "bodyBatteryHigh": 56,
+    "sleepDuration": 560.0,
+    "sleepDeep": 477.0,
     "pulseOx": 95.0
   },
   {
     "date": "2026-01-27",
     "restingHr": 56,
     "bodyBatteryHigh": 48,
+    "sleepDuration": 546.0,
+    "sleepDeep": 55.0,
+    "sleepRem": 149.0,
     "pulseOx": 91.0
   },
   {
     "date": "2026-01-28",
     "restingHr": 55,
     "bodyBatteryHigh": 49,
+    "sleepDuration": 503.0,
+    "sleepDeep": 46.0,
+    "sleepRem": 164.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-29",
     "restingHr": 54,
     "bodyBatteryHigh": 58,
+    "sleepDuration": 487.0,
+    "sleepDeep": 67.0,
+    "sleepRem": 184.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-30",
     "restingHr": 56,
     "bodyBatteryHigh": 39,
+    "sleepDuration": 487.0,
+    "sleepDeep": 37.0,
+    "sleepRem": 190.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-01-31",
     "restingHr": 53,
     "bodyBatteryHigh": 62,
+    "sleepDuration": 553.0,
+    "sleepDeep": 3.0,
+    "sleepRem": 134.0,
     "pulseOx": 94.0
   },
   {
     "date": "2026-02-01",
     "restingHr": 54,
     "bodyBatteryHigh": 67,
+    "sleepDuration": 566.0,
+    "sleepDeep": 58.0,
+    "sleepRem": 130.0,
     "pulseOx": 93.0
   },
   {
@@ -266,30 +354,43 @@
     "date": "2026-02-06",
     "restingHr": 52,
     "bodyBatteryHigh": 41,
+    "sleepDuration": 545.0,
+    "sleepDeep": 14.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-07",
     "restingHr": 53,
     "bodyBatteryHigh": 36,
+    "sleepDuration": 708.0,
+    "sleepDeep": 112.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-08",
     "restingHr": 57,
     "bodyBatteryHigh": 50,
+    "sleepDuration": 487.0,
+    "sleepDeep": 53.0,
+    "sleepRem": 95.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-09",
     "restingHr": 57,
     "bodyBatteryHigh": 43,
+    "sleepDuration": 593.0,
+    "sleepDeep": 39.0,
+    "sleepRem": 187.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-10",
     "restingHr": 54,
     "bodyBatteryHigh": 35,
+    "sleepDuration": 269.0,
+    "sleepDeep": 39.0,
+    "sleepRem": 79.0,
     "pulseOx": 92.0
   },
   {
@@ -302,18 +403,27 @@
     "date": "2026-02-12",
     "restingHr": 55,
     "bodyBatteryHigh": 48,
+    "sleepDuration": 470.0,
+    "sleepDeep": 50.0,
+    "sleepRem": 124.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-13",
     "restingHr": 56,
     "bodyBatteryHigh": 27,
+    "sleepDuration": 516.0,
+    "sleepDeep": 2.0,
+    "sleepRem": 156.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-14",
     "restingHr": 54,
     "bodyBatteryHigh": 54,
+    "sleepDuration": 497.0,
+    "sleepDeep": 35.0,
+    "sleepRem": 174.0,
     "pulseOx": 91.0
   },
   {
@@ -326,24 +436,36 @@
     "date": "2026-02-16",
     "restingHr": 50,
     "bodyBatteryHigh": 65,
+    "sleepDuration": 537.0,
+    "sleepDeep": 47.0,
+    "sleepRem": 155.0,
     "pulseOx": 91.0
   },
   {
     "date": "2026-02-17",
     "restingHr": 54,
     "bodyBatteryHigh": 55,
+    "sleepDuration": 459.0,
+    "sleepDeep": 33.0,
+    "sleepRem": 171.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-18",
     "restingHr": 56,
     "bodyBatteryHigh": 40,
+    "sleepDuration": 482.0,
+    "sleepDeep": 52.0,
+    "sleepRem": 109.0,
     "pulseOx": 91.0
   },
   {
     "date": "2026-02-19",
     "restingHr": 56,
     "bodyBatteryHigh": 47,
+    "sleepDuration": 534.0,
+    "sleepDeep": 43.0,
+    "sleepRem": 104.0,
     "pulseOx": 90.0
   },
   {
@@ -356,24 +478,36 @@
     "date": "2026-02-21",
     "restingHr": 52,
     "bodyBatteryHigh": 51,
+    "sleepDuration": 581.0,
+    "sleepDeep": 15.0,
+    "sleepRem": 154.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-22",
     "restingHr": 53,
     "bodyBatteryHigh": 37,
+    "sleepDuration": 540.0,
+    "sleepDeep": 45.0,
+    "sleepRem": 161.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-23",
     "restingHr": 51,
     "bodyBatteryHigh": 69,
+    "sleepDuration": 531.0,
+    "sleepDeep": 47.0,
+    "sleepRem": 199.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-24",
     "restingHr": 55,
     "bodyBatteryHigh": 32,
+    "sleepDuration": 448.0,
+    "sleepDeep": 38.0,
+    "sleepRem": 112.0,
     "pulseOx": 92.0
   },
   {
@@ -386,24 +520,35 @@
     "date": "2026-02-26",
     "restingHr": 55,
     "bodyBatteryHigh": 44,
+    "sleepDuration": 495.0,
+    "sleepDeep": 49.0,
+    "sleepRem": 96.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-02-27",
     "restingHr": 54,
     "bodyBatteryHigh": 62,
+    "sleepDuration": 492.0,
+    "sleepDeep": 52.0,
+    "sleepRem": 131.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-02-28",
     "restingHr": 53,
     "bodyBatteryHigh": 66,
+    "sleepDuration": 582.0,
+    "sleepDeep": 47.0,
+    "sleepRem": 246.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-01",
     "restingHr": 53,
     "bodyBatteryHigh": 66,
+    "sleepDuration": 649.0,
+    "sleepDeep": 81.0,
     "pulseOx": 93.0
   },
   {
@@ -416,18 +561,27 @@
     "date": "2026-03-03",
     "restingHr": 57,
     "bodyBatteryHigh": 15,
+    "sleepDuration": 265.0,
+    "sleepDeep": 15.0,
+    "sleepRem": 78.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-04",
     "restingHr": 54,
     "bodyBatteryHigh": 44,
+    "sleepDuration": 493.0,
+    "sleepDeep": 33.0,
+    "sleepRem": 123.0,
     "pulseOx": 91.0
   },
   {
     "date": "2026-03-05",
     "restingHr": 56,
     "bodyBatteryHigh": 60,
+    "sleepDuration": 468.0,
+    "sleepDeep": 34.0,
+    "sleepRem": 154.0,
     "pulseOx": 92.0
   },
   {
@@ -440,18 +594,25 @@
     "date": "2026-03-07",
     "restingHr": 51,
     "bodyBatteryHigh": 57,
+    "sleepDuration": 572.0,
+    "sleepDeep": 40.0,
+    "sleepRem": 160.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-08",
     "restingHr": 59,
     "bodyBatteryHigh": 58,
+    "sleepDuration": 406.0,
+    "sleepDeep": 45.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-03-09",
     "restingHr": 55,
     "bodyBatteryHigh": 40,
+    "sleepDuration": 288.0,
+    "sleepDeep": 88.0,
     "pulseOx": 93.0
   },
   {
@@ -469,6 +630,9 @@
     "date": "2026-03-12",
     "restingHr": 56,
     "bodyBatteryHigh": 33,
+    "sleepDuration": 379.0,
+    "sleepDeep": 19.0,
+    "sleepRem": 136.0,
     "pulseOx": 92.0
   },
   {
@@ -481,30 +645,45 @@
     "date": "2026-03-14",
     "restingHr": 55,
     "bodyBatteryHigh": 52,
+    "sleepDuration": 559.0,
+    "sleepDeep": 49.0,
+    "sleepRem": 130.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-15",
     "restingHr": 56,
     "bodyBatteryHigh": 50,
+    "sleepDuration": 590.0,
+    "sleepDeep": 45.0,
+    "sleepRem": 187.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-16",
     "restingHr": 52,
     "bodyBatteryHigh": 80,
+    "sleepDuration": 516.0,
+    "sleepDeep": 17.0,
+    "sleepRem": 163.0,
     "pulseOx": 93.0
   },
   {
     "date": "2026-03-17",
     "restingHr": 54,
     "bodyBatteryHigh": 53,
+    "sleepDuration": 431.0,
+    "sleepDeep": 78.0,
+    "sleepRem": 96.0,
     "pulseOx": 92.0
   },
   {
     "date": "2026-03-18",
     "restingHr": 54,
     "bodyBatteryHigh": 57,
+    "sleepDuration": 358.0,
+    "sleepDeep": 41.0,
+    "sleepRem": 51.0,
     "pulseOx": 93.0
   },
   {
@@ -517,6 +696,9 @@
     "date": "2026-03-20",
     "restingHr": 54,
     "bodyBatteryHigh": 55,
+    "sleepDuration": 563.0,
+    "sleepDeep": 64.0,
+    "sleepRem": 153.0,
     "pulseOx": 90.0
   },
   {
@@ -529,6 +711,8 @@
     "date": "2026-03-22",
     "restingHr": 58,
     "bodyBatteryHigh": 33,
+    "sleepDuration": 594.0,
+    "sleepRem": 140.0,
     "pulseOx": 92.0,
     "weight": 178.0
   }

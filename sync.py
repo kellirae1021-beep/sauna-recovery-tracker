@@ -138,6 +138,19 @@ def fetch_day(client: Garmin, d: date) -> dict:
         if score is not None:
             record["sleepScore"] = int(score)
 
+        # Sleep duration and stages (minutes) — used for Elliott
+        total_secs = daily.get("sleepTimeSeconds")
+        if total_secs:
+            record["sleepDuration"] = round(total_secs / 60, 1)
+
+        deep_secs = daily.get("deepSleepSeconds")
+        if deep_secs:
+            record["sleepDeep"] = round(deep_secs / 60, 1)
+
+        rem_secs = daily.get("remSleepSeconds")
+        if rem_secs:
+            record["sleepRem"] = round(rem_secs / 60, 1)
+
     hrv = safe_get(client.get_hrv_data, ds, label=f"HRV {ds}")
     if hrv:
         summary = hrv.get("hrvSummary") or {}
