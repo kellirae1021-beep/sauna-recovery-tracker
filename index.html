@@ -67,6 +67,25 @@ textarea{min-height:90px;resize:vertical}
 .parse-status.error{background:#fbf0f3;color:var(--bad)}.parse-status.success{background:#eef8f5;color:var(--good)}
 .chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#221b29;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 8px 20px rgba(34,27,41,.25);display:none;max-width:200px}
 
+
+/* Bootcamp goal card */
+.bootcamp-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05)}
+.bootcamp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.bootcamp-header h3{margin:0;font-size:16px}
+.bootcamp-pace-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.bootcamp-pace-badge.good{background:#eef8f5;color:var(--good)}.bootcamp-pace-badge.warn{background:#fef9ec;color:#a07828}.bootcamp-pace-badge.low{background:#fbf0f3;color:var(--bad)}
+.bootcamp-progress-wrap{margin-bottom:12px}
+.bootcamp-bar-track{position:relative;height:16px;background:#f0ebf4;border-radius:999px;overflow:visible;margin-bottom:6px}
+.bootcamp-bar-fill{height:100%;border-radius:999px;transition:width .4s}
+.bootcamp-bar-fill.good{background:var(--teal)}.bootcamp-bar-fill.warn{background:#d4a030}.bootcamp-bar-fill.low{background:var(--rose)}
+.bootcamp-marker{position:absolute;top:-4px;width:3px;height:24px;border-radius:2px;background:#6f3f74;opacity:.5}
+.bootcamp-marker-label{position:absolute;top:26px;font-size:9px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.bootcamp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.bootcamp-stat{background:#faf8fb;border:1px solid var(--border);border-radius:10px;padding:8px;text-align:center}
+.bootcamp-stat .bs-val{font-size:20px;font-weight:700;line-height:1.1;color:var(--text)}
+.bootcamp-stat .bs-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+.bootcamp-monthly-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+
 /* User switcher pills */
 .user-switcher{display:flex;gap:6px}
 .user-btn{border:2px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 16px;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);background:transparent;cursor:pointer;transition:all .15s}
@@ -247,6 +266,7 @@ textarea{min-height:90px;resize:vertical}
   </div>
   <div class="mobile-tab active" id="mobileToday">
     <div class="mobile-recovery" id="mobileRecoveryBanner"></div>
+    <div id="mobileBootcampCard" style="display:none;background:#fff;border-bottom:1px solid var(--border)"></div>
     <div id="mobileTodaySlots"></div>
   </div>
   <div class="mobile-tab" id="mobileCharts">
@@ -352,7 +372,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v33</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v34</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -383,6 +403,7 @@ textarea{min-height:90px;resize:vertical}
     </div>
   </div>
   <div class="desktop-tab-panel active" id="dtodayTab">
+    <div id="desktopBootcampCard" style="display:none"></div>
     <div class="card">
       <div id="desktopRecoveryBanner"></div>
       <div class="today-grid" id="todayGrid"></div>
@@ -517,7 +538,7 @@ textarea{min-height:90px;resize:vertical}
         <div id="workoutWrap">
           <label>Workout today</label>
           <div class="workout-chips" id="workoutChips"></div>
-          <!-- Burn Bootcamp extras — only shown when Burn Bootcamp selected -->
+          <!-- Burn Boot Camp extras — only shown when Burn Boot Camp selected -->
           <div id="bootcampExtras" class="bootcamp-extras" style="display:none">
             <div>
               <label>Class time</label>
@@ -606,7 +627,7 @@ const CHART_PALETTE = {
 
 // Workout options per user — first is default/most common
 const WORKOUT_OPTIONS = {
-  Kelli:   ['Burn Bootcamp','Pickleball','Weights','Run','Walk','Cycling','Other'],
+  Kelli:   ['Burn Boot Camp','Pickleball','Weights','Run','Walk','Cycling','Other'],
   Elliott: ['Jiu Jitsu','Pickleball','Weights','Run','Walk','Cycling','Other'],
 };
 
@@ -690,7 +711,7 @@ function rebuildWorkoutChips(){
   updateBootcampExtras();
 }
 function updateBootcampExtras(){
-  const show=selectedWorkouts.has('Burn Bootcamp');
+  const show=selectedWorkouts.has('Burn Boot Camp');
   document.getElementById('bootcampExtras').style.display=show?'grid':'none';
   if(!show){document.getElementById('bootcampTime').value='';document.getElementById('bootcampType').value='';}
 }
@@ -714,7 +735,7 @@ function sortedDesc(){return[...entries].sort((a,b)=>b.date.localeCompare(a.date
 function weekBounds(offset=0){const now=new Date(),day=now.getDay(),mon=new Date(now);mon.setDate(now.getDate()-(day===0?6:day-1)+offset*7);mon.setHours(0,0,0,0);const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);return{start:localDateStr(mon),end:localDateStr(sun)};}
 function countSaunaInWeek(offset=0){const{start,end}=weekBounds(offset);return new Set(entries.filter(e=>(e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0))&&e.date>=start&&e.date<=end).map(e=>e.date)).size;}
 function totalSaunaSessions(){return new Set(entries.filter(e=>e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0)).map(e=>e.date)).size;}
-function workoutBadgesHtml(entry){if(!entry||!entry.workouts)return'';const ws=entry.workouts.split(',').map(w=>w.trim()).filter(Boolean);if(!ws.length)return'';return`<div class="workout-badge">${ws.map(w=>`<span class="workout-tag">${w==='Burn Bootcamp'&&entry.bootcampTime?`🏋️ ${w} · ${fmtTime(entry.bootcampTime)}${entry.bootcampType?' · '+fmtBootcampType(entry.bootcampType):''}`:w==='Cycling'&&!isBlank(entry.cyclingMiles)?`🚴 Cycling · ${entry.cyclingMiles}mi`:w}</span>`).join('')}</div>`;}
+function workoutBadgesHtml(entry){if(!entry||!entry.workouts)return'';const ws=entry.workouts.split(',').map(w=>w.trim()).filter(Boolean);if(!ws.length)return'';return`<div class="workout-badge">${ws.map(w=>`<span class="workout-tag">${w==='Burn Boot Camp'&&entry.bootcampTime?`🏋️ ${w} · ${fmtTime(entry.bootcampTime)}${entry.bootcampType?' · '+fmtBootcampType(entry.bootcampType):''}`:w==='Cycling'&&!isBlank(entry.cyclingMiles)?`🚴 Cycling · ${entry.cyclingMiles}mi`:w}</span>`).join('')}</div>`;}
 
 // ─── Baselines ────────────────────────────────────────────────────────────────
 function computeBaselines(){if(!garminHistory.length){baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null,pulseOx:null,bodyBatteryMorningHigh:null,respiration:null,sleepDuration:null,sleepDeepTypicalLow:null,sleepDeepTypicalHigh:null,sleepRem:null};baselineRange={start:null,end:null};return;}const latest=garminHistory.reduce((m,r)=>r.date>m?r.date:m,garminHistory[0].date);const cutoff=new Date(latest+'T12:00:00');cutoff.setDate(cutoff.getDate()-90);baselineRange={start:localDateStr(cutoff),end:latest};const recent=garminHistory.filter(r=>new Date(r.date+'T12:00:00')>=cutoff);const hrv=pctRange(recent.map(r=>r.hrv));const deepRange=pctRange(recent.map(r=>r.sleepDeep).filter(v=>v!=null));baselineValues={sleepScore:round1(avgNum(recent.map(r=>r.sleepScore))),restingHr:round1(avgNum(recent.map(r=>r.restingHr))),hrvTypicalLow:hrv.low,hrvTypicalHigh:hrv.high,pulseOx:round1(avgNum(recent.map(r=>r.pulseOx))),bodyBatteryMorningHigh:round1(avgNum(recent.map(r=>r.bodyBatteryHigh))),respiration:round1(avgNum(recent.map(r=>r.respiration))),sleepDuration:round1(avgNum(recent.map(r=>r.sleepDuration))),sleepDeepTypicalLow:deepRange.low,sleepDeepTypicalHigh:deepRange.high,sleepRem:round1(avgNum(recent.map(r=>r.sleepRem)))};}
@@ -736,10 +757,99 @@ function renderBaselines(){const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateS
 
 // ─── Today slots ──────────────────────────────────────────────────────────────
 function desktopTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙';if(type==='workout'){const wEntries=entries.filter(e=>e.date===todayStr&&e.entryType==='workout');const rows=wEntries.map(e=>`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 0;border-top:1px solid var(--border)">${workoutBadgesHtml(e)||'<span style="font-size:13px;color:var(--muted)">No workout type</span>'}<div style="display:flex;gap:5px;flex-shrink:0"><button class="history-btn-edit" onclick="startEdit('${e.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${e.id}')">Delete</button></div></div>${e.notes?`<div class="today-note">${escapeHtml(e.notes)}</div>`:''}`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('workout')">Add</button></div>${wEntries.length?rows:'<div style="font-size:13px;color:var(--muted)">No workout logged.</div>'}</div>`;}const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?(activeUser==='Elliott'?[{label:'Sleep',key:'sleepDuration',baseline:bv.sleepDuration,kind:'higher_better',fmtVal:fmtMins},{label:'Deep Sleep',key:'sleepDeep',baseline:{low:bv.sleepDeepTypicalLow,high:bv.sleepDeepTypicalHigh},kind:'range',fmtVal:fmtMins},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]:[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]).filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Battery',key:'bodyBattery'},{label:'Respiration',key:'respiration'},{label:'Pulse Ox',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>${primary.length?`<div class="prominent-grid">${primary.map(x=>`<div class="prominent-metric"><div class="prominent-top"><span>${x.label}</span>${deltaChip(x.kind,entry[x.key],x.baseline)}</div><div class="prominent-value">${x.fmtVal?x.fmtVal(entry[x.key]):fmt(entry[x.key])}</div><div class="prominent-sub">${x.kind==='range'?`${x.fmtVal?x.fmtVal(x.baseline.low??''):x.baseline.low??'—'}–${x.fmtVal?x.fmtVal(x.baseline.high??''):x.baseline.high??'—'}`:x.baseline!=null?`base ${x.fmtVal?x.fmtVal(x.baseline):x.baseline}`:''}</div></div>`).join('')}</div>`:''}${secondary.length?`<div class="secondary-grid">${secondary.map(x=>`<div class="secondary-metric"><div class="secondary-head">${x.label}</div><div class="secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:''}${workoutBadgesHtml(entry)}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
-function renderDesktopToday(){document.getElementById('desktopRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('morning','Morning')+desktopTodaySlotHtml('workout','Workout')+desktopTodaySlotHtml('sauna','Sauna Today')+desktopTodaySlotHtml('bedtime','Bedtime');}
+
+// ─── Bootcamp Goal ────────────────────────────────────────────────────────────
+function burnBootcampStats(){
+  const CLOSED=new Set(['2026-11-26','2026-12-25']);
+  const GOAL=250,STRETCH=300;
+  const todayD=new Date();todayD.setHours(12,0,0,0);
+  function isOpen(d){if(d.getDay()===0)return false;return!CLOSED.has(localDateStr(d));}
+  let totalOpen=0,elapsed=0,remaining=0;
+  const monthOpen={};for(let m=1;m<=12;m++)monthOpen[m]=0;
+  const cur=new Date('2026-01-01T12:00:00');
+  const end=new Date('2026-12-31T12:00:00');
+  while(cur<=end){
+    if(isOpen(cur)){
+      totalOpen++;
+      const m=cur.getMonth()+1;monthOpen[m]++;
+      if(cur<todayD)elapsed++;else remaining++;
+    }
+    cur.setDate(cur.getDate()+1);
+  }
+  const attendedDates=new Set(entries.filter(e=>e.userName==='Kelli'&&e.entryType==='workout'&&e.workouts&&e.workouts.includes('Burn Boot Camp')&&e.date.startsWith('2026')).map(e=>e.date));
+  const attended=attendedDates.size;
+  const rate=elapsed>0?attended/elapsed:0;
+  const projected=Math.round(rate*totalOpen);
+  const monthly={};for(let m=1;m<=12;m++)monthly[m]=0;
+  attendedDates.forEach(ds=>{const m=parseInt(ds.slice(5,7));if(monthly[m]!==undefined)monthly[m]++;});
+  const needed250=Math.max(0,GOAL-attended);
+  const needed300=Math.max(0,STRETCH-attended);
+  const paceClass=projected>=GOAL?'good':projected>=GOAL-20?'warn':'low';
+  return{attended,projected,needed250,needed300,remaining,elapsed,totalOpen,monthly,monthOpen,rate,paceClass,GOAL,STRETCH};
+}
+
+function bootcampMonthSvg(monthly,monthOpen,attended){
+  const MONTHS=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  const W=320,H=80,L=8,R=8,T=8,B=24,pW=W-L-R,pH=H-T-B;
+  const maxBar=Math.max(...Object.values(monthly),1);
+  const barW=Math.floor(pW/12*0.6);
+  const xp=i=>L+i*(pW/12)+pW/24;
+  let out=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">`;
+  // pace line at goal/12 per month (≈20.8)
+  const paceY=T+pH-(250/12/maxBar)*pH;
+  const clampedY=Math.max(T,Math.min(T+pH,paceY));
+  out+=`<line x1="${L}" y1="${clampedY}" x2="${W-R}" y2="${clampedY}" stroke="#6f3f74" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>`;
+  const nowMonth=new Date().getMonth();
+  Object.keys(monthly).forEach((m,i)=>{
+    const v=monthly[m]||0;
+    const barH=v>0?(v/maxBar)*pH:0;
+    const x=xp(i);
+    const isPast=i<nowMonth,isCurrent=i===nowMonth;
+    const col=isPast||isCurrent?'#6f3f74':'#e6deea';
+    if(barH>0)out+=`<rect x="${x-barW/2}" y="${T+pH-barH}" width="${barW}" height="${barH}" fill="${col}" rx="2"/>`;
+    out+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="9" fill="${isPast||isCurrent?'#6f6277':'#c0b8c8'}">${MONTHS[i]}</text>`;
+    if(v>0)out+=`<text x="${x}" y="${T+pH-barH-3}" text-anchor="middle" font-size="8" fill="${col}">${v}</text>`;
+  });
+  out+=`</svg>`;
+  return out;
+}
+
+function bootcampCardHtml(isMobile){
+  if(activeUser!=='Kelli')return'';
+  const s=burnBootcampStats();
+  const pct=Math.min(100,(s.attended/s.STRETCH)*100);
+  const goalPct=(s.GOAL/s.STRETCH)*100;
+  const projLabel=s.projected>s.STRETCH?`>${s.STRETCH}`:s.projected>0?`${s.projected}`:'—';
+  const paceLabel=s.paceClass==='good'?`On pace for ${projLabel}`:s.paceClass==='warn'?`Close — pace: ${projLabel}`:`Behind — pace: ${projLabel}`;
+  const bar=`<div class="bootcamp-bar-track">
+    <div class="bootcamp-bar-fill ${s.paceClass}" style="width:${pct}%"></div>
+    <div class="bootcamp-marker" style="left:${goalPct}%"><span class="bootcamp-marker-label">250</span></div>
+    <div class="bootcamp-marker" style="left:99%;background:#2f6f73"><span class="bootcamp-marker-label">300</span></div>
+  </div>`;
+  const stats=`<div class="bootcamp-stats">
+    <div class="bootcamp-stat"><div class="bs-val">${s.attended}</div><div class="bs-lbl">Attended</div></div>
+    <div class="bootcamp-stat"><div class="bs-val">${s.needed250>0?s.needed250:'✓'}</div><div class="bs-lbl">Needed for 250</div></div>
+    <div class="bootcamp-stat"><div class="bs-val">${s.remaining}</div><div class="bs-lbl">Open days left</div></div>
+  </div>`;
+  const chart=`<div class="bootcamp-monthly-title">Monthly attendance</div>${bootcampMonthSvg(s.monthly,s.monthOpen,s.attended)}`;
+  if(isMobile){
+    return`<div style="padding:14px 16px"><div class="bootcamp-header"><h3>🏋️ Burn Boot Camp 2026</h3><span class="bootcamp-pace-badge ${s.paceClass}">${paceLabel}</span></div>${bar}${stats}${chart}</div>`;
+  }
+  return`<div class="bootcamp-card"><div class="bootcamp-header"><h3>🏋️ Burn Boot Camp 2026</h3><span class="bootcamp-pace-badge ${s.paceClass}">${paceLabel}</span></div>${bar}${stats}${chart}</div>`;
+}
+
+function renderBootcampGoal(){
+  const dc=document.getElementById('desktopBootcampCard');
+  const mc=document.getElementById('mobileBootcampCard');
+  const show=activeUser==='Kelli';
+  if(dc){dc.style.display=show?'':'none';if(show)dc.innerHTML=bootcampCardHtml(false);}
+  if(mc){mc.style.display=show?'':'none';if(show)mc.innerHTML=bootcampCardHtml(true);}
+}
+
+function renderDesktopToday(){renderBootcampGoal();document.getElementById('desktopRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('morning','Morning')+desktopTodaySlotHtml('workout','Workout')+desktopTodaySlotHtml('sauna','Sauna Today')+desktopTodaySlotHtml('bedtime','Bedtime');}
 
 function mobileTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙';if(type==='workout'){const wEntries=entries.filter(e=>e.date===todayStr&&e.entryType==='workout');const rows=wEntries.map(e=>`<div style="padding:8px 0;border-top:1px solid var(--border)">${workoutBadgesHtml(e)||'<span style="font-size:13px;color:var(--muted)">No type</span>'}<div style="display:flex;gap:5px;margin-top:6px"><button class="history-btn-edit" onclick="startEdit('${e.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${e.id}')">Delete</button></div>${e.notes?`<div class="today-note">${escapeHtml(e.notes)}</div>`:''}</div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('workout')">Add</button></h4>${wEntries.length?rows:'<div style="font-size:13px;color:var(--muted)">No workout logged.</div>'}</div>`;}const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=SAUNA_WEEKLY_GOAL;const dots=Array.from({length:SAUNA_WEEKLY_GOAL},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${SAUNA_WEEKLY_GOAL}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?(activeUser==='Elliott'?[{label:'Sleep',key:'sleepDuration',baseline:bv.sleepDuration,kind:'higher_better',fmtVal:fmtMins},{label:'Deep Sleep',key:'sleepDeep',baseline:{low:bv.sleepDeepTypicalLow,high:bv.sleepDeepTypicalHigh},kind:'range',fmtVal:fmtMins},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]:[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]).filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${x.fmtVal?x.fmtVal(entry[x.key]):fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${deltaChip(x.kind,entry[x.key],x.baseline)}</div></div>`).join('')}</div>`:'';const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${workoutBadgesHtml(entry)}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
-function renderMobileToday(){document.getElementById('mobileRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('morning','Morning')+mobileTodaySlotHtml('workout','Workout')+mobileTodaySlotHtml('sauna','Sauna Today')+mobileTodaySlotHtml('bedtime','Bedtime');}
+function renderMobileToday(){renderBootcampGoal();document.getElementById('mobileRecoveryBanner').innerHTML=recoveryBannerHtml(entries.find(e=>e.date===todayStr&&e.entryType==='morning'));document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('morning','Morning')+mobileTodaySlotHtml('workout','Workout')+mobileTodaySlotHtml('sauna','Sauna Today')+mobileTodaySlotHtml('bedtime','Bedtime');}
 
 // ─── History ──────────────────────────────────────────────────────────────────
 function historyItemsHtml(isMobile=false){if(!entries.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No entries yet.</div>';const byDate=new Map();sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});return Array.from(byDate.entries()).map(([date,dayEntries])=>{const eHtml=dayEntries.map(entry=>{const type=entry.entryType||'morning',icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙',lbl=type==='morning'?'Morning':type==='sauna'?'Sauna':type==='workout'?'Workout':'Bedtime';const m=[];if(activeUser==='Elliott'){if(!isBlank(entry.sleepDuration))m.push(`😴 ${fmtMins(entry.sleepDuration)}`);if(!isBlank(entry.sleepDeep))m.push(`🌑 ${fmtMins(entry.sleepDeep)} deep`);}else{if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);if(!isBlank(entry.hrv))m.push(`📉 ${entry.hrv}`);}if(!isBlank(entry.restingHr))m.push(`❤️ ${entry.restingHr}`);if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight}`);if(!isBlank(entry.energy))m.push(`⚡ ${entry.energy}`);if(!isBlank(entry.stress))m.push(`🧠 ${entry.stress}`);if(!isBlank(entry.muscleSoreness))m.push(`💪 ${entry.muscleSoreness}`);if(!isBlank(entry.jointSoreness))m.push(`🦴 ${entry.jointSoreness}`);if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);if(entry.redLightUsed)m.push('🔴');if(entry.workouts)m.push(`🏃 ${entry.workouts}`);if(!isBlank(entry.cyclingMiles))m.push(`🚴 ${entry.cyclingMiles}mi`);const btns=`<div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div>`;if(isMobile)return`<div class="mobile-history-entry"><div class="mobile-history-type"><span>${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="mobile-history-metrics history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="mobile-history-note history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}).join('');if(isMobile)return`<div class="mobile-history-item"><div class="mobile-history-date">${shortDate(date)}</div>${eHtml}</div>`;return`<div class="history-item"><div class="history-date">${longDate(date)}</div>${eHtml}</div>`;}).join('');}
@@ -885,7 +995,7 @@ function getFormData(){
   const num=id=>{const v=document.getElementById(id)?.value;return v===''||v==null?'':Number(v);};
   const isBedtime=currentEntryType==='bedtime';
   const isWorkout=currentEntryType==='workout';
-  const hasBurn=(isBedtime||isWorkout)&&selectedWorkouts.has('Burn Bootcamp');
+  const hasBurn=(isBedtime||isWorkout)&&selectedWorkouts.has('Burn Boot Camp');
   return{
     id:editingId||crypto.randomUUID(),date:document.getElementById('date').value,
     entryType:currentEntryType,timeOfDay:currentEntryType==='morning'?'morning':currentEntryType==='bedtime'?'post_sauna':currentEntryType==='workout'?'workout':'other',
