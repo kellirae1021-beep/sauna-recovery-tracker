@@ -372,7 +372,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v35</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v36</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -636,7 +636,7 @@ const todayStr=localDateStr();
 const STORAGE_KEY='sauna-recovery-tracker-v17';
 const USER_KEY='srt-active-user';
 const API_KEY_STORAGE='sauna-tracker-api-key';
-const SAUNA_WEEKLY_GOAL=4;
+const SAUNA_WEEKLY_GOAL=5;
 const SUPABASE_URL='https://gnggxqvmcatqholjxtsz.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImduZ2d4cXZtY2F0cWhvbGp4dHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjgxOTYsImV4cCI6MjA4OTQ0NDE5Nn0.LZEPVQ5dPpkSihLMiQJLB2vX5oQEpuaSEpz-Mckxe1I';
 const SB_HEADERS={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`};
@@ -790,25 +790,39 @@ function burnBootcampStats(){
 
 function bootcampMonthSvg(monthly,monthOpen,attended){
   const MONTHS=['J','F','M','A','M','J','J','A','S','O','N','D'];
-  const W=320,H=90,L=8,R=8,T=18,B=24,pW=W-L-R,pH=H-T-B;
-  const maxBar=Math.max(...Object.values(monthly),1);
+  const W=320,H=100,L=8,R=8,T=18,B=24,pW=W-L-R,pH=H-T-B;
+  // Scale based on max possible days in any month (max of monthOpen values)
+  const maxBar=Math.max(...Object.values(monthOpen),1);
   const barW=Math.floor(pW/12*0.6);
   const xp=i=>L+i*(pW/12)+pW/24;
   let out=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">`;
-  // pace line at goal/12 per month (≈20.8)
+  // pace line at 250/12 per month
   const paceY=T+pH-(250/12/maxBar)*pH;
   const clampedY=Math.max(T,Math.min(T+pH,paceY));
   out+=`<line x1="${L}" y1="${clampedY}" x2="${W-R}" y2="${clampedY}" stroke="#6f3f74" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>`;
   const nowMonth=new Date().getMonth();
   Object.keys(monthly).forEach((m,i)=>{
-    const v=monthly[m]||0;
-    const barH=v>0?(v/maxBar)*pH:0;
+    const attended=monthly[m]||0;
+    const possible=monthOpen[m]||0;
     const x=xp(i);
     const isPast=i<nowMonth,isCurrent=i===nowMonth;
-    const col=isPast||isCurrent?'#6f3f74':'#e6deea';
-    if(barH>0)out+=`<rect x="${x-barW/2}" y="${T+pH-barH}" width="${barW}" height="${barH}" fill="${col}" rx="2"/>`;
-    out+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="9" fill="${isPast||isCurrent?'#6f6277':'#c0b8c8'}">${MONTHS[i]}</text>`;
-    if(v>0)out+=`<text x="${x}" y="${T+pH-barH-3}" text-anchor="middle" font-size="8" fill="${col}">${v}</text>`;
+    const lightCol='#e6deea';
+    const darkCol=isPast||isCurrent?'#6f3f74':'#d0c4d8';
+    const monthLblCol=isPast||isCurrent?'#6f6277':'#c0b8c8';
+    // Light bar = full month possible (always shown)
+    const lightH=(possible/maxBar)*pH;
+    out+=`<rect x="${x-barW/2}" y="${T+pH-lightH}" width="${barW}" height="${lightH}" fill="${lightCol}" rx="2"/>`;
+    // Possible count at top of light bar
+    out+=`<text x="${x}" y="${T+pH-lightH-3}" text-anchor="middle" font-size="8" fill="#9a8fa1">${possible}</text>`;
+    // Dark fill = attended (on top of light bar, from bottom)
+    if(attended>0){
+      const darkH=(attended/maxBar)*pH;
+      out+=`<rect x="${x-barW/2}" y="${T+pH-darkH}" width="${barW}" height="${darkH}" fill="${darkCol}" rx="2"/>`;
+      // Attended count at base of dark fill
+      out+=`<text x="${x}" y="${T+pH-4}" text-anchor="middle" font-size="8" font-weight="700" fill="${isPast||isCurrent?'#fff':'#a090b0'}">${attended}</text>`;
+    }
+    // Month label
+    out+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="9" fill="${monthLblCol}">${MONTHS[i]}</text>`;
   });
   out+=`</svg>`;
   return out;
