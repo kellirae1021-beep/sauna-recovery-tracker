@@ -18387,5 +18387,45 @@
     "sleepRem": 62.0,
     "hrv": 33.0,
     "respiration": 15.0
+  },
+  {
+    "date": "2026-03-30",
+    "sleepScore": 86,
+    "sleepDuration": 508.0,
+    "sleepDeep": 71.0,
+    "sleepRem": 121.0,
+    "hrv": 33.0,
+    "respiration": 14.0,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-03-31",
+    "sleepScore": 90,
+    "sleepDuration": 486.0,
+    "sleepDeep": 84.0,
+    "sleepRem": 107.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-01",
+    "sleepScore": 87,
+    "sleepDuration": 479.0,
+    "sleepDeep": 77.0,
+    "sleepRem": 96.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-04-02",
+    "sleepScore": 85,
+    "sleepDuration": 451.0,
+    "sleepDeep": 99.0,
+    "sleepRem": 96.0,
+    "hrv": 36.0,
+    "respiration": 17.0,
+    "pulseOx": 96.0
   }
 ]
