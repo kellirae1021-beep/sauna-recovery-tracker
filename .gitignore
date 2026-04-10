@@ -1,3 +1,4 @@
 .env
 .garmin_tokens.json
 sync.log
+versions/
