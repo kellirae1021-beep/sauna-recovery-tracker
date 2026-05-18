@@ -773,6 +773,7 @@ const seedPRs = [
 ];
 
 const TYPE_FIELDS={
+  sauna:['saunaMinutesWrap','saunaTempWrap','redLightWrap','notesWrap'],
   workout:['workoutWrap','notesWrap'],
   pr:['prWrap']
 };
@@ -1123,14 +1124,14 @@ let selectedPREquip='';
 let selectedPRResultType='weight_reps';
 let editingPRId=null;
 
-function equipBadgeHtml(equip,small=false){const map={Dumbbell:'db',Barbell:'bb',Bodyweight:'bw',Other:'other'};const cls=map[equip]||'other';const label=equip==='Dumbbell'?'DB':equip==='Barbell'?'BB':equip==='Bodyweight'?'BW':equip||'?';return`<span class="pr-badge ${cls}"${small?' style="font-size:9px;padding:1px 5px"':''}>${label}</span>`;}
+function equipBadgeHtml(equip,small=false){const map={Dumbbell:'db',Barbell:'bb',Bodyweight:'bw',Other:'other'};const cls=map[equip]||'other';const label=equip||'?';return`<span class="pr-badge ${cls}"${small?' style="font-size:9px;padding:1px 5px"':''}>${label}</span>`;}
 
 function prResultText(pr){
-  if(pr.prResultType==='timed')return`${pr.prTime||'—'}${pr.prWeight?` @ ${pr.prWeight}#`:''}`;
-  if(pr.prResultType==='count')return`${pr.prCount||'—'} reps${pr.prWeight?` @ ${pr.prWeight}#`:''}`;
+  if(pr.prResultType==='timed')return`${pr.prTime||'—'}${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
+  if(pr.prResultType==='count')return`${pr.prCount||'—'} reps${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
   const parts=[];
   if(pr.prReps!=null&&pr.prReps!=='')parts.push(`${pr.prReps} reps`);
-  if(pr.prWeight!=null&&pr.prWeight!=='')parts.push(`@ ${pr.prWeight}#`);
+  if(pr.prWeight!=null&&pr.prWeight!=='')parts.push(`of ${pr.prWeight} lbs`);
   return parts.join(' ')||'—';
 }
 
@@ -1146,7 +1147,11 @@ function setupPRMovementTypeahead(initialValue=''){
   function showDropdown(query){
     const q=query.trim().toLowerCase();
     const all=getAllMovements();
-    const matches=q?all.filter(m=>m.name.toLowerCase().includes(q)):all.slice(0,12);
+    // Also include any movement names from existing PRs not already in the list
+    const allNames=new Set(all.map(m=>m.name.toLowerCase()));
+    prEntries.forEach(p=>{if(p.prMovement&&!allNames.has(p.prMovement.toLowerCase())){all.push({name:p.prMovement,category:p.prCategory||'Core & Other'});allNames.add(p.prMovement.toLowerCase());}});
+    all.sort((a,b)=>a.name.localeCompare(b.name));
+    const matches=q?all.filter(m=>m.name.toLowerCase().includes(q)):all.slice(0,14);
     const exactMatch=all.find(m=>m.name.toLowerCase()===q);
     dropdown.innerHTML='';
     focusIdx=-1;
@@ -1307,8 +1312,8 @@ function prListHtml(){
           return (a.prCount||a.prTime||'') > (b.prCount||b.prTime||'') ? -1 : 1;
         });
         const rows=equipPRs.map(p=>{
-          const dateStr=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'}):'Date unknown';
-          const dateCls=p.date?'pr-date':'pr-unknown-date';
+        const dateStr=(!p.date||p.date<'2020-01-01')?'Date unknown':new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+          const dateCls=(!p.date||p.date<'2020-01-01')?'pr-unknown-date':'pr-date';
           return`<div class="pr-row">
             <span class="pr-result">${prResultText(p)}</span>
             <span class="${dateCls}">${dateStr}</span>
