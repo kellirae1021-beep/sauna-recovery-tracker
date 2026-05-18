@@ -797,7 +797,7 @@ function historyItemsHtml(isMobile=false){if(!entries.length)return'<div style="
 function renderHistory(){document.getElementById('historyList').innerHTML=historyItemsHtml(false);document.getElementById('mobileHistoryList').innerHTML=historyItemsHtml(true);}
 
 // ─── Charts ───────────────────────────────────────────────────────────────────
-function filterByRange(rows,range){if(range==='all'||!rows.length)return rows;const latest=rows.reduce((m,r)=>r.date>m?r.date:m,rows[0].date);const cutoff=new Date(latest.slice(0,10)+'T12:00:00');cutoff.setDate(cutoff.getDate()-Number(range));return rows.filter(r=>new Date(r.date.slice(0,10)+'T12:00:00')>=cutoff);}
+function filterByRange(rows,range){if(range==='all'||!rows.length)return rows;const cutoff=new Date();cutoff.setDate(cutoff.getDate()-Number(range));return rows.filter(r=>new Date(r.date.slice(0,10)+'T12:00:00')>=cutoff);}
 function xStep(range){return{'7':1,'28':4,'90':10,'180':20,'365':40,'all':90}[range]??4;}
 function dateParts(key){const dt=new Date(key.split('-').slice(0,3).join('-')+'T12:00:00');return{top:dt.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase(),bottom:dt.toLocaleDateString('en-US',{month:'short'}).toUpperCase()+' '+dt.getDate()};}
 function autoYRange(datasets){const vals=datasets.flatMap(ds=>ds.data.map(r=>Number(r.value))).filter(v=>!isNaN(v));if(!vals.length)return{yMin:0,yMax:100};const mn=Math.min(...vals),mx=Math.max(...vals),pad=Math.max((mx-mn)*.12,2);return{yMin:Math.floor(mn-pad),yMax:Math.ceil(mx+pad)};}
@@ -851,13 +851,20 @@ function getChartDatasets(){
   const otherEntries=compareMode?allEntries.filter(e=>e.userName===other):[];
   const otherSa=[...otherEntries].sort((a,b)=>a.date.localeCompare(b.date));
   const oms=(k,type)=>otherSa.filter(e=>!isBlank(e[k])&&(!type||e.entryType===type)).map(e=>({date:`${e.date}-${e.timeOfDay||'other'}`,value:Number(e[k])}));
-  const primaryDatasets=activeUser==='Elliott'
-    ?[{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])]:
-    [{label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},{label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])];
-  return{
-    primary:primaryDatasets,
-    elliotSleep:[{label:'Sleep Dur. (Garmin)',color:'#2c4a6e',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDuration')},{label:'Sleep Duration',color:'#2c4a6e',width:3,data:ms('sleepDuration')},{label:'Deep Sleep (Garmin)',color:'#3a7a9a',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDeep')},{label:'Deep Sleep',color:'#3a7a9a',dash:'8 4',width:3,data:ms('sleepDeep')}]
-  };
+  const primaryDatasets=[
+    {label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},
+    {label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},
+    {label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},
+    {label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},
+    {label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},
+    {label:'RHR',color:p.p3,width:3,data:ms('restingHr')},
+    ...(compareMode?[
+      {label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},
+      {label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},
+      {label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}
+    ]:[])
+  ];
+  return{primary:primaryDatasets};
 }
 
 function renderChartLegends(d){
@@ -865,15 +872,13 @@ function renderChartLegends(d){
   const hasAny=(datasets,label)=>datasets.some(ds=>ds.label===label&&ds.data.length>0);
   const sw=(c,r)=>`<span class="swatch" style="background:${c};${r?'border-radius:2px':''}"></span>`;
   const mSw=(c,r)=>`<span style="display:inline-block;width:10px;height:10px;border-radius:${r?'2px':'50%'};background:${c};margin-right:3px"></span>`;
-  const isE=activeUser==='Elliott';
-  const p1Label=isE?'Sleep Dur.':'Sleep',p2Label=isE?'Deep Sleep':'HRV';
   const pItems=[];
-  if(hasAny(d.primary,p1Label))pItems.push(`<span class="legend-item">${sw(p.p1)}${p1Label}</span>`);
-  if(hasAny(d.primary,p2Label))pItems.push(`<span class="legend-item">${sw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'Sleep'))pItems.push(`<span class="legend-item">${sw(p.p1)}Sleep</span>`);
+  if(hasAny(d.primary,'HRV'))pItems.push(`<span class="legend-item">${sw(p.p2)}HRV</span>`);
   if(hasAny(d.primary,'RHR'))pItems.push(`<span class="legend-item">${sw(p.p3)}RHR</span>`);
   const mpItems=[];
-  if(hasAny(d.primary,p1Label))mpItems.push(`<span>${mSw(p.p1)}${p1Label}</span>`);
-  if(hasAny(d.primary,p2Label))mpItems.push(`<span>${mSw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'Sleep'))mpItems.push(`<span>${mSw(p.p1)}Sleep</span>`);
+  if(hasAny(d.primary,'HRV'))mpItems.push(`<span>${mSw(p.p2)}HRV</span>`);
   if(hasAny(d.primary,'RHR'))mpItems.push(`<span>${mSw(p.p3)}RHR</span>`);
   const saLeg=`<span class="legend-item">${sw(p.saunaOn,true)}Red light on</span><span class="legend-item">${sw(p.saunaOff,true)}No red light</span>`;
   const msaLeg=`<span>${mSw(p.saunaOn,true)}Red light on</span><span>${mSw(p.saunaOff,true)}No red light</span>`;
@@ -881,8 +886,8 @@ function renderChartLegends(d){
   set('desktopPrimaryLegend',pItems.join(''));set('desktopSaunaLegend',saLeg);
   set('mobilePrimaryLegend',mpItems.join(''));set('mobileSaunaLegend',msaLeg);
 }
-function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);const sc=document.getElementById('desktopSleepChartSection');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('sleepChart',d.elliotSleep,null,null,chartRange);drawSaunaChart('saunaBarChart',chartRange);}
-function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);const sc=document.getElementById('mobileSleepChartBlock');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('mobileSleepChart',d.elliotSleep,null,null,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);}
+function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);drawSaunaChart('saunaBarChart',chartRange);}
+function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);}
 function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
