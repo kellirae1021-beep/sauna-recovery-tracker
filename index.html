@@ -297,14 +297,6 @@ textarea{min-height:90px;resize:vertical}
         </div>
         <div class="mobile-chart-box"><svg id="mobilePrimaryChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
       </div>
-      <div class="mobile-chart-block" id="mobileSleepChartBlock" style="display:none">
-        <div class="mobile-chart-title" id="mobilePrimaryChartTitle">Sleep</div>
-        <div class="mobile-chart-legend" id="mobileSleepLegend">
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2c4a6e;margin-right:3px"></span>Sleep Dur.</span>
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3a7a9a;margin-right:3px"></span>Deep Sleep</span>
-        </div>
-        <div class="mobile-chart-box"><svg id="mobileSleepChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
-      </div>
       <div class="mobile-chart-block">
         <div class="mobile-chart-title">Sauna sessions</div>
         <div class="mobile-chart-legend" id="mobileSaunaLegend">
@@ -340,7 +332,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v38</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v39</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -406,14 +398,6 @@ textarea{min-height:90px;resize:vertical}
           <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
         </div>
         <div class="chart-box"><svg id="primaryChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
-      </div>
-      <div id="desktopSleepChartSection" style="display:none">
-        <div class="chart-title" id="desktopPrimaryChartTitle">Sleep</div>
-        <div class="legend" id="desktopSleepLegend">
-          <span class="legend-item"><span class="swatch" style="background:#2c4a6e"></span>Sleep Dur.</span>
-          <span class="legend-item"><span class="swatch" style="background:#3a7a9a"></span>Deep Sleep</span>
-        </div>
-        <div class="chart-box"><svg id="sleepChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
       <div>
         <div class="chart-title">Sauna sessions</div>
@@ -658,9 +642,9 @@ function recoveryBannerHtml(entry){const score=computeRecoveryScore(entry),{labe
 function deltaChip(kind,value,baseline){if(isBlank(value))return'<span class="delta neutral">—</span>';const v=Number(value);if(kind==='range'){if(!baseline||baseline.low==null)return'<span class="delta neutral">—</span>';return v>=baseline.low&&v<=baseline.high?'<span class="delta good">in range</span>':`<span class="delta bad">${v<baseline.low?'below':'above'} range</span>`;}if(isBlank(baseline))return'<span class="delta neutral">—</span>';const b=Number(baseline),diff=v-b,thresh=b<=10?.6:b<=60?2:3;if(Math.abs(diff)<thresh)return'<span class="delta neutral">near base</span>';if(kind==='higher_better')return diff>0?'<span class="delta good">above base</span>':'<span class="delta bad">below base</span>';if(kind==='lower_better')return diff<0?'<span class="delta good">below base</span>':'<span class="delta bad">above base</span>';return'<span class="delta neutral">—</span>';}
 
 // ─── Stats & Baselines render ─────────────────────────────────────────────────
-function statsItems(){const tw=countSaunaInWeek(0),lw=countSaunaInWeek(-1),total=totalSaunaSessions();const sleepStat=activeUser==='Elliott'?{label:'Avg sleep',val:fmtMins(avgNum(entries.map(e=>e.sleepDuration)))}:{label:'Avg sleep',val:avg(entries.map(e=>e.sleepScore))};const p2Stat=activeUser==='Elliott'?{label:'Avg deep',val:fmtMins(avgNum(entries.map(e=>e.sleepDeep)))}:{label:'Avg HRV',val:avg(entries.map(e=>e.hrv))};return[{label:'This week 🔥',val:`${tw}/${saunaWeeklyGoal()}`,cls:tw>=saunaWeeklyGoal()?'goal-met':tw>=saunaWeeklyGoal()-1?'goal-close':''},{label:'Last week',val:`${lw}/${saunaWeeklyGoal()}`,cls:lw>=saunaWeeklyGoal()?'goal-met':''},{label:'Total sessions',val:total,cls:''},{label:'Total entries',val:entries.length,cls:''},sleepStat,p2Stat];}
+function statsItems(){const tw=countSaunaInWeek(0),lw=countSaunaInWeek(-1),total=totalSaunaSessions();return[{label:'This week 🔥',val:`${tw}/${saunaWeeklyGoal()}`,cls:tw>=saunaWeeklyGoal()?'goal-met':tw>=saunaWeeklyGoal()-1?'goal-close':''},{label:'Last week',val:`${lw}/${saunaWeeklyGoal()}`,cls:lw>=saunaWeeklyGoal()?'goal-met':''},{label:'Total sessions',val:total,cls:''},{label:'Total entries',val:entries.length,cls:''},{label:'Avg sleep',val:avg(entries.map(e=>e.sleepScore))},{label:'Avg HRV',val:avg(entries.map(e=>e.hrv))}];}
 function renderStats(){document.getElementById('desktopStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="stat ${cls}">${label}<b>${val}</b></div>`).join('');document.getElementById('mobileStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="mobile-stat ${cls}"><div class="ms-label">${label}</div><div class="ms-value">${val}</div></div>`).join('');}
-function baselineItems(){const bv=baselineValues;if(activeUser==='Elliott'){return[{label:'Sleep Dur.',value:bv.sleepDuration!=null?fmtMins(bv.sleepDuration):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'}];}return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'}];}
+function baselineItems(){const bv=baselineValues;return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'}];}
 function renderBaselines(){const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';document.getElementById('baselineCards').innerHTML=baselineItems().map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');document.getElementById('garminStatus').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data';document.getElementById('mobileBaselines').innerHTML=baselineItems().map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');document.getElementById('mobileBlDate').textContent=baselineRange.start?`Fixed 90d · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'';;}
 
 // ─── Today slots ──────────────────────────────────────────────────────────────
@@ -774,7 +758,7 @@ function mobileTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type
 function renderMobileToday(){renderBootcampGoal();document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('workout','Workout')+mobileTodaySlotHtml('sauna','Sauna Today');}
 
 // ─── History ──────────────────────────────────────────────────────────────────
-function historyItemsHtml(isMobile=false){if(!entries.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No entries yet.</div>';const byDate=new Map();sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});return Array.from(byDate.entries()).map(([date,dayEntries])=>{const eHtml=dayEntries.map(entry=>{const type=entry.entryType||'morning',icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙',lbl=type==='morning'?'Morning':type==='sauna'?'Sauna':type==='workout'?'Workout':'Bedtime';const m=[];if(activeUser==='Elliott'){if(!isBlank(entry.sleepDuration))m.push(`😴 ${fmtMins(entry.sleepDuration)}`);if(!isBlank(entry.sleepDeep))m.push(`🌑 ${fmtMins(entry.sleepDeep)} deep`);}else{if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);if(!isBlank(entry.hrv))m.push(`📉 ${entry.hrv}`);}if(!isBlank(entry.restingHr))m.push(`❤️ ${entry.restingHr}`);if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight}`);if(!isBlank(entry.energy))m.push(`⚡ ${entry.energy}`);if(!isBlank(entry.stress))m.push(`🧠 ${entry.stress}`);if(!isBlank(entry.muscleSoreness))m.push(`💪 ${entry.muscleSoreness}`);if(!isBlank(entry.jointSoreness))m.push(`🦴 ${entry.jointSoreness}`);if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);if(entry.redLightUsed)m.push('🔴');if(entry.workouts)m.push(`🏃 ${entry.workouts}`);if(!isBlank(entry.cyclingMiles))m.push(`🚴 ${entry.cyclingMiles}mi`);const btns=`<div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div>`;if(isMobile)return`<div class="mobile-history-entry"><div class="mobile-history-type"><span>${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="mobile-history-metrics history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="mobile-history-note history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}).join('');if(isMobile)return`<div class="mobile-history-item"><div class="mobile-history-date">${shortDate(date)}</div>${eHtml}</div>`;return`<div class="history-item"><div class="history-date">${longDate(date)}</div>${eHtml}</div>`;}).join('');}
+function historyItemsHtml(isMobile=false){if(!entries.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No entries yet.</div>';const byDate=new Map();sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});return Array.from(byDate.entries()).map(([date,dayEntries])=>{const eHtml=dayEntries.map(entry=>{const type=entry.entryType||'morning',icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙',lbl=type==='morning'?'Morning':type==='sauna'?'Sauna':type==='workout'?'Workout':'Bedtime';const m=[];if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);if(!isBlank(entry.hrv))m.push(`📉 ${entry.hrv}`);if(!isBlank(entry.restingHr))m.push(`❤️ ${entry.restingHr}`);if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight}`);if(!isBlank(entry.energy))m.push(`⚡ ${entry.energy}`);if(!isBlank(entry.stress))m.push(`🧠 ${entry.stress}`);if(!isBlank(entry.muscleSoreness))m.push(`💪 ${entry.muscleSoreness}`);if(!isBlank(entry.jointSoreness))m.push(`🦴 ${entry.jointSoreness}`);if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);if(entry.redLightUsed)m.push('🔴');if(entry.workouts)m.push(`🏃 ${entry.workouts}`);if(!isBlank(entry.cyclingMiles))m.push(`🚴 ${entry.cyclingMiles}mi`);const btns=`<div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div>`;if(isMobile)return`<div class="mobile-history-entry"><div class="mobile-history-type"><span>${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="mobile-history-metrics history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="mobile-history-note history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}).join('');if(isMobile)return`<div class="mobile-history-item"><div class="mobile-history-date">${shortDate(date)}</div>${eHtml}</div>`;return`<div class="history-item"><div class="history-date">${longDate(date)}</div>${eHtml}</div>`;}).join('');}
 function renderHistory(){document.getElementById('historyList').innerHTML=historyItemsHtml(false);document.getElementById('mobileHistoryList').innerHTML=historyItemsHtml(true);}
 
 // ─── Charts ───────────────────────────────────────────────────────────────────
@@ -832,12 +816,9 @@ function getChartDatasets(){
   const otherEntries=compareMode?allEntries.filter(e=>e.userName===other):[];
   const otherSa=[...otherEntries].sort((a,b)=>a.date.localeCompare(b.date));
   const oms=(k,type)=>otherSa.filter(e=>!isBlank(e[k])&&(!type||e.entryType===type)).map(e=>({date:`${e.date}-${e.timeOfDay||'other'}`,value:Number(e[k])}));
-  const primaryDatasets=activeUser==='Elliott'
-    ?[{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])]:
-    [{label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},{label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])];
+  const primaryDatasets=[{label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},{label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},{label:'RHR',color:p.p3,width:3,data:ms('restingHr')},...(compareMode?[{label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},{label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},{label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}]:[])];
   return{
-    primary:primaryDatasets,
-    elliotSleep:[{label:'Sleep Dur. (Garmin)',color:'#2c4a6e',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDuration')},{label:'Sleep Duration',color:'#2c4a6e',width:3,data:ms('sleepDuration')},{label:'Deep Sleep (Garmin)',color:'#3a7a9a',dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('sleepDeep')},{label:'Deep Sleep',color:'#3a7a9a',dash:'8 4',width:3,data:ms('sleepDeep')}]
+    primary:primaryDatasets
   };
 }
 
@@ -846,15 +827,13 @@ function renderChartLegends(d){
   const hasAny=(datasets,label)=>datasets.some(ds=>ds.label===label&&ds.data.length>0);
   const sw=(c,r)=>`<span class="swatch" style="background:${c};${r?'border-radius:2px':''}"></span>`;
   const mSw=(c,r)=>`<span style="display:inline-block;width:10px;height:10px;border-radius:${r?'2px':'50%'};background:${c};margin-right:3px"></span>`;
-  const isE=activeUser==='Elliott';
-  const p1Label=isE?'Sleep Dur.':'Sleep',p2Label=isE?'Deep Sleep':'HRV';
   const pItems=[];
-  if(hasAny(d.primary,p1Label))pItems.push(`<span class="legend-item">${sw(p.p1)}${p1Label}</span>`);
-  if(hasAny(d.primary,p2Label))pItems.push(`<span class="legend-item">${sw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'Sleep'))pItems.push(`<span class="legend-item">${sw(p.p1)}Sleep</span>`);
+  if(hasAny(d.primary,'HRV'))pItems.push(`<span class="legend-item">${sw(p.p2)}HRV</span>`);
   if(hasAny(d.primary,'RHR'))pItems.push(`<span class="legend-item">${sw(p.p3)}RHR</span>`);
   const mpItems=[];
-  if(hasAny(d.primary,p1Label))mpItems.push(`<span>${mSw(p.p1)}${p1Label}</span>`);
-  if(hasAny(d.primary,p2Label))mpItems.push(`<span>${mSw(p.p2)}${p2Label}</span>`);
+  if(hasAny(d.primary,'Sleep'))mpItems.push(`<span>${mSw(p.p1)}Sleep</span>`);
+  if(hasAny(d.primary,'HRV'))mpItems.push(`<span>${mSw(p.p2)}HRV</span>`);
   if(hasAny(d.primary,'RHR'))mpItems.push(`<span>${mSw(p.p3)}RHR</span>`);
   const saLeg=`<span class="legend-item">${sw(p.saunaOn,true)}Red light on</span><span class="legend-item">${sw(p.saunaOff,true)}No red light</span>`;
   const msaLeg=`<span>${mSw(p.saunaOn,true)}Red light on</span><span>${mSw(p.saunaOff,true)}No red light</span>`;
@@ -862,8 +841,8 @@ function renderChartLegends(d){
   set('desktopPrimaryLegend',pItems.join(''));set('desktopSaunaLegend',saLeg);
   set('mobilePrimaryLegend',mpItems.join(''));set('mobileSaunaLegend',msaLeg);
 }
-function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);const sc=document.getElementById('desktopSleepChartSection');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('sleepChart',d.elliotSleep,null,null,chartRange);drawSaunaChart('saunaBarChart',chartRange);}
-function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);const sc=document.getElementById('mobileSleepChartBlock');if(sc)sc.style.display=activeUser==='Elliott'?'':'none';if(activeUser==='Elliott')drawChart('mobileSleepChart',d.elliotSleep,null,null,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);}
+function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);drawSaunaChart('saunaBarChart',chartRange);}
+function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);}
 function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
