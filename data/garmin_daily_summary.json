@@ -18427,5 +18427,459 @@
     "hrv": 36.0,
     "respiration": 17.0,
     "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-03",
+    "sleepScore": 66,
+    "sleepDuration": 417.0,
+    "sleepDeep": 53.0,
+    "sleepRem": 85.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-04",
+    "sleepScore": 84,
+    "sleepDuration": 493.0,
+    "sleepDeep": 69.0,
+    "sleepRem": 101.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0,
+    "weight": 150.8
+  },
+  {
+    "date": "2026-04-05",
+    "sleepScore": 88,
+    "sleepDuration": 534.0,
+    "sleepDeep": 105.0,
+    "sleepRem": 109.0,
+    "hrv": 38.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0,
+    "weight": 150.6
+  },
+  {
+    "date": "2026-04-06",
+    "sleepScore": 72,
+    "sleepDuration": 453.0,
+    "sleepDeep": 72.0,
+    "sleepRem": 38.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-07",
+    "sleepScore": 78,
+    "sleepDuration": 485.0,
+    "sleepDeep": 72.0,
+    "sleepRem": 70.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-08",
+    "sleepScore": 79,
+    "sleepDuration": 444.0,
+    "sleepDeep": 76.0,
+    "sleepRem": 84.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-09",
+    "sleepScore": 75,
+    "sleepDuration": 476.0,
+    "sleepDeep": 62.0,
+    "sleepRem": 39.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0,
+    "weight": 152.0
+  },
+  {
+    "date": "2026-04-10",
+    "sleepScore": 82,
+    "sleepDuration": 480.0,
+    "sleepDeep": 75.0,
+    "sleepRem": 82.0,
+    "hrv": 34.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-11",
+    "sleepScore": 80,
+    "sleepDuration": 474.0,
+    "sleepDeep": 55.0,
+    "sleepRem": 90.0,
+    "hrv": 33.0,
+    "respiration": 16.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-12",
+    "sleepScore": 74,
+    "sleepDuration": 520.0,
+    "sleepDeep": 84.0,
+    "sleepRem": 55.0,
+    "hrv": 32.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-13",
+    "sleepScore": 89,
+    "sleepDuration": 500.0,
+    "sleepDeep": 66.0,
+    "sleepRem": 93.0,
+    "hrv": 33.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-14",
+    "sleepScore": 70,
+    "sleepDuration": 393.0,
+    "sleepDeep": 62.0,
+    "sleepRem": 30.0,
+    "hrv": 35.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-15",
+    "sleepScore": 56,
+    "sleepDuration": 370.0,
+    "sleepDeep": 61.0,
+    "sleepRem": 49.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-16",
+    "sleepScore": 85,
+    "sleepDuration": 498.0,
+    "sleepDeep": 87.0,
+    "sleepRem": 105.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-17",
+    "sleepScore": 83,
+    "sleepDuration": 491.0,
+    "sleepDeep": 69.0,
+    "sleepRem": 101.0,
+    "hrv": 36.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-18",
+    "sleepScore": 78,
+    "sleepDuration": 416.0,
+    "sleepDeep": 92.0,
+    "sleepRem": 51.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-19",
+    "sleepScore": 58,
+    "sleepDuration": 326.0,
+    "sleepDeep": 82.0,
+    "sleepRem": 10.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-20",
+    "sleepScore": 86,
+    "sleepDuration": 450.0,
+    "sleepDeep": 83.0,
+    "sleepRem": 93.0,
+    "hrv": 38.0,
+    "respiration": 13.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-21",
+    "sleepScore": 77,
+    "sleepDuration": 400.0,
+    "sleepDeep": 64.0,
+    "sleepRem": 61.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 98.0
+  },
+  {
+    "date": "2026-04-22",
+    "sleepScore": 75,
+    "sleepDuration": 389.0,
+    "sleepDeep": 98.0,
+    "sleepRem": 47.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-23",
+    "sleepScore": 85,
+    "sleepDuration": 501.0,
+    "sleepDeep": 79.0,
+    "sleepRem": 126.0,
+    "hrv": 36.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-24",
+    "sleepScore": 84,
+    "sleepDuration": 497.0,
+    "sleepDeep": 110.0,
+    "sleepRem": 88.0,
+    "hrv": 36.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-25",
+    "sleepScore": 90,
+    "sleepDuration": 469.0,
+    "sleepDeep": 35.0,
+    "sleepRem": 110.0,
+    "hrv": 38.0,
+    "respiration": 15.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-04-26",
+    "sleepScore": 76,
+    "sleepDuration": 505.0,
+    "sleepDeep": 80.0,
+    "sleepRem": 77.0,
+    "hrv": 39.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-27",
+    "sleepScore": 86,
+    "sleepDuration": 490.3,
+    "sleepDeep": 64.0,
+    "sleepRem": 90.0,
+    "hrv": 39.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-28",
+    "sleepScore": 82,
+    "sleepDuration": 452.0,
+    "sleepDeep": 79.0,
+    "sleepRem": 81.0,
+    "hrv": 40.0,
+    "respiration": 14.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-04-29",
+    "sleepScore": 84,
+    "sleepDuration": 488.0,
+    "sleepDeep": 77.0,
+    "sleepRem": 105.0,
+    "hrv": 40.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-04-30",
+    "sleepScore": 78,
+    "sleepDuration": 456.0,
+    "sleepDeep": 100.0,
+    "sleepRem": 75.0,
+    "hrv": 40.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-01",
+    "sleepScore": 79,
+    "sleepDuration": 453.0,
+    "sleepDeep": 44.0,
+    "sleepRem": 94.0,
+    "hrv": 39.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-05-02",
+    "sleepScore": 73,
+    "sleepDuration": 390.0,
+    "sleepDeep": 101.0,
+    "sleepRem": 66.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0,
+    "weight": 152.0
+  },
+  {
+    "date": "2026-05-03",
+    "sleepScore": 81,
+    "sleepDuration": 461.0,
+    "sleepDeep": 83.0,
+    "sleepRem": 62.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-04",
+    "sleepScore": 79,
+    "sleepDuration": 482.0,
+    "sleepDeep": 61.0,
+    "sleepRem": 70.0,
+    "hrv": 34.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-05",
+    "sleepScore": 82,
+    "sleepDuration": 443.0,
+    "sleepDeep": 68.0,
+    "sleepRem": 89.0,
+    "hrv": 34.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-06",
+    "sleepScore": 82,
+    "sleepDuration": 512.0,
+    "sleepDeep": 49.0,
+    "sleepRem": 96.0,
+    "hrv": 35.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-07",
+    "sleepScore": 78,
+    "sleepDuration": 470.0,
+    "sleepDeep": 53.0,
+    "sleepRem": 72.0,
+    "hrv": 35.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-05-08",
+    "sleepScore": 84,
+    "sleepDuration": 498.0,
+    "sleepDeep": 87.0,
+    "sleepRem": 73.0,
+    "hrv": 35.0,
+    "respiration": 15.0,
+    "pulseOx": 97.0
+  },
+  {
+    "date": "2026-05-09",
+    "sleepScore": 83,
+    "sleepDuration": 474.0,
+    "sleepDeep": 79.0,
+    "sleepRem": 83.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-10",
+    "sleepScore": 79,
+    "sleepDuration": 500.0,
+    "sleepDeep": 75.0,
+    "sleepRem": 56.0,
+    "hrv": 36.0,
+    "respiration": 15.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-11",
+    "sleepScore": 91,
+    "sleepDuration": 514.0,
+    "sleepDeep": 64.0,
+    "sleepRem": 149.0,
+    "hrv": 38.0,
+    "respiration": 14.0,
+    "pulseOx": 94.0
+  },
+  {
+    "date": "2026-05-12",
+    "sleepScore": 79,
+    "sleepDuration": 448.0,
+    "sleepDeep": 85.0,
+    "sleepRem": 50.0,
+    "hrv": 38.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-13",
+    "sleepScore": 75,
+    "sleepDuration": 418.0,
+    "sleepDeep": 62.0,
+    "sleepRem": 67.0,
+    "hrv": 38.0,
+    "respiration": 14.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-14",
+    "sleepScore": 81,
+    "sleepDuration": 477.0,
+    "sleepDeep": 88.0,
+    "sleepRem": 77.0,
+    "hrv": 38.0,
+    "respiration": 15.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-15",
+    "sleepScore": 73,
+    "sleepDuration": 414.0,
+    "sleepDeep": 99.0,
+    "sleepRem": 40.0,
+    "hrv": 37.0,
+    "respiration": 14.0,
+    "pulseOx": 96.0
+  },
+  {
+    "date": "2026-05-16",
+    "sleepScore": 71,
+    "sleepDuration": 519.0,
+    "sleepDeep": 68.0,
+    "sleepRem": 37.0,
+    "hrv": 37.0,
+    "respiration": 15.0,
+    "pulseOx": 95.0
+  },
+  {
+    "date": "2026-05-17",
+    "sleepScore": 74,
+    "sleepDuration": 513.0,
+    "sleepDeep": 77.0,
+    "sleepRem": 72.0,
+    "hrv": 36.0,
+    "respiration": 14.0,
+    "pulseOx": 93.0
   }
 ]
