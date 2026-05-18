@@ -85,7 +85,12 @@ textarea{min-height:90px;resize:vertical}
 .pr-counter-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05);margin-bottom:14px}
 .pr-counter-bar-track{height:12px;background:#f0ebf4;border-radius:999px;overflow:hidden;margin:8px 0 4px}
 .pr-counter-bar-fill{height:100%;background:var(--plum);border-radius:999px;transition:width .5s}
-.pr-form-section{display:grid;gap:12px}
+.pr-dropdown-item{padding:10px 14px;cursor:pointer;font-size:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.pr-dropdown-item:last-child{border-bottom:none}
+.pr-dropdown-item:hover,.pr-dropdown-item.focused{background:#f3edf7}
+.pr-dropdown-item .pr-dd-cat{font-size:11px;color:var(--muted)}
+.pr-dropdown-create{padding:10px 14px;cursor:pointer;font-size:14px;color:var(--user-primary);font-weight:600;border-top:1px solid var(--border)}
+.pr-dropdown-create:hover{background:#f3edf7}
 .pr-movement-select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;font-size:16px;background:#fff;color:var(--text)}
 .pr-new-movement-wrap{display:none;grid-template-columns:1fr 1fr;gap:8px}
 .pr-equip-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
@@ -255,12 +260,13 @@ textarea{min-height:90px;resize:vertical}
   .mobile-history-type{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
   .mobile-history-metrics{display:flex;flex-wrap:wrap;gap:5px}
   .mobile-history-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px}
-  .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:#fff;border-top:1px solid var(--border);z-index:200}
-  .mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--muted);font-size:9px;font-weight:600;gap:2px;padding:6px 2px}
-  .mobile-nav-btn .nav-icon{font-size:19px;line-height:1}
+  .mobile-nav{display:flex;flex-direction:row;align-items:stretch;position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:#fff;border-top:1px solid var(--border);z-index:200}
+  .mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--muted);font-size:10px;font-weight:600;gap:2px;padding:4px 2px;min-width:0}
+  .mobile-nav-btn .nav-icon{font-size:22px;line-height:1}
+  .mobile-nav-btn .nav-label{font-size:9px;white-space:nowrap}
   .mobile-nav-btn.active{color:var(--user-primary)}
-  .mobile-nav-add-wrap{flex:0 0 58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-  .mobile-nav-add{width:42px;height:42px;border-radius:50%;background:var(--user-primary);border:none;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:background .2s}
+  .mobile-nav-add-wrap{flex:0 0 56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .mobile-nav-add{width:44px;height:44px;border-radius:50%;background:var(--user-primary);border:none;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:background .2s}
   .mobile-nav-add-label{font-size:9px;color:var(--user-primary);font-weight:600}
 }
 @media(min-width:769px){.mobile-wrap{display:none!important}}
@@ -359,10 +365,11 @@ textarea{min-height:90px;resize:vertical}
     </div>
     <div style="padding:0 16px 80px" id="mobilePRList"></div>
   </div>
-    <button class="mobile-nav-btn active" data-tab="mobileToday"><span class="nav-icon">🏠</span>Today</button>
-    <button class="mobile-nav-btn" data-tab="mobileCharts"><span class="nav-icon">📈</span>Charts</button>
-    <button class="mobile-nav-btn" data-tab="mobileHistory"><span class="nav-icon">📋</span>History</button>
-    <button class="mobile-nav-btn" data-tab="mobilePRs"><span class="nav-icon">🏆</span>PRs</button>
+  <nav class="mobile-nav">
+    <button class="mobile-nav-btn active" data-tab="mobileToday"><span class="nav-icon">🏠</span></button>
+    <button class="mobile-nav-btn" data-tab="mobileCharts"><span class="nav-icon">📈</span></button>
+    <button class="mobile-nav-btn" data-tab="mobileHistory"><span class="nav-icon">📋</span></button>
+    <button class="mobile-nav-btn" data-tab="mobilePRs"><span class="nav-icon">🏆</span></button>
     <div class="mobile-nav-add-wrap">
       <button class="mobile-nav-add" id="mobileAddBtn">+</button>
       <span class="mobile-nav-add-label" id="mobileAddLabel">Add</span>
@@ -549,15 +556,14 @@ textarea{min-height:90px;resize:vertical}
         <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px;accent-color:var(--user-primary)" /></div>
         <!-- PR fields -->
         <div id="prWrap" class="pr-form-section">
-          <div>
+          <div style="position:relative">
             <label>Movement</label>
-            <select id="prMovement" class="pr-movement-select">
-              <option value="">— select movement —</option>
-            </select>
+            <input id="prMovementInput" type="text" placeholder="Type to search or create new…" autocomplete="off" style="width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;font-size:16px" />
+            <input type="hidden" id="prMovement" />
+            <div id="prMovementDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:200;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:220px;overflow-y:auto;margin-top:4px"></div>
           </div>
-          <div id="prNewMovementWrap" class="pr-new-movement-wrap">
-            <div><label>Movement name</label><input id="prNewName" type="text" placeholder="e.g. Incline DB Press" /></div>
-            <div><label>Category</label><select id="prNewCategory" class="pr-movement-select"><option value="Upper Body">Upper Body</option><option value="Lower Body">Lower Body</option><option value="Core &amp; Other">Core &amp; Other</option></select></div>
+          <div id="prNewMovementWrap" class="pr-new-movement-wrap" style="display:none">
+            <div><label>Category for new movement</label><select id="prNewCategory" class="pr-movement-select"><option value="Upper Body">Upper Body</option><option value="Lower Body">Lower Body</option><option value="Core &amp; Other">Core &amp; Other</option></select></div>
           </div>
           <div>
             <label>Equipment</label>
@@ -1128,18 +1134,67 @@ function prResultText(pr){
   return parts.join(' ')||'—';
 }
 
-function populatePRMovementSelect(selectedName=''){
-  const sel=document.getElementById('prMovement');if(!sel)return;
-  const all=getAllMovements();
-  const byCategory={};PR_CATEGORIES.forEach(c=>{byCategory[c]=[];});
-  all.forEach(m=>{if(byCategory[m.category])byCategory[m.category].push(m.name);else byCategory['Core & Other'].push(m.name);});
-  sel.innerHTML='<option value="">— select movement —</option>';
-  PR_CATEGORIES.forEach(cat=>{
-    const grp=document.createElement('optgroup');grp.label=cat;
-    byCategory[cat].forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=name;if(name===selectedName)o.selected=true;grp.appendChild(o);});
-    sel.appendChild(grp);
+function setupPRMovementTypeahead(initialValue=''){
+  const input=document.getElementById('prMovementInput');
+  const hidden=document.getElementById('prMovement');
+  const dropdown=document.getElementById('prMovementDropdown');
+  if(!input)return;
+  input.value=initialValue;
+  hidden.value=initialValue;
+  let focusIdx=-1;
+
+  function showDropdown(query){
+    const q=query.trim().toLowerCase();
+    const all=getAllMovements();
+    const matches=q?all.filter(m=>m.name.toLowerCase().includes(q)):all.slice(0,12);
+    const exactMatch=all.find(m=>m.name.toLowerCase()===q);
+    dropdown.innerHTML='';
+    focusIdx=-1;
+    matches.forEach(m=>{
+      const el=document.createElement('div');
+      el.className='pr-dropdown-item';
+      el.innerHTML=`<span>${m.name}</span><span class="pr-dd-cat">${m.category}</span>`;
+      el.addEventListener('mousedown',e=>{e.preventDefault();selectMovement(m.name,m.category);});
+      dropdown.appendChild(el);
+    });
+    if(q&&!exactMatch){
+      const el=document.createElement('div');
+      el.className='pr-dropdown-create';
+      el.textContent=`+ Create "${query.trim()}"`;
+      el.addEventListener('mousedown',e=>{e.preventDefault();triggerCreateNew(query.trim());});
+      dropdown.appendChild(el);
+    }
+    dropdown.style.display=(matches.length||(!exactMatch&&q))?'block':'none';
+  }
+
+  function selectMovement(name,category){
+    input.value=name;
+    hidden.value=name;
+    dropdown.style.display='none';
+    document.getElementById('prNewMovementWrap').style.display='none';
+    // Auto-set category on new movement wrap in case needed
+    if(document.getElementById('prNewCategory'))document.getElementById('prNewCategory').value=category||'Core & Other';
+  }
+
+  function triggerCreateNew(name){
+    input.value=name;
+    hidden.value='__new__';
+    dropdown.style.display='none';
+    document.getElementById('prNewMovementWrap').style.display='block';
+    const cat=getMovementCategory(name)||'Core & Other';
+    if(document.getElementById('prNewCategory'))document.getElementById('prNewCategory').value=cat;
+  }
+
+  input.addEventListener('input',()=>{hidden.value='';document.getElementById('prNewMovementWrap').style.display='none';showDropdown(input.value);});
+  input.addEventListener('focus',()=>showDropdown(input.value));
+  input.addEventListener('blur',()=>setTimeout(()=>{dropdown.style.display='none';},150));
+  input.addEventListener('keydown',e=>{
+    const items=dropdown.querySelectorAll('.pr-dropdown-item,.pr-dropdown-create');
+    if(e.key==='ArrowDown'){e.preventDefault();focusIdx=Math.min(focusIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
+    else if(e.key==='ArrowUp'){e.preventDefault();focusIdx=Math.max(focusIdx-1,0);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
+    else if(e.key==='Enter'&&focusIdx>=0){e.preventDefault();items[focusIdx]?.dispatchEvent(new MouseEvent('mousedown'));}
+    else if(e.key==='Escape'){dropdown.style.display='none';}
   });
-  const addOpt=document.createElement('option');addOpt.value='__new__';addOpt.textContent='+ Add new movement…';sel.appendChild(addOpt);
 }
 
 function setPREquip(equip){
@@ -1156,11 +1211,9 @@ function setPRResultType(type){
 
 function openPRForm(id=null){
   editingPRId=id;
-  populatePRMovementSelect();
   setPREquip('Dumbbell');
   setPRResultType('weight_reps');
   document.getElementById('prNewMovementWrap').style.display='none';
-  document.getElementById('prNewName').value='';
   document.getElementById('prWeight').value='';
   document.getElementById('prReps').value='';
   document.getElementById('prTime').value='';
@@ -1169,7 +1222,7 @@ function openPRForm(id=null){
   document.getElementById('date').value=todayStr;
   if(id){
     const pr=prEntries.find(p=>p.id===id);if(!pr)return;
-    populatePRMovementSelect(pr.prMovement);
+    setupPRMovementTypeahead(pr.prMovement||'');
     setPREquip(pr.prEquipment||'Dumbbell');
     setPRResultType(pr.prResultType||'weight_reps');
     document.getElementById('date').value=pr.date||todayStr;
@@ -1180,6 +1233,7 @@ function openPRForm(id=null){
     document.getElementById('prNote').value=pr.prNote||'';
     document.getElementById('entryModalTitle').textContent='Edit PR · Kelli';
   } else {
+    setupPRMovementTypeahead('');
     document.getElementById('entryModalTitle').textContent='Log PR · Kelli';
   }
   setEntryType('pr');
@@ -1188,18 +1242,20 @@ function openPRForm(id=null){
 window.openPRForm=openPRForm;
 
 function savePR(){
-  const movSel=document.getElementById('prMovement').value;
-  let movName=movSel,movCat='Core & Other';
-  if(movSel==='__new__'){
-    movName=document.getElementById('prNewName').value.trim();
-    movCat=document.getElementById('prNewCategory').value;
+  const hiddenVal=document.getElementById('prMovement').value;
+  const inputVal=document.getElementById('prMovementInput').value.trim();
+  let movName='',movCat='Core & Other';
+  if(hiddenVal==='__new__'||(!hiddenVal&&inputVal)){
+    movName=inputVal;
+    movCat=document.getElementById('prNewCategory').value||'Core & Other';
     if(!movName){alert('Enter a movement name.');return;}
     const customs=getCustomMovements();
     if(!customs.find(m=>m.name===movName)&&!BUILTIN_MOVEMENTS.find(m=>m.name===movName)){customs.push({name:movName,category:movCat});saveCustomMovements(customs);}
   } else {
+    movName=hiddenVal||inputVal;
     movCat=getMovementCategory(movName)||'Core & Other';
   }
-  if(!movName){alert('Select a movement.');return;}
+  if(!movName){alert('Select or create a movement.');return;}
   if(!selectedPREquip){alert('Select equipment.');return;}
   const pr={
     id:editingPRId||crypto.randomUUID(),
@@ -1414,7 +1470,6 @@ document.getElementById('mobileCleanupBtn').addEventListener('click',runCleanup)
 document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(currentEntryType==='pr'){savePR();return;}if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
 document.querySelectorAll('.pr-equip-chip').forEach(b=>b.addEventListener('click',()=>setPREquip(b.dataset.equip)));
 document.querySelectorAll('.pr-result-type-chip').forEach(b=>b.addEventListener('click',()=>setPRResultType(b.dataset.rtype)));
-document.getElementById('prMovement')?.addEventListener('change',e=>{document.getElementById('prNewMovementWrap').style.display=e.target.value==='__new__'?'grid':'none';});
 Object.keys(FIELD_RULES).forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',validateForm);el.addEventListener('blur',validateForm);}});
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 window.addEventListener('resize',()=>{renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();});
