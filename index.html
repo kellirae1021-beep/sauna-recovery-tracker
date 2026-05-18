@@ -105,8 +105,8 @@ textarea{min-height:90px;resize:vertical}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .stat{background:#faf8fb;border:1px solid var(--border);padding:12px;border-radius:12px;font-size:12px;color:var(--muted)}
 .stat b{display:block;color:var(--text);font-size:20px;line-height:1.1;margin-top:3px}
-.stat.goal-met b{color:var(--teal)}.stat.goal-close b{color:#a07828}
-.baselines-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.stat.goal-met b{color:var(--teal)}.stat.goal-close b{color:#a07828}.stat.stat-bad b{color:var(--bad)}
+.mobile-stat.goal-met .ms-value{color:var(--teal)}.mobile-stat.goal-close .ms-value{color:#a07828}.mobile-stat.stat-bad .ms-value{color:var(--bad)}.baselines-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
 .baseline{background:#faf8fb;border:1px solid var(--border);padding:10px;border-radius:12px;font-size:11px;color:var(--muted)}
 .baseline b{display:block;color:var(--text);font-size:18px;line-height:1.1;margin-top:2px}
 .desktop-tabs{display:flex;gap:8px}
@@ -184,7 +184,6 @@ textarea{min-height:90px;resize:vertical}
   .mobile-stat{background:#faf8fb;border:1px solid var(--border);border-radius:10px;padding:8px 6px;text-align:center}
   .mobile-stat .ms-label{font-size:9px;color:var(--muted);line-height:1.2}
   .mobile-stat .ms-value{font-size:16px;font-weight:700;color:var(--text);line-height:1.2;margin-top:1px}
-  .mobile-stat.goal-met .ms-value{color:var(--teal)}.mobile-stat.goal-close .ms-value{color:#a07828}
   .mobile-baselines{background:#fff;border-bottom:1px solid var(--border);padding:10px 12px 8px}
   .mobile-baselines-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
   .mobile-baselines-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
@@ -293,7 +292,6 @@ textarea{min-height:90px;resize:vertical}
         <div class="mobile-chart-legend" id="mobilePrimaryLegend">
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6f3f74;margin-right:3px"></span>Sleep</span>
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2f6f73;margin-right:3px"></span>HRV</span>
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3c2f46;margin-right:3px"></span>RHR</span>
         </div>
         <div class="mobile-chart-box"><svg id="mobilePrimaryChart" class="mobile-chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none"></svg></div>
       </div>
@@ -340,7 +338,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v40</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v41</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -403,7 +401,6 @@ textarea{min-height:90px;resize:vertical}
         <div class="legend" id="desktopPrimaryLegend">
           <span class="legend-item"><span class="swatch" style="background:#6f3f74"></span>Sleep</span>
           <span class="legend-item"><span class="swatch" style="background:#2f6f73"></span>HRV</span>
-          <span class="legend-item"><span class="swatch" style="background:#3c2f46"></span>RHR</span>
         </div>
         <div class="chart-box"><svg id="primaryChart" class="chart-svg" style="width:100%" viewBox="0 0 900 300" preserveAspectRatio="none"></svg></div>
       </div>
@@ -555,7 +552,7 @@ let activeUser=localStorage.getItem(USER_KEY)||'Kelli';
 let compareMode=false;
 let allEntries=[],entries=[],garminHistory=[],compareGarminHistory=[];
 let chartRange='7',mobileChartRange='7';
-let baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null};
+let baselineValues={sleepScore:null,hrvTypicalLow:null,hrvTypicalHigh:null};
 let baselineRange={start:null,end:null};
 let ingestDraft={date:todayStr,sleepScore:'',hrv:'',restingHr:'',bodyBattery:'',respiration:'',pulseOx:''};
 let editingId=null,currentEntryType='morning';
@@ -649,7 +646,7 @@ function workoutBadgesHtml(entry){if(!entry||!entry.workouts)return'';const ws=e
 // Fixed pre-sauna baseline window — 90 days ending the day before sauna start
 const BASELINE_END = '2026-03-18';
 const BASELINE_START = '2025-12-19';
-function computeBaselines(){if(!garminHistory.length){baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null};baselineRange={start:null,end:null};return;}const window=garminHistory.filter(r=>r.date>=BASELINE_START&&r.date<=BASELINE_END);if(!window.length){baselineValues={sleepScore:null,restingHr:null,hrvTypicalLow:null,hrvTypicalHigh:null};baselineRange={start:BASELINE_START,end:BASELINE_END};return;}baselineRange={start:BASELINE_START,end:BASELINE_END};const hrv=pctRange(window.map(r=>r.hrv));baselineValues={sleepScore:round1(avgNum(window.map(r=>r.sleepScore))),restingHr:round1(avgNum(window.map(r=>r.restingHr))),hrvTypicalLow:hrv.low,hrvTypicalHigh:hrv.high};}
+function computeBaselines(){if(!garminHistory.length){baselineValues={sleepScore:null,hrvTypicalLow:null,hrvTypicalHigh:null};baselineRange={start:null,end:null};return;}const window=garminHistory.filter(r=>r.date>=BASELINE_START&&r.date<=BASELINE_END);if(!window.length){baselineValues={sleepScore:null,hrvTypicalLow:null,hrvTypicalHigh:null};baselineRange={start:BASELINE_START,end:BASELINE_END};return;}baselineRange={start:BASELINE_START,end:BASELINE_END};const hrv=pctRange(window.map(r=>r.hrv));baselineValues={sleepScore:round1(avgNum(window.map(r=>r.sleepScore))),hrvTypicalLow:hrv.low,hrvTypicalHigh:hrv.high};}
 
 // ─── Recovery score ───────────────────────────────────────────────────────────
 function computeRecoveryScore(entry){if(!entry)return null;const pts=[],wts=[];if(activeUser==='Elliott'){if(!isBlank(entry.sleepDuration)&&baselineValues.sleepDuration!=null){pts.push(Math.max(0,Math.min(1,(Number(entry.sleepDuration)-(baselineValues.sleepDuration*0.7))/((baselineValues.sleepDuration*1.3)-(baselineValues.sleepDuration*0.7)))));wts.push(2.5);}if(!isBlank(entry.sleepDeep)&&baselineValues.sleepDeepTypicalLow!=null){const{sleepDeepTypicalLow:lo,sleepDeepTypicalHigh:hi}=baselineValues,range=hi-lo;pts.push(Math.max(0,Math.min(1,range>0?(Number(entry.sleepDeep)-lo)/range:Number(entry.sleepDeep)>=lo?.8:.3)));wts.push(2.5);}if(!isBlank(entry.restingHr)&&baselineValues.restingHr!=null){pts.push(Math.max(0,Math.min(1,.65-(Number(entry.restingHr)-baselineValues.restingHr)*.06)));wts.push(2);}if(!isBlank(entry.bodyBattery)){pts.push(Number(entry.bodyBattery)/100);wts.push(1.5);}if(!isBlank(entry.energy)){pts.push((Number(entry.energy)-1)/9);wts.push(1);}if(!isBlank(entry.stress)){pts.push(1-(Number(entry.stress)-1)/9);wts.push(1);}if(!pts.length)return null;return Math.round(pts.reduce((s,p,i)=>s+p*wts[i],0)/wts.reduce((a,b)=>a+b,0)*100);}// Kelli
@@ -666,21 +663,45 @@ function statsItems(){
   const cutoff=new Date();cutoff.setDate(cutoff.getDate()-30);
   const cutoffStr=localDateStr(cutoff);
   const recent=garminHistory.filter(r=>r.date>=cutoffStr);
-  const avgSleep=recent.length?avg(recent.map(r=>r.sleepScore)):'—';
-  const avgHrv=recent.length?avg(recent.map(r=>r.hrv)):'—';
-  const avgRhr=recent.length?avg(recent.map(r=>r.restingHr)):'—';
+  const avgSleepVal=recent.length?avgNum(recent.map(r=>r.sleepScore)):null;
+  const avgHrvVal=recent.length?avgNum(recent.map(r=>r.hrv)):null;
+  const avgSleep=avgSleepVal!=null?Math.round(avgSleepVal):'—';
+  const avgHrv=avgHrvVal!=null?Math.round(avgHrvVal):'—';
+  // Color vs baseline — only for Kelli (Elliott has no pre-sauna baseline)
+  const bv=baselineValues;
+  let sleepCls='',hrvCls='';
+  if(activeUser==='Kelli'&&avgSleepVal!=null&&bv.sleepScore!=null){
+    sleepCls=avgSleepVal>=bv.sleepScore+2?'goal-met':avgSleepVal<bv.sleepScore-2?'stat-bad':'';
+  }
+  if(activeUser==='Kelli'&&avgHrvVal!=null&&bv.hrvTypicalLow!=null){
+    const hrvMid=(bv.hrvTypicalLow+bv.hrvTypicalHigh)/2;
+    hrvCls=avgHrvVal>=hrvMid+1?'goal-met':avgHrvVal<bv.hrvTypicalLow-1?'stat-bad':'';
+  }
   return[
     {label:'This week 🔥',val:`${tw}/${saunaWeeklyGoal()}`,cls:tw>=saunaWeeklyGoal()?'goal-met':tw>=saunaWeeklyGoal()-1?'goal-close':''},
     {label:'Last week',val:`${lw}/${saunaWeeklyGoal()}`,cls:lw>=saunaWeeklyGoal()?'goal-met':''},
     {label:'Total sessions',val:total,cls:''},
-    {label:'Avg sleep · 30d',val:avgSleep,cls:''},
-    {label:'Avg HRV · 30d',val:avgHrv,cls:''},
-    {label:'Avg RHR · 30d',val:avgRhr,cls:''}
+    {label:'Avg sleep · 30d',val:avgSleep,cls:sleepCls},
+    {label:'Avg HRV · 30d',val:avgHrv,cls:hrvCls}
   ];
 }
 function renderStats(){document.getElementById('desktopStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="stat ${cls}">${label}<b>${val}</b></div>`).join('');document.getElementById('mobileStats').innerHTML=statsItems().map(({label,val,cls})=>`<div class="mobile-stat ${cls}"><div class="ms-label">${label}</div><div class="ms-value">${val}</div></div>`).join('');}
-function baselineItems(){const bv=baselineValues;if(activeUser==='Elliott'){return[{label:'Sleep Dur.',value:bv.sleepDuration!=null?fmtMins(bv.sleepDuration):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'}];}return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'},{label:'Resting HR',value:bv.restingHr!=null?`${Math.round(bv.restingHr)}`:'—'}];}
-function renderBaselines(){const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';const label=baselineRange.start?`Pre-sauna · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data';document.getElementById('baselineCards').innerHTML=baselineItems().map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');document.getElementById('garminStatus').textContent=label;document.getElementById('mobileBaselines').innerHTML=baselineItems().map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');document.getElementById('mobileBlDate').textContent=label;}
+function baselineItems(){if(activeUser==='Elliott')return[];const bv=baselineValues;return[{label:'Sleep',value:bv.sleepScore!=null?Math.round(bv.sleepScore):'—'},{label:'HRV',value:bv.hrvTypicalLow!=null?`${Math.round(bv.hrvTypicalLow)}–${Math.round(bv.hrvTypicalHigh)}`:'—'}];}
+function renderBaselines(){
+  const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
+  const label=baselineRange.start?`Pre-sauna · ${fmtD(baselineRange.start)} – ${fmtD(baselineRange.end)}`:'No Garmin data';
+  const items=baselineItems();
+  // Desktop
+  const dCard=document.querySelector('.desktop-wrap .card:nth-child(3)');
+  if(dCard)dCard.style.display=activeUser==='Elliott'?'none':'';
+  document.getElementById('baselineCards').innerHTML=items.map(c=>`<div class="baseline">${c.label}<b>${c.value}</b></div>`).join('');
+  document.getElementById('garminStatus').textContent=label;
+  // Mobile
+  const mBl=document.querySelector('.mobile-baselines');
+  if(mBl)mBl.style.display=activeUser==='Elliott'?'none':'';
+  document.getElementById('mobileBaselines').innerHTML=items.map(c=>`<div class="mobile-baseline"><div class="mb-label">${c.label}</div><div class="mb-value">${c.value}</div></div>`).join('');
+  document.getElementById('mobileBlDate').textContent=activeUser==='Elliott'?'':label;
+}
 
 // ─── Today slots ──────────────────────────────────────────────────────────────
 function desktopTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙';if(type==='workout'){const wEntries=entries.filter(e=>e.date===todayStr&&e.entryType==='workout');const rows=wEntries.map(e=>`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 0;border-top:1px solid var(--border)">${workoutBadgesHtml(e)||'<span style="font-size:13px;color:var(--muted)">No workout type</span>'}<div style="display:flex;gap:5px;flex-shrink:0"><button class="history-btn-edit" onclick="startEdit('${e.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${e.id}')">Delete</button></div></div>${e.notes?`<div class="today-note">${escapeHtml(e.notes)}</div>`:''}`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('workout')">Add</button></div>${wEntries.length?rows:'<div style="font-size:13px;color:var(--muted)">No workout logged.</div>'}</div>`;}const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);if(!entry)return`<div class="today-slot empty"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="openSlot('${type}')">Add</button></div><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=saunaWeeklyGoal();const dots=Array.from({length:saunaWeeklyGoal()},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div><div class="sauna-main">${entry.saunaMinutes||'—'} min</div><div class="sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${saunaWeeklyGoal()}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?(activeUser==='Elliott'?[{label:'Sleep',key:'sleepDuration',baseline:bv.sleepDuration,kind:'higher_better',fmtVal:fmtMins},{label:'Deep Sleep',key:'sleepDeep',baseline:{low:bv.sleepDeepTypicalLow,high:bv.sleepDeepTypicalHigh},kind:'range',fmtVal:fmtMins},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]:[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]).filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Battery',key:'bodyBattery'},{label:'Respiration',key:'respiration'},{label:'Pulse Ox',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));return`<div class="today-slot"><div class="today-slot-title"><h4>${icon} ${title}</h4><button onclick="startEdit('${entry.id}')">Edit</button></div>${primary.length?`<div class="prominent-grid">${primary.map(x=>`<div class="prominent-metric"><div class="prominent-top"><span>${x.label}</span>${deltaChip(x.kind,entry[x.key],x.baseline)}</div><div class="prominent-value">${x.fmtVal?x.fmtVal(entry[x.key]):fmt(entry[x.key])}</div><div class="prominent-sub">${x.kind==='range'?`${x.fmtVal?x.fmtVal(x.baseline.low??''):x.baseline.low??'—'}–${x.fmtVal?x.fmtVal(x.baseline.high??''):x.baseline.high??'—'}`:x.baseline!=null?`base ${x.fmtVal?x.fmtVal(x.baseline):x.baseline}`:''}</div></div>`).join('')}</div>`:''}${secondary.length?`<div class="secondary-grid">${secondary.map(x=>`<div class="secondary-metric"><div class="secondary-head">${x.label}</div><div class="secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:''}${workoutBadgesHtml(entry)}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
@@ -856,15 +877,17 @@ function getChartDatasets(){
     {label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},
     {label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},
     {label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},
-    {label:'RHR (Garmin)',color:p.p3,width:1.5,opacity:.14,showLabels:false,data:gs('restingHr')},
-    {label:'RHR',color:p.p3,width:3,data:ms('restingHr')},
     ...(compareMode?[
       {label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},
-      {label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')},
-      {label:`${other} RHR`,color:COMPARE_COLORS.restingHr,width:2,opacity:.6,dash:'4 2',data:oms('restingHr')}
+      {label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')}
     ]:[])
   ];
   return{primary:primaryDatasets};
+}
+    [{label:'Sleep (Garmin)',color:p.p1,width:1.5,opacity:.14,showLabels:false,data:gs('sleepScore')},{label:'Sleep',color:p.p1,width:3,data:ms('sleepScore')},{label:'HRV (Garmin)',color:p.p2,dash:'8 4',width:1.5,opacity:.14,showLabels:false,data:gs('hrv')},{label:'HRV',color:p.p2,dash:'8 4',width:3,data:ms('hrv')},...(compareMode?[{label:`${other} Sleep`,color:COMPARE_COLORS.sleepScore,width:2,opacity:.6,dash:'4 2',data:oms('sleepScore')},{label:`${other} HRV`,color:COMPARE_COLORS.hrv,width:2,opacity:.6,dash:'4 2',data:oms('hrv')}]:[])];
+  return{
+    primary:primaryDatasets
+  };
 }
 
 function renderChartLegends(d){
@@ -875,11 +898,9 @@ function renderChartLegends(d){
   const pItems=[];
   if(hasAny(d.primary,'Sleep'))pItems.push(`<span class="legend-item">${sw(p.p1)}Sleep</span>`);
   if(hasAny(d.primary,'HRV'))pItems.push(`<span class="legend-item">${sw(p.p2)}HRV</span>`);
-  if(hasAny(d.primary,'RHR'))pItems.push(`<span class="legend-item">${sw(p.p3)}RHR</span>`);
   const mpItems=[];
   if(hasAny(d.primary,'Sleep'))mpItems.push(`<span>${mSw(p.p1)}Sleep</span>`);
   if(hasAny(d.primary,'HRV'))mpItems.push(`<span>${mSw(p.p2)}HRV</span>`);
-  if(hasAny(d.primary,'RHR'))mpItems.push(`<span>${mSw(p.p3)}RHR</span>`);
   const saLeg=`<span class="legend-item">${sw(p.saunaOn,true)}Red light on</span><span class="legend-item">${sw(p.saunaOff,true)}No red light</span>`;
   const msaLeg=`<span>${mSw(p.saunaOn,true)}Red light on</span><span>${mSw(p.saunaOff,true)}No red light</span>`;
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
