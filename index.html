@@ -339,7 +339,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v42</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v43</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -442,7 +442,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- Entry modal -->
 <div class="modal-backdrop" id="entryModal">
   <div class="modal">
-    <div class="modal-head"><h3 id="entryModalTitle">Add entry</h3><button id="closeEntryBtn">Close</button></div>
+    <div class="modal-head"><h3 id="entryModalTitle">Add entry</h3><button id="closeEntryBtn" class="pill-btn">Close</button></div>
     <div class="modal-body">
       <form id="entryForm">
         <div class="entry-type-bar">
@@ -500,7 +500,7 @@ textarea{min-height:90px;resize:vertical}
             </div>
           </div>
         </div>
-        <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px" /></div>
+        <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px;accent-color:var(--user-primary)" /></div>
         <div id="notesWrap"><label for="notes">Notes</label><textarea id="notes"></textarea></div>
         <div style="display:flex;gap:8px">
           <button type="submit" class="pill-btn primary" style="flex:1;min-height:48px;font-size:16px;font-weight:700">Save</button>
@@ -886,12 +886,13 @@ function renderChartLegends(d){
   const hasAny=(datasets,label)=>datasets.some(ds=>ds.label===label&&ds.data.length>0);
   const sw=(c,r)=>`<span class="swatch" style="background:${c};${r?'border-radius:2px':''}"></span>`;
   const mSw=(c,r)=>`<span style="display:inline-block;width:10px;height:10px;border-radius:${r?'2px':'50%'};background:${c};margin-right:3px"></span>`;
+  const hasMetric=(datasets,label)=>datasets.some(ds=>(ds.label===label||ds.label===label+' (Garmin)')&&ds.data.length>0);
   const pItems=[];
-  if(hasAny(d.primary,'Sleep'))pItems.push(`<span class="legend-item">${sw(p.p1)}Sleep</span>`);
-  if(hasAny(d.primary,'HRV'))pItems.push(`<span class="legend-item">${sw(p.p2)}HRV</span>`);
+  if(hasMetric(d.primary,'Sleep'))pItems.push(`<span class="legend-item">${sw(p.p1)}Sleep</span>`);
+  if(hasMetric(d.primary,'HRV'))pItems.push(`<span class="legend-item">${sw(p.p2)}HRV</span>`);
   const mpItems=[];
-  if(hasAny(d.primary,'Sleep'))mpItems.push(`<span>${mSw(p.p1)}Sleep</span>`);
-  if(hasAny(d.primary,'HRV'))mpItems.push(`<span>${mSw(p.p2)}HRV</span>`);
+  if(hasMetric(d.primary,'Sleep'))mpItems.push(`<span>${mSw(p.p1)}Sleep</span>`);
+  if(hasMetric(d.primary,'HRV'))mpItems.push(`<span>${mSw(p.p2)}HRV</span>`);
   const saLeg=`<span class="legend-item">${sw(p.saunaOn,true)}Red light on</span><span class="legend-item">${sw(p.saunaOff,true)}No red light</span>`;
   const msaLeg=`<span>${mSw(p.saunaOn,true)}Red light on</span><span>${mSw(p.saunaOff,true)}No red light</span>`;
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
