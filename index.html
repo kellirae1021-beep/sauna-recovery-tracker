@@ -68,7 +68,33 @@ textarea{min-height:90px;resize:vertical}
 .chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#221b29;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 8px 20px rgba(34,27,41,.25);display:none;max-width:200px}
 
 
-/* Bootcamp goal card */
+/* PR Tracker */
+.pr-badge{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.03em;flex-shrink:0}
+.pr-badge.db{background:#f3edf7;color:#6f3f74;border:1px solid #d4b8dc}
+.pr-badge.bb{background:#e8f0f8;color:#2c4a6e;border:1px solid #a8c0dc}
+.pr-badge.bw{background:#f0f0f0;color:#555;border:1px solid #ccc}
+.pr-badge.other{background:#f5f0e8;color:#7a5a20;border:1px solid #d4c090}
+.pr-category-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.pr-movement-block{margin-bottom:12px}
+.pr-movement-name{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.pr-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;border-top:1px solid var(--border)}
+.pr-row:first-of-type{border-top:none}
+.pr-result{flex:1;font-weight:600}
+.pr-date{font-size:11px;color:var(--muted);white-space:nowrap}
+.pr-unknown-date{font-size:11px;color:var(--neutral);font-style:italic}
+.pr-counter-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05);margin-bottom:14px}
+.pr-counter-bar-track{height:12px;background:#f0ebf4;border-radius:999px;overflow:hidden;margin:8px 0 4px}
+.pr-counter-bar-fill{height:100%;background:var(--plum);border-radius:999px;transition:width .5s}
+.pr-form-section{display:grid;gap:12px}
+.pr-movement-select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;font:inherit;font-size:16px;background:#fff;color:var(--text)}
+.pr-new-movement-wrap{display:none;grid-template-columns:1fr 1fr;gap:8px}
+.pr-equip-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.pr-equip-chip{border:1px solid var(--border);border-radius:999px;padding:8px 14px;background:#fff;color:var(--text);font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+.pr-equip-chip.selected{background:var(--user-primary);color:#fff;border-color:var(--user-primary)}
+.pr-result-type-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.pr-result-type-chip{border:1px solid var(--border);border-radius:999px;padding:8px 14px;background:#fff;color:var(--text);font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+.pr-result-type-chip.selected{background:var(--user-primary);color:#fff;border-color:var(--user-primary)}
+
 .bootcamp-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(60,47,70,.05)}
 .bootcamp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .bootcamp-header h3{margin:0;font-size:16px}
@@ -230,12 +256,12 @@ textarea{min-height:90px;resize:vertical}
   .mobile-history-metrics{display:flex;flex-wrap:wrap;gap:5px}
   .mobile-history-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px}
   .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:#fff;border-top:1px solid var(--border);z-index:200}
-  .mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--muted);font-size:10px;font-weight:600;gap:3px;padding:8px 4px}
-  .mobile-nav-btn .nav-icon{font-size:22px;line-height:1}
+  .mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--muted);font-size:9px;font-weight:600;gap:2px;padding:6px 2px}
+  .mobile-nav-btn .nav-icon{font-size:19px;line-height:1}
   .mobile-nav-btn.active{color:var(--user-primary)}
-  .mobile-nav-add-wrap{flex:0 0 72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-  .mobile-nav-add{width:50px;height:50px;border-radius:50%;background:var(--user-primary);border:none;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:background .2s}
-  .mobile-nav-add-label{font-size:10px;color:var(--user-primary);font-weight:600}
+  .mobile-nav-add-wrap{flex:0 0 58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .mobile-nav-add{width:42px;height:42px;border-radius:50%;background:var(--user-primary);border:none;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:background .2s}
+  .mobile-nav-add-label{font-size:9px;color:var(--user-primary);font-weight:600}
 }
 @media(min-width:769px){.mobile-wrap{display:none!important}}
 </style>
@@ -264,6 +290,7 @@ textarea{min-height:90px;resize:vertical}
     <div class="mobile-bl-date" id="mobileBlDate"></div>
   </div>
   <div class="mobile-tab active" id="mobileToday">
+    <div id="mobilePRCounterCard" style="display:none;background:#fff;border-bottom:1px solid var(--border)"></div>
     <div id="mobileBootcampCard" style="display:none;background:#fff;border-bottom:1px solid var(--border)"></div>
     <div id="mobileTodaySlots"></div>
   </div>
@@ -325,10 +352,17 @@ textarea{min-height:90px;resize:vertical}
     </div>
     <div class="mobile-history-list" id="mobileHistoryList"></div>
   </div>
-  <nav class="mobile-nav">
+  <div class="mobile-tab" id="mobilePRs">
+    <div class="mobile-history-head">
+      <h3>🏆 PRs</h3>
+      <button class="pill-btn primary" onclick="openPRForm()" style="font-size:12px;padding:6px 12px">+ Log PR</button>
+    </div>
+    <div style="padding:0 16px 80px" id="mobilePRList"></div>
+  </div>
     <button class="mobile-nav-btn active" data-tab="mobileToday"><span class="nav-icon">🏠</span>Today</button>
     <button class="mobile-nav-btn" data-tab="mobileCharts"><span class="nav-icon">📈</span>Charts</button>
     <button class="mobile-nav-btn" data-tab="mobileHistory"><span class="nav-icon">📋</span>History</button>
+    <button class="mobile-nav-btn" data-tab="mobilePRs"><span class="nav-icon">🏆</span>PRs</button>
     <div class="mobile-nav-add-wrap">
       <button class="mobile-nav-add" id="mobileAddBtn">+</button>
       <span class="mobile-nav-add-label" id="mobileAddLabel">Add</span>
@@ -339,7 +373,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v43</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v44</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -365,10 +399,12 @@ textarea{min-height:90px;resize:vertical}
         <button class="desktop-tab-btn active" data-dtab="dtodayTab">Today</button>
         <button class="desktop-tab-btn" data-dtab="dchartsTab">Charts</button>
         <button class="desktop-tab-btn" data-dtab="dhistoryTab">History</button>
+        <button class="desktop-tab-btn" data-dtab="dprTab" id="dprTabBtn" style="display:none">🏆 PRs</button>
       </div>
     </div>
   </div>
   <div class="desktop-tab-panel active" id="dtodayTab">
+    <div id="desktopPRCounterCard" style="display:none"></div>
     <div id="desktopBootcampCard" style="display:none"></div>
     <div class="card">
       <div class="today-grid" id="todayGrid"></div>
@@ -437,6 +473,15 @@ textarea{min-height:90px;resize:vertical}
       <div id="historyList"></div>
     </div>
   </div>
+  <div class="desktop-tab-panel" id="dprTab">
+    <div class="card">
+      <div class="section-title">
+        <h3>🏆 Personal Records</h3>
+        <button class="pill-btn primary" onclick="openPRForm()">+ Log PR</button>
+      </div>
+      <div id="desktopPRList"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Entry modal -->
@@ -448,6 +493,7 @@ textarea{min-height:90px;resize:vertical}
         <div class="entry-type-bar">
           <button type="button" class="entry-type-btn active" data-entry-type="workout">🏋️ Workout</button>
           <button type="button" class="entry-type-btn" data-entry-type="sauna">🔥 Sauna</button>
+          <button type="button" class="entry-type-btn" data-entry-type="pr" id="prEntryTypeBtn" style="display:none">🏆 PR</button>
         </div>
         <div class="grid2">
           <div><label for="date">Date</label><input id="date" type="date" required /></div>
@@ -501,6 +547,43 @@ textarea{min-height:90px;resize:vertical}
           </div>
         </div>
         <div id="redLightWrap" class="switch-row"><div><strong>Red light used</strong></div><input id="redLightUsed" type="checkbox" style="width:24px;height:24px;accent-color:var(--user-primary)" /></div>
+        <!-- PR fields -->
+        <div id="prWrap" class="pr-form-section">
+          <div>
+            <label>Movement</label>
+            <select id="prMovement" class="pr-movement-select">
+              <option value="">— select movement —</option>
+            </select>
+          </div>
+          <div id="prNewMovementWrap" class="pr-new-movement-wrap">
+            <div><label>Movement name</label><input id="prNewName" type="text" placeholder="e.g. Incline DB Press" /></div>
+            <div><label>Category</label><select id="prNewCategory" class="pr-movement-select"><option value="Upper Body">Upper Body</option><option value="Lower Body">Lower Body</option><option value="Core &amp; Other">Core &amp; Other</option></select></div>
+          </div>
+          <div>
+            <label>Equipment</label>
+            <div class="pr-equip-chips" id="prEquipChips">
+              <button type="button" class="pr-equip-chip" data-equip="Dumbbell">Dumbbell</button>
+              <button type="button" class="pr-equip-chip" data-equip="Barbell">Barbell</button>
+              <button type="button" class="pr-equip-chip" data-equip="Bodyweight">Bodyweight</button>
+              <button type="button" class="pr-equip-chip" data-equip="Other">Other</button>
+            </div>
+          </div>
+          <div>
+            <label>Result type</label>
+            <div class="pr-result-type-chips">
+              <button type="button" class="pr-result-type-chip selected" data-rtype="weight_reps">Weight + Reps</button>
+              <button type="button" class="pr-result-type-chip" data-rtype="timed">Timed</button>
+              <button type="button" class="pr-result-type-chip" data-rtype="count">Count</button>
+            </div>
+          </div>
+          <div class="grid2" id="prWeightRepsWrap">
+            <div><label for="prWeight">Weight (lbs, optional)</label><input id="prWeight" type="number" min="1" max="2000" step="0.5" inputmode="decimal" placeholder="e.g. 60" /></div>
+            <div><label for="prReps">Reps</label><input id="prReps" type="number" min="1" max="9999" inputmode="numeric" placeholder="e.g. 8" /></div>
+          </div>
+          <div id="prTimedWrap" style="display:none"><label for="prTime">Time (mm:ss)</label><input id="prTime" type="text" placeholder="e.g. 5:18" pattern="\d+:\d{2}" /></div>
+          <div id="prCountWrap" style="display:none"><label for="prCount">Count</label><input id="prCount" type="number" min="1" inputmode="numeric" placeholder="e.g. 42" /></div>
+          <div><label for="prNote">Notes (optional)</label><textarea id="prNote" style="min-height:60px"></textarea></div>
+        </div>
         <div id="notesWrap"><label for="notes">Notes</label><textarea id="notes"></textarea></div>
         <div style="display:flex;gap:8px">
           <button type="submit" class="pill-btn primary" style="flex:1;min-height:48px;font-size:16px;font-weight:700">Save</button>
@@ -567,11 +650,127 @@ const seedEntries=[
   {id:'seed-2026-03-12-am',date:'2026-03-12',entryType:'morning',timeOfDay:'morning',userName:'Kelli',saunaMinutes:'',sleepScore:66,sleepSelf:'',hrv:34,restingHr:62,bodyBattery:'',respiration:15.5,pulseOx:95,weight:'',energy:'',stress:8,muscleSoreness:'',jointSoreness:'',redLightUsed:false,workouts:'',bootcampTime:'',bootcampType:'',notes:''}
 ];
 
+// ─── PR Data ──────────────────────────────────────────────────────────────────
+const PR_CATEGORIES = ['Upper Body','Lower Body','Core & Other'];
+const PR_EQUIPMENT = ['Dumbbell','Barbell','Bodyweight','Other'];
+
+// Built-in movements — user can add more via localStorage
+const BUILTIN_MOVEMENTS = [
+  {name:'Hammer Curl',category:'Upper Body'},
+  {name:'DB Snatch',category:'Upper Body'},
+  {name:'DB Hex Press',category:'Upper Body'},
+  {name:'DB One Arm Row',category:'Upper Body'},
+  {name:'DB Single Arm Row',category:'Upper Body'},
+  {name:'DB Chest Press',category:'Upper Body'},
+  {name:'Chinups',category:'Upper Body'},
+  {name:'Pullups',category:'Upper Body'},
+  {name:'Pushups',category:'Upper Body'},
+  {name:'OH Tricep Press',category:'Upper Body'},
+  {name:'DB RDL',category:'Lower Body'},
+  {name:'DB Goblet Squat',category:'Lower Body'},
+  {name:'DB Front Squat',category:'Lower Body'},
+  {name:'DB Squat',category:'Lower Body'},
+  {name:'DB Split Squat',category:'Lower Body'},
+  {name:'DB Deadlift',category:'Lower Body'},
+  {name:'Pistol Squat',category:'Lower Body'},
+  {name:'Weighted Wall Sit',category:'Lower Body'},
+  {name:'Contralateral DB Lunge',category:'Lower Body'},
+  {name:'DB Reverse Lunge',category:'Lower Body'},
+  {name:'DB Front Lunge',category:'Lower Body'},
+  {name:'Jump Lunges',category:'Lower Body'},
+  {name:'Box Jumps',category:'Lower Body'},
+  {name:'Front Squat',category:'Lower Body'},
+  {name:'Back Squat',category:'Lower Body'},
+  {name:'Squat Clean',category:'Lower Body'},
+  {name:'Hang Squat Clean',category:'Lower Body'},
+  {name:'Deadlift',category:'Lower Body'},
+  {name:'Overhead Lunge',category:'Lower Body'},
+  {name:'Low Plank Hold',category:'Core & Other'},
+  {name:'Single DB Russian Twist',category:'Core & Other'},
+  {name:'Burpees',category:'Core & Other'},
+  {name:'Double Unders',category:'Core & Other'},
+  {name:'Run 1/2 Mile',category:'Core & Other'},
+  {name:'Hollow Hold Flutter Kicks',category:'Core & Other'},
+  {name:'DB Farmer\'s Carry',category:'Core & Other'},
+  {name:'OH Carry',category:'Core & Other'},
+  {name:'Power Snatch',category:'Upper Body'},
+  {name:'Squat Snatch',category:'Upper Body'},
+  {name:'Push Press',category:'Upper Body'},
+  {name:'Bench Press',category:'Upper Body'},
+  {name:'Power Clean',category:'Upper Body'},
+];
+
+function getCustomMovements(){try{return JSON.parse(localStorage.getItem('srt-custom-movements')||'[]');}catch{return[];}}
+function saveCustomMovements(arr){localStorage.setItem('srt-custom-movements',JSON.stringify(arr));}
+function getAllMovements(){return[...BUILTIN_MOVEMENTS,...getCustomMovements()].sort((a,b)=>a.name.localeCompare(b.name));}
+function getMovementCategory(name){return getAllMovements().find(m=>m.name===name)?.category||'Core & Other';}
+
+// Seed PR entries
+const seedPRs = [
+  // Upper Body
+  {id:'pr-hammer-curl-1',date:'2026-03-25',entryType:'pr',userName:'Kelli',prMovement:'Hammer Curl',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:25,prReps:10,prTime:'',prCount:'',prNote:''},
+  {id:'pr-db-snatch-1',date:'2024-09-01',entryType:'pr',userName:'Kelli',prMovement:'DB Snatch',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:50,prReps:6,prTime:'',prCount:'',prNote:'Alternating arm'},
+  {id:'pr-db-hex-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Hex Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:45,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-db-one-arm-row-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB One Arm Row',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:55,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-db-single-arm-row-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Single Arm Row',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:50,prReps:10,prTime:'',prCount:'',prNote:'Per arm'},
+  {id:'pr-chest-press-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Chest Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:55,prReps:10,prTime:'',prCount:'',prNote:''},
+  {id:'pr-chest-press-2',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Chest Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:60,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-chest-press-3',date:'2026-04-01',entryType:'pr',userName:'Kelli',prMovement:'DB Chest Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:65,prReps:8,prTime:'',prCount:'',prNote:'With spotter'},
+  {id:'pr-chinups-1',date:'2025-09-01',entryType:'pr',userName:'Kelli',prMovement:'Chinups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:7,prTime:'',prCount:'',prNote:''},
+  {id:'pr-chinups-2',date:'2026-03-01',entryType:'pr',userName:'Kelli',prMovement:'Chinups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-pullups-1',date:'2025-09-01',entryType:'pr',userName:'Kelli',prMovement:'Pullups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:6,prTime:'',prCount:'',prNote:''},
+  {id:'pr-pullups-2',date:'2026-02-01',entryType:'pr',userName:'Kelli',prMovement:'Pullups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:7,prTime:'',prCount:'',prNote:''},
+  {id:'pr-pushups-1',date:'2026-01-01',entryType:'pr',userName:'Kelli',prMovement:'Pushups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'42',prNote:'Max unbroken'},
+  {id:'pr-oh-tricep-1',date:'2025-03-01',entryType:'pr',userName:'Kelli',prMovement:'OH Tricep Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:30,prReps:12,prTime:'',prCount:'',prNote:'Probably not max'},
+  // Lower Body
+  {id:'pr-rdl-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB RDL',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:10,prTime:'',prCount:'',prNote:''},
+  {id:'pr-rdl-2',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'DB RDL',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:80,prReps:6,prTime:'',prCount:'',prNote:''},
+  {id:'pr-goblet-1',date:'2024-09-01',entryType:'pr',userName:'Kelli',prMovement:'DB Goblet Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:100,prReps:12,prTime:'',prCount:'',prNote:''},
+  {id:'pr-front-squat-1',date:'2025-01-01',entryType:'pr',userName:'Kelli',prMovement:'DB Front Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:60,prReps:14,prTime:'',prCount:'',prNote:''},
+  {id:'pr-front-squat-2',date:'2026-01-01',entryType:'pr',userName:'Kelli',prMovement:'DB Front Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:8,prTime:'',prCount:'',prNote:'3 sets'},
+  {id:'pr-front-squat-3',date:'2026-05-01',entryType:'pr',userName:'Kelli',prMovement:'DB Front Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:55,prReps:15,prTime:'',prCount:'',prNote:'3 sets'},
+  {id:'pr-front-squat-4',date:'2026-05-01',entryType:'pr',userName:'Kelli',prMovement:'DB Front Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:65,prReps:12,prTime:'',prCount:'',prNote:''},
+  {id:'pr-db-squat-1',date:'2025-03-01',entryType:'pr',userName:'Kelli',prMovement:'DB Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-split-squat-1',date:'2026-05-01',entryType:'pr',userName:'Kelli',prMovement:'DB Split Squat',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:60,prReps:8,prTime:'',prCount:'',prNote:''},
+  {id:'pr-deadlift-1',date:'2025-03-01',entryType:'pr',userName:'Kelli',prMovement:'DB Deadlift',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:90,prReps:12,prTime:'',prCount:'',prNote:''},
+  {id:'pr-deadlift-2',date:'2026-02-01',entryType:'pr',userName:'Kelli',prMovement:'DB Deadlift',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:100,prReps:9,prTime:'',prCount:'',prNote:''},
+  {id:'pr-pistol-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Pistol Squat',prCategory:'Lower Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:5,prTime:'',prCount:'',prNote:'Each leg'},
+  {id:'pr-wall-sit-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Weighted Wall Sit',prCategory:'Lower Body',prEquipment:'Other',prResultType:'timed',prWeight:17.5,prReps:null,prTime:'3:00',prCount:'',prNote:''},
+  {id:'pr-contra-lunge-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Contralateral DB Lunge',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:40,prReps:15,prTime:'',prCount:'',prNote:'Per leg'},
+  {id:'pr-rev-lunge-1',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'DB Reverse Lunge',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:8,prTime:'',prCount:'',prNote:'Per leg'},
+  {id:'pr-front-lunge-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Front Lunge',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:45,prReps:10,prTime:'',prCount:'',prNote:'Per leg'},
+  {id:'pr-jump-lunges-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Jump Lunges',prCategory:'Lower Body',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'30',prNote:'2:1 in 1 min'},
+  {id:'pr-box-jumps-1',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'Box Jumps',prCategory:'Lower Body',prEquipment:'Other',prResultType:'weight_reps',prWeight:null,prReps:3,prTime:'',prCount:'',prNote:'36"'},
+  // Core & Other
+  {id:'pr-plank-1',date:'2025-09-01',entryType:'pr',userName:'Kelli',prMovement:'Low Plank Hold',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'timed',prWeight:null,prReps:null,prTime:'5:18',prCount:'',prNote:''},
+  {id:'pr-russian-twist-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Single DB Russian Twist',prCategory:'Core & Other',prEquipment:'Dumbbell',prResultType:'count',prWeight:20,prReps:null,prTime:'',prCount:'80',prNote:'Max in 2 mins'},
+  {id:'pr-burpees-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Burpees',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'20',prNote:'In 1 min'},
+  {id:'pr-burpees-2',date:'2024-09-01',entryType:'pr',userName:'Kelli',prMovement:'Burpees',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'38',prNote:'In 2 mins'},
+  {id:'pr-du-1',date:'2025-10-01',entryType:'pr',userName:'Kelli',prMovement:'Double Unders',prCategory:'Core & Other',prEquipment:'Other',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'47',prNote:''},
+  {id:'pr-du-2',date:'2026-04-01',entryType:'pr',userName:'Kelli',prMovement:'Double Unders',prCategory:'Core & Other',prEquipment:'Other',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'60',prNote:''},
+  {id:'pr-run-1',date:'2026-05-01',entryType:'pr',userName:'Kelli',prMovement:'Run 1/2 Mile',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'timed',prWeight:null,prReps:null,prTime:'3:58',prCount:'',prNote:''},
+  {id:'pr-flutter-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Hollow Hold Flutter Kicks',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'106',prNote:'2:1'},
+  {id:'pr-farmers-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'DB Farmer\'s Carry',prCategory:'Core & Other',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:60,prReps:2,prTime:'',prCount:'',prNote:'2 laps'},
+  {id:'pr-oh-carry-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'OH Carry',prCategory:'Core & Other',prEquipment:'Other',prResultType:'weight_reps',prWeight:40,prReps:3,prTime:'',prCount:'',prNote:'3 laps'},
+  // Barbell (pre-Ronin 2018)
+  {id:'pr-bb-back-squat-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Back Squat',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:195,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-front-squat-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Front Squat',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:165,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-squat-clean-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Squat Clean',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:135,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-hang-clean-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Hang Squat Clean',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:125,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-power-snatch-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Power Snatch',prCategory:'Upper Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:85,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-squat-snatch-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Squat Snatch',prCategory:'Upper Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:95,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-deadlift-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Deadlift',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:195,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-push-press-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Push Press',prCategory:'Upper Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:115,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-bench-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Bench Press',prCategory:'Upper Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:85,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-power-clean-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Power Clean',prCategory:'Upper Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:115,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+  {id:'pr-bb-oh-lunge-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Overhead Lunge',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:115,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
+];
+
 const TYPE_FIELDS={
-  sauna:['saunaMinutesWrap','saunaTempWrap','redLightWrap','notesWrap'],
-  workout:['workoutWrap','notesWrap']
+  workout:['workoutWrap','notesWrap'],
+  pr:['prWrap']
 };
-const ALL_FIELD_WRAPS=['saunaMinutesWrap','saunaTempWrap','sleepScoreWrap','sleepSelfWrap','hrvWrap','restingHrWrap','bodyBatteryWrap','respirationWrap','pulseOxWrap','weightWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','workoutWrap','redLightWrap','notesWrap'];
+const ALL_FIELD_WRAPS=['saunaMinutesWrap','saunaTempWrap','sleepScoreWrap','sleepSelfWrap','hrvWrap','restingHrWrap','bodyBatteryWrap','respirationWrap','pulseOxWrap','weightWrap','energyWrap','stressWrap','muscleSorenessWrap','jointSorenessWrap','workoutWrap','redLightWrap','notesWrap','prWrap'];
 const FIELD_RULES={sleepSelf:{min:1,max:10},energy:{min:1,max:10},stress:{min:1,max:10},muscleSoreness:{min:1,max:10},jointSoreness:{min:1,max:10},sleepScore:{min:0,max:100},hrv:{min:1,max:200},restingHr:{min:30,max:120},bodyBattery:{min:0,max:100},respiration:{min:5,max:30},pulseOx:{min:70,max:100},saunaMinutes:{min:1,max:120},weight:{min:50,max:500}};
 
 // ─── Supabase ─────────────────────────────────────────────────────────────────
@@ -799,15 +998,21 @@ function bootcampCardHtml(isMobile){
 function renderBootcampGoal(){
   const dc=document.getElementById('desktopBootcampCard');
   const mc=document.getElementById('mobileBootcampCard');
+  const dcPR=document.getElementById('desktopPRCounterCard');
+  const mcPR=document.getElementById('mobilePRCounterCard');
   const show=activeUser==='Kelli';
   if(dc){dc.style.display=show?'':'none';if(show)dc.innerHTML=bootcampCardHtml(false);}
   if(mc){mc.style.display=show?'':'none';if(show)mc.innerHTML=bootcampCardHtml(true);}
+  if(dcPR){dcPR.style.display=show?'':'none';if(show)dcPR.innerHTML=prCounterCardHtml();}
+  if(mcPR){mcPR.style.display=show?'':'none';if(show)mcPR.innerHTML=`<div style="padding:14px 16px">${prCounterCardHtml()}</div>`;}
+  const prTabBtn=document.getElementById('dprTabBtn');
+  if(prTabBtn)prTabBtn.style.display=show?'':'none';
 }
-
-function renderDesktopToday(){renderBootcampGoal();document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('workout','Workout')+desktopTodaySlotHtml('sauna','Sauna Today');}
+function todayPRsHtml(){const todayPRs=prEntries.filter(p=>p.userName==='Kelli'&&p.date===todayStr);if(!todayPRs.length)return'';const rows=todayPRs.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">${equipBadgeHtml(p.prEquipment,true)}<span style="font-size:13px;font-weight:600;flex:1">${p.prMovement}</span><span style="font-size:13px">${prResultText(p)}</span><button class="history-btn-edit" onclick="openPRForm('${p.id}')" style="padding:3px 8px;font-size:11px">Edit</button><button class="history-btn-delete" onclick="removePR('${p.id}')" style="padding:3px 8px;font-size:11px">✕</button></div>`).join('');return`<div class="today-slot" style="grid-column:1/-1"><div class="today-slot-title"><h4>🏆 Today's PRs</h4><button onclick="openPRForm()">+ Log PR</button></div>${rows}</div>`;}
+function renderDesktopToday(){renderBootcampGoal();document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('workout','Workout')+desktopTodaySlotHtml('sauna','Sauna Today')+(activeUser==='Kelli'?todayPRsHtml():'');}
 
 function mobileTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙';if(type==='workout'){const wEntries=entries.filter(e=>e.date===todayStr&&e.entryType==='workout');const rows=wEntries.map(e=>`<div style="padding:8px 0;border-top:1px solid var(--border)">${workoutBadgesHtml(e)||'<span style="font-size:13px;color:var(--muted)">No type</span>'}<div style="display:flex;gap:5px;margin-top:6px"><button class="history-btn-edit" onclick="startEdit('${e.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${e.id}')">Delete</button></div>${e.notes?`<div class="today-note">${escapeHtml(e.notes)}</div>`:''}</div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('workout')">Add</button></h4>${wEntries.length?rows:'<div style="font-size:13px;color:var(--muted)">No workout logged.</div>'}</div>`;}const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=saunaWeeklyGoal();const dots=Array.from({length:saunaWeeklyGoal()},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}${!isBlank(entry.saunaTemp)?` · ${entry.saunaTemp}°F`:''}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${saunaWeeklyGoal()}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?(activeUser==='Elliott'?[{label:'Sleep',key:'sleepDuration',baseline:bv.sleepDuration,kind:'higher_better',fmtVal:fmtMins},{label:'Deep Sleep',key:'sleepDeep',baseline:{low:bv.sleepDeepTypicalLow,high:bv.sleepDeepTypicalHigh},kind:'range',fmtVal:fmtMins},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]:[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]).filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${x.fmtVal?x.fmtVal(entry[x.key]):fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${deltaChip(x.kind,entry[x.key],x.baseline)}</div></div>`).join('')}</div>`:'';const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${workoutBadgesHtml(entry)}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
-function renderMobileToday(){renderBootcampGoal();document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('workout','Workout')+mobileTodaySlotHtml('sauna','Sauna Today');}
+function renderMobileToday(){renderBootcampGoal();const todayPRs=prEntries.filter(p=>p.userName==='Kelli'&&p.date===todayStr);const prSlot=activeUser==='Kelli'&&todayPRs.length?`<div class="mobile-today-slot">${todayPRsHtml()}</div>`:'';document.getElementById('mobileTodaySlots').innerHTML=mobileTodaySlotHtml('workout','Workout')+mobileTodaySlotHtml('sauna','Sauna Today')+prSlot;}
 
 // ─── History ──────────────────────────────────────────────────────────────────
 function historyItemsHtml(isMobile=false){if(!entries.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No entries yet.</div>';const byDate=new Map();sortedDesc().forEach(e=>{if(!byDate.has(e.date))byDate.set(e.date,[]);byDate.get(e.date).push(e);});return Array.from(byDate.entries()).map(([date,dayEntries])=>{const eHtml=dayEntries.map(entry=>{const type=entry.entryType||'morning',icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙',lbl=type==='morning'?'Morning':type==='sauna'?'Sauna':type==='workout'?'Workout':'Bedtime';const m=[];if(activeUser==='Elliott'){if(!isBlank(entry.sleepDuration))m.push(`😴 ${fmtMins(entry.sleepDuration)}`);if(!isBlank(entry.sleepDeep))m.push(`🌑 ${fmtMins(entry.sleepDeep)} deep`);}else{if(!isBlank(entry.sleepScore))m.push(`😴 ${entry.sleepScore}`);if(!isBlank(entry.hrv))m.push(`📉 ${entry.hrv}`);}if(!isBlank(entry.restingHr))m.push(`❤️ ${entry.restingHr}`);if(!isBlank(entry.bodyBattery))m.push(`🔋 ${entry.bodyBattery}`);if(!isBlank(entry.respiration))m.push(`🫁 ${entry.respiration}`);if(!isBlank(entry.pulseOx))m.push(`🩸 ${entry.pulseOx}%`);if(!isBlank(entry.weight))m.push(`⚖️ ${entry.weight}`);if(!isBlank(entry.energy))m.push(`⚡ ${entry.energy}`);if(!isBlank(entry.stress))m.push(`🧠 ${entry.stress}`);if(!isBlank(entry.muscleSoreness))m.push(`💪 ${entry.muscleSoreness}`);if(!isBlank(entry.jointSoreness))m.push(`🦴 ${entry.jointSoreness}`);if(!isBlank(entry.saunaMinutes))m.push(`🔥 ${entry.saunaMinutes}m`);if(!isBlank(entry.saunaTemp))m.push(`🌡️ ${entry.saunaTemp}°F`);if(entry.redLightUsed)m.push('🔴');if(entry.workouts)m.push(`🏃 ${entry.workouts}`);if(!isBlank(entry.cyclingMiles))m.push(`🚴 ${entry.cyclingMiles}mi`);const btns=`<div style="display:flex;gap:6px"><button class="history-btn-edit" onclick="startEdit('${entry.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${entry.id}')">Delete</button></div>`;if(isMobile)return`<div class="mobile-history-entry"><div class="mobile-history-type"><span>${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="mobile-history-metrics history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="mobile-history-note history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;return`<div class="history-entry"><div class="history-entry-head"><span class="history-entry-type">${icon} ${lbl}</span>${btns}</div>${m.length?`<div class="history-metrics">${m.map(x=>`<div class="metric">${x}</div>`).join('')}</div>`:''} ${entry.notes?`<div class="history-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}).join('');if(isMobile)return`<div class="mobile-history-item"><div class="mobile-history-date">${shortDate(date)}</div>${eHtml}</div>`;return`<div class="history-item"><div class="history-date">${longDate(date)}</div>${eHtml}</div>`;}).join('');}
@@ -901,11 +1106,206 @@ function renderChartLegends(d){
 }
 function renderDesktopCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('primaryChart',d.primary,0,100,chartRange);drawSaunaChart('saunaBarChart',chartRange);}
 function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);drawChart('mobilePrimaryChart',d.primary,0,100,mobileChartRange);drawSaunaChart('mobileSaunaChart',mobileChartRange);}
-function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
+// ─── PR Logic ─────────────────────────────────────────────────────────────────
+let prEntries=[]; // separate from allEntries — stored in localStorage
+const PR_STORAGE='srt-pr-entries-v1';
+function loadPREntries(){try{const raw=localStorage.getItem(PR_STORAGE);const stored=raw?JSON.parse(raw):[];// merge seed with stored (seed fills in any missing by id)
+const storedIds=new Set(stored.map(p=>p.id));const merged=[...stored,...seedPRs.filter(s=>!storedIds.has(s.id))];return merged;}catch{return structuredClone(seedPRs);}}
+function savePREntries(){localStorage.setItem(PR_STORAGE,JSON.stringify(prEntries));}
+
+let selectedPREquip='';
+let selectedPRResultType='weight_reps';
+let editingPRId=null;
+
+function equipBadgeHtml(equip,small=false){const map={Dumbbell:'db',Barbell:'bb',Bodyweight:'bw',Other:'other'};const cls=map[equip]||'other';const label=equip==='Dumbbell'?'DB':equip==='Barbell'?'BB':equip==='Bodyweight'?'BW':equip||'?';return`<span class="pr-badge ${cls}"${small?' style="font-size:9px;padding:1px 5px"':''}>${label}</span>`;}
+
+function prResultText(pr){
+  if(pr.prResultType==='timed')return`${pr.prTime||'—'}${pr.prWeight?` @ ${pr.prWeight}#`:''}`;
+  if(pr.prResultType==='count')return`${pr.prCount||'—'} reps${pr.prWeight?` @ ${pr.prWeight}#`:''}`;
+  const parts=[];
+  if(pr.prReps!=null&&pr.prReps!=='')parts.push(`${pr.prReps} reps`);
+  if(pr.prWeight!=null&&pr.prWeight!=='')parts.push(`@ ${pr.prWeight}#`);
+  return parts.join(' ')||'—';
+}
+
+function populatePRMovementSelect(selectedName=''){
+  const sel=document.getElementById('prMovement');if(!sel)return;
+  const all=getAllMovements();
+  const byCategory={};PR_CATEGORIES.forEach(c=>{byCategory[c]=[];});
+  all.forEach(m=>{if(byCategory[m.category])byCategory[m.category].push(m.name);else byCategory['Core & Other'].push(m.name);});
+  sel.innerHTML='<option value="">— select movement —</option>';
+  PR_CATEGORIES.forEach(cat=>{
+    const grp=document.createElement('optgroup');grp.label=cat;
+    byCategory[cat].forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=name;if(name===selectedName)o.selected=true;grp.appendChild(o);});
+    sel.appendChild(grp);
+  });
+  const addOpt=document.createElement('option');addOpt.value='__new__';addOpt.textContent='+ Add new movement…';sel.appendChild(addOpt);
+}
+
+function setPREquip(equip){
+  selectedPREquip=equip;
+  document.querySelectorAll('.pr-equip-chip').forEach(c=>c.classList.toggle('selected',c.dataset.equip===equip));
+}
+function setPRResultType(type){
+  selectedPRResultType=type;
+  document.querySelectorAll('.pr-result-type-chip').forEach(c=>c.classList.toggle('selected',c.dataset.rtype===type));
+  document.getElementById('prWeightRepsWrap').style.display=type==='weight_reps'?'':'none';
+  document.getElementById('prTimedWrap').style.display=type==='timed'?'':'none';
+  document.getElementById('prCountWrap').style.display=type==='count'?'':'none';
+}
+
+function openPRForm(id=null){
+  editingPRId=id;
+  populatePRMovementSelect();
+  setPREquip('Dumbbell');
+  setPRResultType('weight_reps');
+  document.getElementById('prNewMovementWrap').style.display='none';
+  document.getElementById('prNewName').value='';
+  document.getElementById('prWeight').value='';
+  document.getElementById('prReps').value='';
+  document.getElementById('prTime').value='';
+  document.getElementById('prCount').value='';
+  document.getElementById('prNote').value='';
+  document.getElementById('date').value=todayStr;
+  if(id){
+    const pr=prEntries.find(p=>p.id===id);if(!pr)return;
+    populatePRMovementSelect(pr.prMovement);
+    setPREquip(pr.prEquipment||'Dumbbell');
+    setPRResultType(pr.prResultType||'weight_reps');
+    document.getElementById('date').value=pr.date||todayStr;
+    document.getElementById('prWeight').value=pr.prWeight??'';
+    document.getElementById('prReps').value=pr.prReps??'';
+    document.getElementById('prTime').value=pr.prTime||'';
+    document.getElementById('prCount').value=pr.prCount||'';
+    document.getElementById('prNote').value=pr.prNote||'';
+    document.getElementById('entryModalTitle').textContent='Edit PR · Kelli';
+  } else {
+    document.getElementById('entryModalTitle').textContent='Log PR · Kelli';
+  }
+  setEntryType('pr');
+  openModal('entryModal');
+}
+window.openPRForm=openPRForm;
+
+function savePR(){
+  const movSel=document.getElementById('prMovement').value;
+  let movName=movSel,movCat='Core & Other';
+  if(movSel==='__new__'){
+    movName=document.getElementById('prNewName').value.trim();
+    movCat=document.getElementById('prNewCategory').value;
+    if(!movName){alert('Enter a movement name.');return;}
+    const customs=getCustomMovements();
+    if(!customs.find(m=>m.name===movName)&&!BUILTIN_MOVEMENTS.find(m=>m.name===movName)){customs.push({name:movName,category:movCat});saveCustomMovements(customs);}
+  } else {
+    movCat=getMovementCategory(movName)||'Core & Other';
+  }
+  if(!movName){alert('Select a movement.');return;}
+  if(!selectedPREquip){alert('Select equipment.');return;}
+  const pr={
+    id:editingPRId||crypto.randomUUID(),
+    date:document.getElementById('date').value||null,
+    entryType:'pr',userName:'Kelli',
+    prMovement:movName,prCategory:movCat,prEquipment:selectedPREquip,
+    prResultType:selectedPRResultType,
+    prWeight:document.getElementById('prWeight').value!==''?Number(document.getElementById('prWeight').value):null,
+    prReps:document.getElementById('prReps').value!==''?Number(document.getElementById('prReps').value):null,
+    prTime:document.getElementById('prTime').value||'',
+    prCount:document.getElementById('prCount').value||'',
+    prNote:document.getElementById('prNote').value.trim()
+  };
+  const idx=prEntries.findIndex(p=>p.id===pr.id);
+  if(idx>=0)prEntries[idx]=pr;else prEntries.push(pr);
+  savePREntries();
+  closeModal('entryModal');
+  renderPRs();
+  renderPRCounterCard();
+}
+
+function removePR(id){if(!confirm('Delete this PR?'))return;prEntries=prEntries.filter(p=>p.id!==id);savePREntries();renderPRs();renderPRCounterCard();}
+window.removePR=removePR;
+
+function prListHtml(){
+  const prs=prEntries.filter(p=>p.userName==='Kelli');
+  if(!prs.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No PRs logged yet.</div>';
+  // Group by category, then movement+equipment
+  const out=[];
+  PR_CATEGORIES.forEach(cat=>{
+    const catPRs=prs.filter(p=>p.prCategory===cat);if(!catPRs.length)return;
+    // Group by movement name
+    const byMovement=new Map();
+    catPRs.forEach(p=>{if(!byMovement.has(p.prMovement))byMovement.set(p.prMovement,[]);byMovement.get(p.prMovement).push(p);});
+    out.push(`<div class="pr-category-title">${cat}</div>`);
+    // Sort movements alphabetically
+    const sortedMovements=[...byMovement.keys()].sort();
+    sortedMovements.forEach(mov=>{
+      const movPRs=byMovement.get(mov);
+      // Group by equipment within movement
+      const byEquip=new Map();
+      movPRs.forEach(p=>{if(!byEquip.has(p.prEquipment))byEquip.set(p.prEquipment,[]);byEquip.get(p.prEquipment).push(p);});
+      const equipKeys=[...byEquip.keys()].sort();
+      equipKeys.forEach(equip=>{
+        const equipPRs=byEquip.get(equip);
+        // Sort by reps asc (or count/time desc)
+        equipPRs.sort((a,b)=>{
+          if(a.prResultType==='weight_reps')return(a.prReps||0)-(b.prReps||0);
+          return (a.prCount||a.prTime||'') > (b.prCount||b.prTime||'') ? -1 : 1;
+        });
+        const rows=equipPRs.map(p=>{
+          const dateStr=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'}):'Date unknown';
+          const dateCls=p.date?'pr-date':'pr-unknown-date';
+          return`<div class="pr-row">
+            <span class="pr-result">${prResultText(p)}</span>
+            <span class="${dateCls}">${dateStr}</span>
+            <button class="history-btn-edit" onclick="openPRForm('${p.id}')" style="padding:3px 8px;font-size:11px">Edit</button>
+            <button class="history-btn-delete" onclick="removePR('${p.id}')" style="padding:3px 8px;font-size:11px">✕</button>
+          </div>`;
+        }).join('');
+        out.push(`<div class="pr-movement-block">
+          <div class="pr-movement-name">${mov} ${equipBadgeHtml(equip)}</div>
+          ${rows}
+        </div>`);
+      });
+    });
+  });
+  return out.join('');
+}
+
+function renderPRs(){
+  const html=prListHtml();
+  const d=document.getElementById('desktopPRList');if(d)d.innerHTML=html;
+  const m=document.getElementById('mobilePRList');if(m)m.innerHTML=html;
+}
+
+function prCounterCardHtml(){
+  if(activeUser!=='Kelli')return'';
+  const count2026=prEntries.filter(p=>p.userName==='Kelli'&&p.date&&p.date.startsWith('2026')).length;
+  const barW=count2026===0?0:Math.min(100,Math.round((count2026/Math.max(count2026,20))*100));
+  return`<div class="pr-counter-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <h3 style="margin:0;font-size:16px">🏆 PRs in 2026</h3>
+      <span style="font-size:22px;font-weight:800;color:var(--plum)">${count2026}</span>
+    </div>
+    <div class="pr-counter-bar-track"><div class="pr-counter-bar-fill" style="width:${barW}%"></div></div>
+    <div style="font-size:11px;color:var(--muted)">${count2026} personal record${count2026===1?'':'s'} set this year</div>
+  </div>`;
+}
+
+function renderPRCounterCard(){
+  if(activeUser!=='Kelli')return;
+  const dc=document.getElementById('desktopBootcampCard');
+  const mc=document.getElementById('mobileBootcampCard');
+  // Insert PR counter before BBC card (or after if no BBC)
+  const dcPR=document.getElementById('desktopPRCounterCard');
+  const mcPR=document.getElementById('mobilePRCounterCard');
+  if(dcPR)dcPR.innerHTML=prCounterCardHtml();
+  if(mcPR)mcPR.innerHTML=prCounterCardHtml();
+}
+
+function renderAll(){renderStats();renderBaselines();renderDesktopToday();renderMobileToday();renderHistory();renderPRs();renderPRCounterCard();renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
-function setDesktopTab(id){document.querySelectorAll('.desktop-tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.dtab===id));document.querySelectorAll('.desktop-tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));if(id==='dchartsTab')setTimeout(renderDesktopCharts,0);}
-function setMobileTab(id){document.querySelectorAll('.mobile-tab').forEach(t=>t.classList.toggle('active',t.id===id));document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='mobileCharts')setTimeout(renderMobileCharts,0);window.scrollTo(0,0);}
+function setDesktopTab(id){document.querySelectorAll('.desktop-tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.dtab===id));document.querySelectorAll('.desktop-tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));if(id==='dchartsTab')setTimeout(renderDesktopCharts,0);if(id==='dprTab')renderPRs();}
+function setMobileTab(id){document.querySelectorAll('.mobile-tab').forEach(t=>t.classList.toggle('active',t.id===id));document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='mobileCharts')setTimeout(renderMobileCharts,0);if(id==='mobilePRs')renderPRs();window.scrollTo(0,0);}
 
 // ─── Modals ───────────────────────────────────────────────────────────────────
 const openModal=id=>document.getElementById(id).classList.add('open');
@@ -917,6 +1317,12 @@ function setEntryType(type){
   document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.toggle('active',b.dataset.entryType===type));
   ALL_FIELD_WRAPS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=TYPE_FIELDS[type]?.includes(id)?'':'none';});
   if(type==='bedtime'||type==='workout')rebuildWorkoutChips();
+  // Show date field always
+  const dateWrap=document.getElementById('date')?.closest('div');
+  if(dateWrap)dateWrap.style.display='';
+  // PR entry type button visibility
+  const prBtn=document.getElementById('prEntryTypeBtn');
+  if(prBtn)prBtn.style.display=activeUser==='Kelli'?'':'none';
 }
 function validateField(id){const el=document.getElementById(id),rule=FIELD_RULES[id];if(!el||!rule)return true;const wrap=el.closest('div');if(!wrap||wrap.style.display==='none'){wrap?.classList.remove('field-invalid');return true;}if(!el.value){wrap.classList.remove('field-invalid');return true;}const n=Number(el.value),ok=!isNaN(n)&&n>=rule.min&&n<=rule.max;wrap.classList.toggle('field-invalid',!ok);return ok;}
 function validateForm(){const ok=Object.keys(FIELD_RULES).every(id=>validateField(id));const btn=document.querySelector('#entryForm button[type="submit"]');if(btn)btn.disabled=!ok;return ok;}
@@ -1005,13 +1411,17 @@ document.getElementById('cleanupBtn').addEventListener('click',runCleanup);
 document.getElementById('migrateWorkoutsBtn').addEventListener('click',runWorkoutMigration);
 document.getElementById('mobileMigrateWorkoutsBtn').addEventListener('click',runWorkoutMigration);
 document.getElementById('mobileCleanupBtn').addEventListener('click',runCleanup);
-document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
+document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(currentEntryType==='pr'){savePR();return;}if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
+document.querySelectorAll('.pr-equip-chip').forEach(b=>b.addEventListener('click',()=>setPREquip(b.dataset.equip)));
+document.querySelectorAll('.pr-result-type-chip').forEach(b=>b.addEventListener('click',()=>setPRResultType(b.dataset.rtype)));
+document.getElementById('prMovement')?.addEventListener('change',e=>{document.getElementById('prNewMovementWrap').style.display=e.target.value==='__new__'?'grid':'none';});
 Object.keys(FIELD_RULES).forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',validateForm);el.addEventListener('blur',validateForm);}});
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 window.addEventListener('resize',()=>{renderDesktopCharts();if(document.getElementById('mobileCharts').classList.contains('active'))renderMobileCharts();});
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init(){
+  prEntries=loadPREntries();
   const path=GARMIN_PATHS[activeUser]||GARMIN_PATHS.Kelli;
   try{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw 0;garminHistory=await r.json();}catch{garminHistory=[];}
   computeBaselines();
