@@ -5,6 +5,8 @@ sync.py — Garmin Connect → garmin JSON
 Fetches recent health metrics from Garmin Connect and writes to
 data/garmin_daily_summary.json (Kelli) or data/garmin_elliott.json (Elliott).
 
+Fetches 3 metrics per day: restingHr, sleepScore, hrv.
+
 Setup:
     pip install garminconnect python-dotenv
 
@@ -115,18 +117,14 @@ def fetch_day(client: Garmin, d: date) -> dict:
     ds = d.isoformat()
     record: dict = {"date": ds}
 
+    # Resting HR
     stats = safe_get(client.get_stats, ds, label=f"stats {ds}")
     if stats:
         rhr = stats.get("restingHeartRate") or stats.get("minHeartRate")
         if rhr:
             record["restingHr"] = int(rhr)
 
-        bb_list = safe_get(client.get_body_battery, ds, ds, label=f"body battery {ds}")
-        if bb_list:
-            highs = [r.get("charged") for r in bb_list if r.get("charged")]
-            if highs:
-                record["bodyBatteryHigh"] = int(max(highs))
-
+    # Sleep score
     sleep = safe_get(client.get_sleep_data, ds, label=f"sleep {ds}")
     if sleep:
         daily = sleep.get("dailySleepDTO") or {}
@@ -138,50 +136,13 @@ def fetch_day(client: Garmin, d: date) -> dict:
         if score is not None:
             record["sleepScore"] = int(score)
 
-        # Sleep duration and stages (minutes)
-        total_secs = daily.get("sleepTimeSeconds")
-        if total_secs:
-            record["sleepDuration"] = round(total_secs / 60, 1)
-
-        deep_secs = daily.get("deepSleepSeconds")
-        if deep_secs:
-            record["sleepDeep"] = round(deep_secs / 60, 1)
-
-        rem_secs = daily.get("remSleepSeconds")
-        if rem_secs:
-            record["sleepRem"] = round(rem_secs / 60, 1)
-
+    # HRV
     hrv = safe_get(client.get_hrv_data, ds, label=f"HRV {ds}")
     if hrv:
         summary = hrv.get("hrvSummary") or {}
         val = summary.get("lastNight") or summary.get("weeklyAvg") or hrv.get("lastNight")
         if val:
             record["hrv"] = round(float(val), 1)
-
-    resp = safe_get(client.get_respiration_data, ds, label=f"respiration {ds}")
-    if resp:
-        avg_r = resp.get("avgWakingRespirationValue") or resp.get("avgSleepRespirationValue")
-        if avg_r:
-            record["respiration"] = round(float(avg_r), 1)
-
-    spo2 = safe_get(client.get_spo2_data, ds, label=f"SpO2 {ds}")
-    if spo2:
-        reading_list = spo2.get("continuousReadingDTOList") or []
-        val = (
-            spo2.get("averageSpO2")
-            or (reading_list[0].get("spO2Reading") if reading_list else None)
-        )
-        if val:
-            record["pulseOx"] = round(float(val), 1)
-
-    weight_data = safe_get(client.get_body_composition, ds, ds, label=f"weight {ds}")
-    if weight_data:
-        entries = weight_data.get("dateWeightList") or []
-        if entries:
-            kg = entries[-1].get("weight")
-            if kg:
-                kg_val = kg / 1000 if kg > 500 else kg
-                record["weight"] = round(kg_val * 2.20462, 1)
 
     return record
 
