@@ -671,7 +671,7 @@ const BUILTIN_MOVEMENTS = [
   {name:'Chinups',category:'Upper Body'},
   {name:'Pullups',category:'Upper Body'},
   {name:'Pushups',category:'Upper Body'},
-  {name:'OH Tricep Press',category:'Upper Body'},
+  {name:'Overhead Tricep Press',category:'Upper Body'},
   {name:'RDL',category:'Lower Body'},
   {name:'Goblet Squat',category:'Lower Body'},
   {name:'Front Squat',category:'Lower Body'},
@@ -696,7 +696,7 @@ const BUILTIN_MOVEMENTS = [
   {name:'Run 1/2 Mile',category:'Core & Other'},
   {name:'Hollow Hold Flutter Kicks',category:'Core & Other'},
   {name:'Farmer\'s Carry',category:'Core & Other'},
-  {name:'OH Carry',category:'Core & Other'},
+  {name:'Overhead Carry',category:'Core & Other'},
   {name:'Power Snatch',category:'Upper Body'},
   {name:'Squat Snatch',category:'Upper Body'},
   {name:'Push Press',category:'Upper Body'},
@@ -725,7 +725,7 @@ const seedPRs = [
   {id:'pr-pullups-1',date:'2025-09-01',entryType:'pr',userName:'Kelli',prMovement:'Pullups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:6,prTime:'',prCount:'',prNote:''},
   {id:'pr-pullups-2',date:'2026-02-01',entryType:'pr',userName:'Kelli',prMovement:'Pullups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'weight_reps',prWeight:null,prReps:7,prTime:'',prCount:'',prNote:''},
   {id:'pr-pushups-1',date:'2026-01-01',entryType:'pr',userName:'Kelli',prMovement:'Pushups',prCategory:'Upper Body',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'42',prNote:'Max unbroken'},
-  {id:'pr-oh-tricep-1',date:'2025-03-01',entryType:'pr',userName:'Kelli',prMovement:'OH Tricep Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:30,prReps:12,prTime:'',prCount:'',prNote:'Probably not max'},
+  {id:'pr-oh-tricep-1',date:'2025-03-01',entryType:'pr',userName:'Kelli',prMovement:'Overhead Tricep Press',prCategory:'Upper Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:30,prReps:12,prTime:'',prCount:'',prNote:'Probably not max'},
   // Lower Body
   {id:'pr-rdl-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'RDL',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:10,prTime:'',prCount:'',prNote:''},
   {id:'pr-rdl-2',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'RDL',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:80,prReps:6,prTime:'',prCount:'',prNote:''},
@@ -755,7 +755,7 @@ const seedPRs = [
   {id:'pr-run-1',date:'2026-05-01',entryType:'pr',userName:'Kelli',prMovement:'Run 1/2 Mile',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'timed',prWeight:null,prReps:null,prTime:'3:58',prCount:'',prNote:''},
   {id:'pr-flutter-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Hollow Hold Flutter Kicks',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'106',prNote:'2:1'},
   {id:'pr-farmers-1',date:null,entryType:'pr',userName:'Kelli',prMovement:"Farmer's Carry",prCategory:'Core & Other',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:60,prReps:2,prTime:'',prCount:'',prNote:'2 laps'},
-  {id:'pr-oh-carry-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'OH Carry',prCategory:'Core & Other',prEquipment:'Other',prResultType:'weight_reps',prWeight:40,prReps:3,prTime:'',prCount:'',prNote:'3 laps'},
+  {id:'pr-oh-carry-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Overhead Carry',prCategory:'Core & Other',prEquipment:'Other',prResultType:'weight_reps',prWeight:40,prReps:3,prTime:'',prCount:'',prNote:'3 laps'},
   // Barbell (pre-Ronin 2018)
   {id:'pr-bb-back-squat-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Back Squat',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:195,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
   {id:'pr-bb-front-squat-1',date:'2018-01-01',entryType:'pr',userName:'Kelli',prMovement:'Front Squat',prCategory:'Lower Body',prEquipment:'Barbell',prResultType:'weight_reps',prWeight:165,prReps:1,prTime:'',prCount:'',prNote:'Pre-Ronin'},
@@ -1013,7 +1013,31 @@ function renderBootcampGoal(){
   const prTabBtn=document.getElementById('dprTabBtn');
   if(prTabBtn)prTabBtn.style.display=show?'':'none';
 }
-function todayPRsHtml(){const todayPRs=prEntries.filter(p=>p.userName==='Kelli'&&p.date===todayStr);if(!todayPRs.length)return'';const rows=todayPRs.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">${equipBadgeHtml(p.prEquipment,true)}<span style="font-size:13px;font-weight:600;flex:1">${p.prMovement}</span><span style="font-size:13px">${prResultText(p)}</span><button class="history-btn-edit" onclick="openPRForm('${p.id}')" style="padding:3px 8px;font-size:11px">Edit</button><button class="history-btn-delete" onclick="removePR('${p.id}')" style="padding:3px 8px;font-size:11px">✕</button></div>`).join('');return`<div class="today-slot" style="grid-column:1/-1"><div class="today-slot-title"><h4>🏆 Today's PRs</h4><button onclick="openPRForm()">+ Log PR</button></div>${rows}</div>`;}
+function todayPRsHtml(){
+  const todayPRs=prEntries.filter(p=>p.userName==='Kelli'&&p.date===todayStr);
+  if(!todayPRs.length)return'';
+  const rows=todayPRs.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">${equipBadgeHtml(p.prEquipment,true)}<span style="font-size:13px;font-weight:600;flex:1">${p.prMovement}</span><span style="font-size:13px">${prResultText(p)}</span><button class="history-btn-edit" onclick="openPRForm('${p.id}')" style="padding:3px 8px;font-size:11px">Edit</button><button class="history-btn-delete" onclick="removePR('${p.id}')" style="padding:3px 8px;font-size:11px">✕</button></div>`).join('');
+  return`<div class="today-slot" style="grid-column:1/-1"><div class="today-slot-title"><h4>🏆 Today's PRs</h4><button onclick="openPRForm()">+ Log PR</button></div>${rows}</div>`;
+}
+
+function allPRsExpandableHtml(){
+  const count2026=prEntries.filter(p=>p.userName==='Kelli'&&p.date&&p.date.startsWith('2026')).length;
+  if(!count2026)return'';
+  const rows=prEntries.filter(p=>p.userName==='Kelli'&&p.date&&p.date.startsWith('2026'))
+    .sort((a,b)=>b.date.localeCompare(a.date))
+    .map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-top:1px solid var(--border)">${equipBadgeHtml(p.prEquipment,true)}<span style="font-size:13px;font-weight:600;flex:1">${p.prMovement}</span><span style="font-size:12px;color:var(--muted)">${prResultText(p)}</span><span style="font-size:11px;color:var(--muted);white-space:nowrap">${p.date?new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):''}</span></div>`).join('');
+  return`<div id="prYearExpandable" style="display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:8px">${rows}</div>
+<button onclick="togglePRExpand()" id="prExpandBtn" style="margin-top:8px;font-size:12px;color:var(--user-primary);background:none;border:none;cursor:pointer;padding:0;font-weight:600">▶ Show ${count2026} PRs this year</button>`;
+}
+window.togglePRExpand=function(){
+  const el=document.getElementById('prYearExpandable');
+  const btn=document.getElementById('prExpandBtn');
+  if(!el||!btn)return;
+  const open=el.style.display!=='none';
+  el.style.display=open?'none':'block';
+  const count2026=prEntries.filter(p=>p.userName==='Kelli'&&p.date&&p.date.startsWith('2026')).length;
+  btn.textContent=(open?'▶ Show ':'▼ Hide ')+count2026+' PRs this year';
+};
 function renderDesktopToday(){renderBootcampGoal();document.getElementById('todayGrid').innerHTML=desktopTodaySlotHtml('workout','Workout')+desktopTodaySlotHtml('sauna','Sauna Today')+(activeUser==='Kelli'?todayPRsHtml():'');}
 
 function mobileTodaySlotHtml(type,title){const icon=type==='morning'?'🌅':type==='sauna'?'🔥':type==='workout'?'🏋️':'🌙';if(type==='workout'){const wEntries=entries.filter(e=>e.date===todayStr&&e.entryType==='workout');const rows=wEntries.map(e=>`<div style="padding:8px 0;border-top:1px solid var(--border)">${workoutBadgesHtml(e)||'<span style="font-size:13px;color:var(--muted)">No type</span>'}<div style="display:flex;gap:5px;margin-top:6px"><button class="history-btn-edit" onclick="startEdit('${e.id}')">Edit</button><button class="history-btn-delete" onclick="removeEntry('${e.id}')">Delete</button></div>${e.notes?`<div class="today-note">${escapeHtml(e.notes)}</div>`:''}</div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('workout')">Add</button></h4>${wEntries.length?rows:'<div style="font-size:13px;color:var(--muted)">No workout logged.</div>'}</div>`;}const entry=entries.find(e=>e.date===todayStr&&e.entryType===type);if(!entry)return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="openSlot('${type}')">Add</button></h4><div style="font-size:13px;color:var(--muted)">No entry yet.</div></div>`;if(type==='sauna'){const tw=countSaunaInWeek(0),met=tw>=saunaWeeklyGoal();const dots=Array.from({length:saunaWeeklyGoal()},(_,i)=>`<div class="week-dot ${i<tw?(met?'goal-met':'filled'):''}"></div>`).join('');return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4><div class="mobile-sauna-main">${entry.saunaMinutes||'—'} min</div><div class="mobile-sauna-sub">Red light: ${entry.redLightUsed?'Yes':'No'}${!isBlank(entry.saunaTemp)?` · ${entry.saunaTemp}°F`:''}</div><div class="week-goal-bar"><div class="week-goal-label">This week ${tw}/${saunaWeeklyGoal()}</div><div class="week-goal-dots">${dots}</div></div>${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}const bv=baselineValues;const primary=type==='morning'?(activeUser==='Elliott'?[{label:'Sleep',key:'sleepDuration',baseline:bv.sleepDuration,kind:'higher_better',fmtVal:fmtMins},{label:'Deep Sleep',key:'sleepDeep',baseline:{low:bv.sleepDeepTypicalLow,high:bv.sleepDeepTypicalHigh},kind:'range',fmtVal:fmtMins},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]:[{label:'Sleep',key:'sleepScore',baseline:bv.sleepScore,kind:'higher_better'},{label:'HRV',key:'hrv',baseline:{low:bv.hrvTypicalLow,high:bv.hrvTypicalHigh},kind:'range'},{label:'RHR',key:'restingHr',baseline:bv.restingHr,kind:'lower_better'}]).filter(x=>!isBlank(entry[x.key])):[];const secondary=[...(type==='morning'?[{label:'Body Bat.',key:'bodyBattery'},{label:'Resp',key:'respiration'},{label:'SpO2',key:'pulseOx'},{label:'Weight',key:'weight'},{label:'Self Sleep',key:'sleepSelf'},{label:'Joint sore',key:'jointSoreness'}]:[{label:'Joint sore',key:'jointSoreness'}]),{label:'Energy',key:'energy'},{label:'Stress',key:'stress'},{label:'Muscle',key:'muscleSoreness'}].filter(x=>!isBlank(entry[x.key]));const primaryHtml=primary.length?`<div class="mobile-prominent-grid">${primary.map(x=>`<div class="mobile-prominent-metric"><div class="mobile-prominent-label">${x.label}</div><div class="mobile-prominent-value">${x.fmtVal?x.fmtVal(entry[x.key]):fmt(entry[x.key])}</div><div class="mobile-prominent-delta">${deltaChip(x.kind,entry[x.key],x.baseline)}</div></div>`).join('')}</div>`:'';const secondaryHtml=secondary.length?`<div class="mobile-secondary-grid">${secondary.map(x=>`<div class="mobile-secondary-metric"><div class="mobile-secondary-label">${x.label}</div><div class="mobile-secondary-value">${fmt(entry[x.key])}</div></div>`).join('')}</div>`:'';return`<div class="mobile-today-slot"><h4>${icon} ${title}<button onclick="startEdit('${entry.id}')">Edit</button></h4>${primaryHtml}${secondaryHtml}${workoutBadgesHtml(entry)}${entry.notes?`<div class="today-note">${escapeHtml(entry.notes)}</div>`:''}</div>`;}
@@ -1115,7 +1139,7 @@ function renderMobileCharts(){const d=getChartDatasets();renderChartLegends(d);d
 let prEntries=[]; // separate from allEntries — stored in localStorage
 const PR_STORAGE='srt-pr-entries-v1';
 function loadPREntries(){
-  const RENAMES={'DB Snatch':'Snatch','DB Hex Press':'Hex Press','DB One Arm Row':'One Arm Row','DB Single Arm Row':'Single Arm Row','DB Chest Press':'Chest Press','DB RDL':'RDL','DB Goblet Squat':'Goblet Squat','DB Front Squat':'Front Squat','DB Squat':'Squat','DB Split Squat':'Split Squat','DB Deadlift':'Deadlift','Contralateral DB Lunge':'Contralateral Lunge','DB Reverse Lunge':'Reverse Lunge','DB Front Lunge':'Front Lunge','Single DB Russian Twist':'Russian Twist',"DB Farmer's Carry":"Farmer's Carry"};
+  const RENAMES={'DB Snatch':'Snatch','DB Hex Press':'Hex Press','DB One Arm Row':'One Arm Row','DB Single Arm Row':'Single Arm Row','DB Chest Press':'Chest Press','DB RDL':'RDL','DB Goblet Squat':'Goblet Squat','DB Front Squat':'Front Squat','DB Squat':'Squat','DB Split Squat':'Split Squat','DB Deadlift':'Deadlift','Contralateral DB Lunge':'Contralateral Lunge','DB Reverse Lunge':'Reverse Lunge','DB Front Lunge':'Front Lunge','Single DB Russian Twist':'Russian Twist',"DB Farmer's Carry":"Farmer's Carry",'OH Tricep Press':'Overhead Tricep Press','OH Carry':'Overhead Carry'};
   try{const raw=localStorage.getItem(PR_STORAGE);const stored=raw?JSON.parse(raw):[];
   stored.forEach(p=>{if(p.prMovement&&RENAMES[p.prMovement])p.prMovement=RENAMES[p.prMovement];});
   const storedIds=new Set(stored.map(p=>p.id));const merged=[...stored,...seedPRs.filter(s=>!storedIds.has(s.id))];return merged;}catch{return structuredClone(seedPRs);}
@@ -1129,14 +1153,16 @@ let editingPRId=null;
 function equipBadgeHtml(equip,small=false){const map={Dumbbell:'db',Barbell:'bb',Bodyweight:'bw',Other:'other'};const cls=map[equip]||'other';const label=equip||'?';return`<span class="pr-badge ${cls}"${small?' style="font-size:9px;padding:1px 5px"':''}>${label}</span>`;}
 
 function prResultText(pr){
+  const repWord=n=>n===1?'rep':'reps';
   if(pr.prResultType==='timed')return`${pr.prTime||'—'}${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
-  if(pr.prResultType==='count')return`${pr.prCount||'—'} reps${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
+  if(pr.prResultType==='count')return`${pr.prCount||'—'} ${repWord(Number(pr.prCount))}${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
   const parts=[];
-  if(pr.prReps!=null&&pr.prReps!=='')parts.push(`${pr.prReps} reps`);
+  if(pr.prReps!=null&&pr.prReps!=='')parts.push(`${pr.prReps} ${repWord(Number(pr.prReps))}`);
   if(pr.prWeight!=null&&pr.prWeight!=='')parts.push(`of ${pr.prWeight} lbs`);
   return parts.join(' ')||'—';
 }
 
+let prTypeaheadReady=false;
 function setupPRMovementTypeahead(initialValue=''){
   const input=document.getElementById('prMovementInput');
   const hidden=document.getElementById('prMovement');
@@ -1144,64 +1170,56 @@ function setupPRMovementTypeahead(initialValue=''){
   if(!input)return;
   input.value=initialValue;
   hidden.value=initialValue;
-  let focusIdx=-1;
+  document.getElementById('prNewMovementWrap').style.display='none';
+  dropdown.style.display='none';
 
-  function showDropdown(query){
-    const q=query.trim().toLowerCase();
-    const all=getAllMovements();
-    // Also include any movement names from existing PRs not already in the list
-    const allNames=new Set(all.map(m=>m.name.toLowerCase()));
-    prEntries.forEach(p=>{if(p.prMovement&&!allNames.has(p.prMovement.toLowerCase())){all.push({name:p.prMovement,category:p.prCategory||'Core & Other'});allNames.add(p.prMovement.toLowerCase());}});
-    all.sort((a,b)=>a.name.localeCompare(b.name));
-    const matches=q?all.filter(m=>m.name.toLowerCase().includes(q)):all.slice(0,14);
-    const exactMatch=all.find(m=>m.name.toLowerCase()===q);
-    dropdown.innerHTML='';
-    focusIdx=-1;
-    matches.forEach(m=>{
-      const el=document.createElement('div');
-      el.className='pr-dropdown-item';
-      el.innerHTML=`<span>${m.name}</span><span class="pr-dd-cat">${m.category}</span>`;
-      el.addEventListener('mousedown',e=>{e.preventDefault();selectMovement(m.name,m.category);});
-      dropdown.appendChild(el);
-    });
-    if(q&&!exactMatch){
-      const el=document.createElement('div');
-      el.className='pr-dropdown-create';
-      el.textContent=`+ Create "${query.trim()}"`;
-      el.addEventListener('mousedown',e=>{e.preventDefault();triggerCreateNew(query.trim());});
-      dropdown.appendChild(el);
+  if(!prTypeaheadReady){
+    prTypeaheadReady=true;
+    let focusIdx=-1;
+
+    function allMovementsForSearch(){
+      const all=getAllMovements().map(m=>({...m}));
+      const allNames=new Set(all.map(m=>m.name.toLowerCase()));
+      prEntries.forEach(p=>{if(p.prMovement&&!allNames.has(p.prMovement.toLowerCase())){all.push({name:p.prMovement,category:p.prCategory||'Core & Other'});allNames.add(p.prMovement.toLowerCase());}});
+      return all.sort((a,b)=>a.name.localeCompare(b.name));
     }
-    dropdown.style.display=(matches.length||(!exactMatch&&q))?'block':'none';
-  }
 
-  function selectMovement(name,category){
-    input.value=name;
-    hidden.value=name;
-    dropdown.style.display='none';
-    document.getElementById('prNewMovementWrap').style.display='none';
-    // Auto-set category on new movement wrap in case needed
-    if(document.getElementById('prNewCategory'))document.getElementById('prNewCategory').value=category||'Core & Other';
-  }
+    function showDropdown(query){
+      const q=(query||'').trim().toLowerCase();
+      const all=allMovementsForSearch();
+      const matches=q?all.filter(m=>m.name.toLowerCase().includes(q)):all.slice(0,16);
+      const exactMatch=all.find(m=>m.name.toLowerCase()===q);
+      dropdown.innerHTML='';focusIdx=-1;
+      matches.forEach(m=>{
+        const el=document.createElement('div');
+        el.className='pr-dropdown-item';
+        el.innerHTML=`<span>${m.name}</span><span class="pr-dd-cat">${m.category}</span>`;
+        el.addEventListener('mousedown',e=>{e.preventDefault();input.value=m.name;hidden.value=m.name;dropdown.style.display='none';document.getElementById('prNewMovementWrap').style.display='none';});
+        dropdown.appendChild(el);
+      });
+      if(q&&!exactMatch){
+        const raw=query.trim();
+        const el=document.createElement('div');
+        el.className='pr-dropdown-create';
+        el.textContent=`+ Create "${raw}"`;
+        el.addEventListener('mousedown',e=>{e.preventDefault();input.value=raw;hidden.value='__new__';dropdown.style.display='none';document.getElementById('prNewMovementWrap').style.display='block';});
+        dropdown.appendChild(el);
+      }
+      dropdown.style.display=(matches.length||(!exactMatch&&q))?'block':'none';
+    }
 
-  function triggerCreateNew(name){
-    input.value=name;
-    hidden.value='__new__';
-    dropdown.style.display='none';
-    document.getElementById('prNewMovementWrap').style.display='block';
-    const cat=getMovementCategory(name)||'Core & Other';
-    if(document.getElementById('prNewCategory'))document.getElementById('prNewCategory').value=cat;
+    input.addEventListener('input',()=>{hidden.value='';document.getElementById('prNewMovementWrap').style.display='none';showDropdown(input.value);});
+    input.addEventListener('focus',()=>showDropdown(input.value));
+    input.addEventListener('blur',()=>setTimeout(()=>{dropdown.style.display='none';},200));
+    input.addEventListener('keydown',e=>{
+      const items=dropdown.querySelectorAll('.pr-dropdown-item,.pr-dropdown-create');
+      if(!items.length)return;
+      if(e.key==='ArrowDown'){e.preventDefault();focusIdx=Math.min(focusIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
+      else if(e.key==='ArrowUp'){e.preventDefault();focusIdx=Math.max(focusIdx-1,0);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
+      else if(e.key==='Enter'&&focusIdx>=0){e.preventDefault();items[focusIdx]?.dispatchEvent(new MouseEvent('mousedown'));}
+      else if(e.key==='Escape'){dropdown.style.display='none';}
+    });
   }
-
-  input.addEventListener('input',()=>{hidden.value='';document.getElementById('prNewMovementWrap').style.display='none';showDropdown(input.value);});
-  input.addEventListener('focus',()=>showDropdown(input.value));
-  input.addEventListener('blur',()=>setTimeout(()=>{dropdown.style.display='none';},150));
-  input.addEventListener('keydown',e=>{
-    const items=dropdown.querySelectorAll('.pr-dropdown-item,.pr-dropdown-create');
-    if(e.key==='ArrowDown'){e.preventDefault();focusIdx=Math.min(focusIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
-    else if(e.key==='ArrowUp'){e.preventDefault();focusIdx=Math.max(focusIdx-1,0);items.forEach((el,i)=>el.classList.toggle('focused',i===focusIdx));}
-    else if(e.key==='Enter'&&focusIdx>=0){e.preventDefault();items[focusIdx]?.dispatchEvent(new MouseEvent('mousedown'));}
-    else if(e.key==='Escape'){dropdown.style.display='none';}
-  });
 }
 
 function setPREquip(equip){
@@ -1308,10 +1326,16 @@ function prListHtml(){
       const equipKeys=[...byEquip.keys()].sort();
       equipKeys.forEach(equip=>{
         const equipPRs=byEquip.get(equip);
-        // Sort by reps asc (or count/time desc)
+        // Sort heaviest/most first
         equipPRs.sort((a,b)=>{
-          if(a.prResultType==='weight_reps')return(a.prReps||0)-(b.prReps||0);
-          return (a.prCount||a.prTime||'') > (b.prCount||b.prTime||'') ? -1 : 1;
+          if(a.prResultType==='weight_reps'){
+            // Primary: weight desc, secondary: reps desc
+            const wDiff=(b.prWeight||0)-(a.prWeight||0);
+            return wDiff!==0?wDiff:(b.prReps||0)-(a.prReps||0);
+          }
+          if(a.prResultType==='count')return(Number(b.prCount)||0)-(Number(a.prCount)||0);
+          if(a.prResultType==='timed')return(b.prTime||'')>(a.prTime||'')?-1:1;
+          return 0;
         });
         const rows=equipPRs.map(p=>{
         const dateStr=(!p.date||p.date<'2020-01-01')?'Date unknown':new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -1349,7 +1373,8 @@ function prCounterCardHtml(){
       <span style="font-size:22px;font-weight:800;color:var(--plum)">${count2026}</span>
     </div>
     <div class="pr-counter-bar-track"><div class="pr-counter-bar-fill" style="width:${barW}%"></div></div>
-    <div style="font-size:11px;color:var(--muted)">${count2026} personal record${count2026===1?'':'s'} set this year</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:2px">${count2026} personal record${count2026===1?'':'s'} set this year</div>
+    ${allPRsExpandableHtml()}
   </div>`;
 }
 
