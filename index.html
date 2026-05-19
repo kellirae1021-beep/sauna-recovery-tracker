@@ -580,6 +580,7 @@ textarea{min-height:90px;resize:vertical}
               <button type="button" class="pr-result-type-chip selected" data-rtype="weight_reps">Weight + Reps</button>
               <button type="button" class="pr-result-type-chip" data-rtype="timed">Timed</button>
               <button type="button" class="pr-result-type-chip" data-rtype="count">Count</button>
+              <button type="button" class="pr-result-type-chip" data-rtype="height_dist">Height/Distance</button>
             </div>
           </div>
           <div class="grid2" id="prWeightRepsWrap">
@@ -588,6 +589,10 @@ textarea{min-height:90px;resize:vertical}
           </div>
           <div id="prTimedWrap" style="display:none"><label for="prTime">Time (mm:ss)</label><input id="prTime" type="text" placeholder="e.g. 5:18" pattern="\d+:\d{2}" /></div>
           <div id="prCountWrap" style="display:none"><label for="prCount">Count</label><input id="prCount" type="number" min="1" inputmode="numeric" placeholder="e.g. 42" /></div>
+          <div id="prHeightWrap" style="display:none" class="grid2">
+            <div><label for="prHeight">Height / Distance</label><input id="prHeight" type="number" min="0" step="0.5" inputmode="decimal" placeholder="e.g. 36" /></div>
+            <div><label for="prHeightUnit">Unit</label><select id="prHeightUnit"><option value="in">inches</option><option value="ft">feet</option><option value="cm">cm</option><option value="m">meters</option></select></div>
+          </div>
           <div><label for="prNote">Notes (optional)</label><textarea id="prNote" style="min-height:60px"></textarea></div>
         </div>
         <div id="notesWrap"><label for="notes">Notes</label><textarea id="notes"></textarea></div>
@@ -744,7 +749,7 @@ const seedPRs = [
   {id:'pr-rev-lunge-1',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'Reverse Lunge',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:70,prReps:8,prTime:'',prCount:'',prNote:'Per leg'},
   {id:'pr-front-lunge-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Front Lunge',prCategory:'Lower Body',prEquipment:'Dumbbell',prResultType:'weight_reps',prWeight:45,prReps:10,prTime:'',prCount:'',prNote:'Per leg'},
   {id:'pr-jump-lunges-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Jump Lunges',prCategory:'Lower Body',prEquipment:'Bodyweight',prResultType:'count',prWeight:null,prReps:null,prTime:'',prCount:'30',prNote:'2:1 in 1 min'},
-  {id:'pr-box-jumps-1',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'Box Jumps',prCategory:'Lower Body',prEquipment:'Other',prResultType:'weight_reps',prWeight:null,prReps:3,prTime:'',prCount:'',prNote:'36"'},
+  {id:'pr-box-jumps-1',date:'2025-11-01',entryType:'pr',userName:'Kelli',prMovement:'Box Jumps',prCategory:'Lower Body',prEquipment:'Other',prResultType:'height_dist',prWeight:null,prReps:null,prHeight:36,prHeightUnit:'in',prTime:'',prCount:'',prNote:''},
   // Core & Other
   {id:'pr-plank-1',date:'2025-09-01',entryType:'pr',userName:'Kelli',prMovement:'Low Plank Hold',prCategory:'Core & Other',prEquipment:'Bodyweight',prResultType:'timed',prWeight:null,prReps:null,prTime:'5:18',prCount:'',prNote:''},
   {id:'pr-russian-twist-1',date:null,entryType:'pr',userName:'Kelli',prMovement:'Russian Twist',prCategory:'Core & Other',prEquipment:'Dumbbell',prResultType:'count',prWeight:20,prReps:null,prTime:'',prCount:'80',prNote:'Max in 2 mins'},
@@ -1025,7 +1030,15 @@ function allPRsExpandableHtml(){
   if(!count2026)return'';
   const rows=prEntries.filter(p=>p.userName==='Kelli'&&p.date&&p.date.startsWith('2026'))
     .sort((a,b)=>b.date.localeCompare(a.date))
-    .map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-top:1px solid var(--border)">${equipBadgeHtml(p.prEquipment,true)}<span style="font-size:13px;font-weight:600;flex:1">${p.prMovement}</span><span style="font-size:12px;color:var(--muted)">${prResultText(p)}</span><span style="font-size:11px;color:var(--muted);white-space:nowrap">${p.date?new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):''}</span></div>`).join('');
+    .map(p=>{
+      const d=new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      return`<div style="display:grid;grid-template-columns:65px 1fr 80px 1fr;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${d}</span>
+        <span style="font-size:13px;font-weight:600">${p.prMovement}</span>
+        <span>${equipBadgeHtml(p.prEquipment,true)}</span>
+        <span style="font-size:12px;color:var(--text);text-align:right">${prResultText(p)}</span>
+      </div>`;
+    }).join('');
   return`<div id="prYearExpandable" style="display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:8px">${rows}</div>
 <button onclick="togglePRExpand()" id="prExpandBtn" style="margin-top:8px;font-size:12px;color:var(--user-primary);background:none;border:none;cursor:pointer;padding:0;font-weight:600">▶ Show ${count2026} PRs this year</button>`;
 }
@@ -1154,8 +1167,10 @@ function equipBadgeHtml(equip,small=false){const map={Dumbbell:'db',Barbell:'bb'
 
 function prResultText(pr){
   const repWord=n=>n===1?'rep':'reps';
+  const unitLabel={'in':'in','ft':'ft','cm':'cm','m':'m'};
   if(pr.prResultType==='timed')return`${pr.prTime||'—'}${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
   if(pr.prResultType==='count')return`${pr.prCount||'—'} ${repWord(Number(pr.prCount))}${pr.prWeight?` of ${pr.prWeight} lbs`:''}`;
+  if(pr.prResultType==='height_dist')return pr.prHeight!=null?`${pr.prHeight} ${unitLabel[pr.prHeightUnit||'in']||pr.prHeightUnit||'in'}`:'—';
   const parts=[];
   if(pr.prReps!=null&&pr.prReps!=='')parts.push(`${pr.prReps} ${repWord(Number(pr.prReps))}`);
   if(pr.prWeight!=null&&pr.prWeight!=='')parts.push(`of ${pr.prWeight} lbs`);
@@ -1232,6 +1247,7 @@ function setPRResultType(type){
   document.getElementById('prWeightRepsWrap').style.display=type==='weight_reps'?'':'none';
   document.getElementById('prTimedWrap').style.display=type==='timed'?'':'none';
   document.getElementById('prCountWrap').style.display=type==='count'?'':'none';
+  document.getElementById('prHeightWrap').style.display=type==='height_dist'?'':'none';
 }
 
 function openPRForm(id=null){
@@ -1243,6 +1259,8 @@ function openPRForm(id=null){
   document.getElementById('prReps').value='';
   document.getElementById('prTime').value='';
   document.getElementById('prCount').value='';
+  document.getElementById('prHeight').value='';
+  document.getElementById('prHeightUnit').value='in';
   document.getElementById('prNote').value='';
   document.getElementById('date').value=todayStr;
   if(id){
@@ -1255,6 +1273,8 @@ function openPRForm(id=null){
     document.getElementById('prReps').value=pr.prReps??'';
     document.getElementById('prTime').value=pr.prTime||'';
     document.getElementById('prCount').value=pr.prCount||'';
+    document.getElementById('prHeight').value=pr.prHeight??'';
+    document.getElementById('prHeightUnit').value=pr.prHeightUnit||'in';
     document.getElementById('prNote').value=pr.prNote||'';
     document.getElementById('entryModalTitle').textContent='Edit PR · Kelli';
   } else {
@@ -1292,6 +1312,8 @@ function savePR(){
     prReps:document.getElementById('prReps').value!==''?Number(document.getElementById('prReps').value):null,
     prTime:document.getElementById('prTime').value||'',
     prCount:document.getElementById('prCount').value||'',
+    prHeight:document.getElementById('prHeight').value!==''?Number(document.getElementById('prHeight').value):null,
+    prHeightUnit:document.getElementById('prHeightUnit').value||'in',
     prNote:document.getElementById('prNote').value.trim()
   };
   const idx=prEntries.findIndex(p=>p.id===pr.id);
@@ -1305,62 +1327,94 @@ function savePR(){
 function removePR(id){if(!confirm('Delete this PR?'))return;prEntries=prEntries.filter(p=>p.id!==id);savePREntries();renderPRs();renderPRCounterCard();}
 window.removePR=removePR;
 
+const PR_EQUIP_FILTER_KEY='srt-pr-equip-filter';
+function getPREquipFilter(){try{const raw=localStorage.getItem(PR_EQUIP_FILTER_KEY);return raw?JSON.parse(raw):['Dumbbell','Bodyweight','Other'];}catch{return['Dumbbell','Bodyweight','Other'];}}
+function savePREquipFilter(arr){localStorage.setItem(PR_EQUIP_FILTER_KEY,JSON.stringify(arr));}
+
+function prFilterHtml(){
+  const active=getPREquipFilter();
+  return`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center">
+    <span style="font-size:12px;color:var(--muted);font-weight:600">Show:</span>
+    ${PR_EQUIPMENT.map(e=>`<label style="display:inline-flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;user-select:none">
+      <input type="checkbox" data-equip-filter="${e}" ${active.includes(e)?'checked':''} style="accent-color:var(--user-primary);width:16px;height:16px" />
+      ${e}
+    </label>`).join('')}
+  </div>`;
+}
+
 function prListHtml(){
-  const prs=prEntries.filter(p=>p.userName==='Kelli');
-  if(!prs.length)return'<div style="font-size:13px;color:var(--muted);padding:12px">No PRs logged yet.</div>';
-  // Group by category, then movement+equipment
-  const out=[];
+  const active=getPREquipFilter();
+  const prs=prEntries.filter(p=>p.userName==='Kelli'&&active.includes(p.prEquipment));
+  const filterHtml=prFilterHtml();
+  if(!prs.length)return filterHtml+'<div style="font-size:13px;color:var(--muted);padding:12px">No PRs match the current filter.</div>';
+  const out=[filterHtml];
   PR_CATEGORIES.forEach(cat=>{
     const catPRs=prs.filter(p=>p.prCategory===cat);if(!catPRs.length)return;
-    // Group by movement name
+    const catId='prcat-'+cat.replace(/[^a-z]/gi,'-');
     const byMovement=new Map();
     catPRs.forEach(p=>{if(!byMovement.has(p.prMovement))byMovement.set(p.prMovement,[]);byMovement.get(p.prMovement).push(p);});
-    out.push(`<div class="pr-category-title">${cat}</div>`);
-    // Sort movements alphabetically
     const sortedMovements=[...byMovement.keys()].sort();
+    const bodyRows=[];
     sortedMovements.forEach(mov=>{
       const movPRs=byMovement.get(mov);
-      // Group by equipment within movement
       const byEquip=new Map();
       movPRs.forEach(p=>{if(!byEquip.has(p.prEquipment))byEquip.set(p.prEquipment,[]);byEquip.get(p.prEquipment).push(p);});
-      const equipKeys=[...byEquip.keys()].sort();
-      equipKeys.forEach(equip=>{
+      [...byEquip.keys()].sort().forEach(equip=>{
         const equipPRs=byEquip.get(equip);
-        // Sort heaviest/most first
         equipPRs.sort((a,b)=>{
-          if(a.prResultType==='weight_reps'){
-            // Primary: weight desc, secondary: reps desc
-            const wDiff=(b.prWeight||0)-(a.prWeight||0);
-            return wDiff!==0?wDiff:(b.prReps||0)-(a.prReps||0);
-          }
+          if(a.prResultType==='weight_reps'){const wDiff=(b.prWeight||0)-(a.prWeight||0);return wDiff!==0?wDiff:(b.prReps||0)-(a.prReps||0);}
+          if(a.prResultType==='height_dist')return(b.prHeight||0)-(a.prHeight||0);
           if(a.prResultType==='count')return(Number(b.prCount)||0)-(Number(a.prCount)||0);
           if(a.prResultType==='timed')return(b.prTime||'')>(a.prTime||'')?-1:1;
           return 0;
         });
         const rows=equipPRs.map(p=>{
-        const dateStr=(!p.date||p.date<'2020-01-01')?'Date unknown':new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+          const d=(!p.date||p.date<'2020-01-01')?'Date unknown':new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
           const dateCls=(!p.date||p.date<'2020-01-01')?'pr-unknown-date':'pr-date';
           return`<div class="pr-row">
             <span class="pr-result">${prResultText(p)}</span>
-            <span class="${dateCls}">${dateStr}</span>
+            <span class="${dateCls}">${d}</span>
             <button class="history-btn-edit" onclick="openPRForm('${p.id}')" style="padding:3px 8px;font-size:11px">Edit</button>
             <button class="history-btn-delete" onclick="removePR('${p.id}')" style="padding:3px 8px;font-size:11px">✕</button>
           </div>`;
         }).join('');
-        out.push(`<div class="pr-movement-block">
-          <div class="pr-movement-name">${mov} ${equipBadgeHtml(equip)}</div>
-          ${rows}
-        </div>`);
+        bodyRows.push(`<div class="pr-movement-block"><div class="pr-movement-name">${mov} ${equipBadgeHtml(equip)}</div>${rows}</div>`);
       });
     });
+    out.push(`<div class="pr-category-block">
+      <div class="pr-category-title" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="togglePRCategory('${catId}')">
+        <span>${cat}</span><span id="${catId}-icon" style="font-size:12px;color:var(--muted)">▶</span>
+      </div>
+      <div id="${catId}" style="display:none">${bodyRows.join('')}</div>
+    </div>`);
   });
   return out.join('');
 }
 
+window.togglePRCategory=function(id){
+  const el=document.getElementById(id);
+  const icon=document.getElementById(id+'-icon');
+  if(!el)return;
+  const open=el.style.display!=='none';
+  el.style.display=open?'none':'block';
+  if(icon)icon.textContent=open?'▶':'▼';
+};
+
 function renderPRs(){
   const html=prListHtml();
-  const d=document.getElementById('desktopPRList');if(d)d.innerHTML=html;
-  const m=document.getElementById('mobilePRList');if(m)m.innerHTML=html;
+  const d=document.getElementById('desktopPRList');if(d){d.innerHTML=html;wireEquipFilter(d);}
+  const m=document.getElementById('mobilePRList');if(m){m.innerHTML=html;wireEquipFilter(m);}
+}
+function wireEquipFilter(container){
+  container.querySelectorAll('[data-equip-filter]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const active=getPREquipFilter();
+      const equip=cb.dataset.equipFilter;
+      const newActive=cb.checked?[...active,equip]:active.filter(e=>e!==equip);
+      savePREquipFilter(newActive);
+      renderPRs();
+    });
+  });
 }
 
 function prCounterCardHtml(){
