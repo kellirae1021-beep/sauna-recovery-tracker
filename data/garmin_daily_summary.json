@@ -18881,5 +18881,20 @@
     "hrv": 36.0,
     "respiration": 14.0,
     "pulseOx": 93.0
+  },
+  {
+    "date": "2026-05-18",
+    "sleepScore": 80,
+    "hrv": 36.0
+  },
+  {
+    "date": "2026-05-19",
+    "sleepScore": 89,
+    "hrv": 36.0
+  },
+  {
+    "date": "2026-05-20",
+    "sleepScore": 82,
+    "hrv": 36.0
   }
 ]
