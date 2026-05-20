@@ -1191,12 +1191,25 @@ function setupPRMovementTypeahead(initialValue=''){
   if(!prTypeaheadReady){
     prTypeaheadReady=true;
     let focusIdx=-1;
+    let suppressBlur=false;
 
     function allMovementsForSearch(){
       const all=getAllMovements().map(m=>({...m}));
       const allNames=new Set(all.map(m=>m.name.toLowerCase()));
       prEntries.forEach(p=>{if(p.prMovement&&!allNames.has(p.prMovement.toLowerCase())){all.push({name:p.prMovement,category:p.prCategory||'Core & Other'});allNames.add(p.prMovement.toLowerCase());}});
       return all.sort((a,b)=>a.name.localeCompare(b.name));
+    }
+
+    function selectItem(name,isNew=false){
+      if(isNew){
+        input.value=name;hidden.value='__new__';
+        document.getElementById('prNewMovementWrap').style.display='block';
+      } else {
+        input.value=name;hidden.value=name;
+        document.getElementById('prNewMovementWrap').style.display='none';
+      }
+      dropdown.style.display='none';
+      suppressBlur=false;
     }
 
     function showDropdown(query){
@@ -1209,7 +1222,11 @@ function setupPRMovementTypeahead(initialValue=''){
         const el=document.createElement('div');
         el.className='pr-dropdown-item';
         el.innerHTML=`<span>${m.name}</span><span class="pr-dd-cat">${m.category}</span>`;
-        el.addEventListener('mousedown',e=>{e.preventDefault();input.value=m.name;hidden.value=m.name;dropdown.style.display='none';document.getElementById('prNewMovementWrap').style.display='none';});
+        // Both mousedown (desktop) and touchend (mobile)
+        const pick=e=>{e.preventDefault();e.stopPropagation();selectItem(m.name);};
+        el.addEventListener('mousedown',pick);
+        el.addEventListener('touchend',pick);
+        el.addEventListener('touchstart',()=>{suppressBlur=true;},{passive:true});
         dropdown.appendChild(el);
       });
       if(q&&!exactMatch){
@@ -1217,7 +1234,10 @@ function setupPRMovementTypeahead(initialValue=''){
         const el=document.createElement('div');
         el.className='pr-dropdown-create';
         el.textContent=`+ Create "${raw}"`;
-        el.addEventListener('mousedown',e=>{e.preventDefault();input.value=raw;hidden.value='__new__';dropdown.style.display='none';document.getElementById('prNewMovementWrap').style.display='block';});
+        const pick=e=>{e.preventDefault();e.stopPropagation();selectItem(raw,true);};
+        el.addEventListener('mousedown',pick);
+        el.addEventListener('touchend',pick);
+        el.addEventListener('touchstart',()=>{suppressBlur=true;},{passive:true});
         dropdown.appendChild(el);
       }
       dropdown.style.display=(matches.length||(!exactMatch&&q))?'block':'none';
@@ -1225,7 +1245,9 @@ function setupPRMovementTypeahead(initialValue=''){
 
     input.addEventListener('input',()=>{hidden.value='';document.getElementById('prNewMovementWrap').style.display='none';showDropdown(input.value);});
     input.addEventListener('focus',()=>showDropdown(input.value));
-    input.addEventListener('blur',()=>setTimeout(()=>{dropdown.style.display='none';},200));
+    input.addEventListener('blur',()=>{if(suppressBlur)return;setTimeout(()=>{if(!suppressBlur)dropdown.style.display='none';},300);});
+    dropdown.addEventListener('touchstart',()=>{suppressBlur=true;},{passive:true});
+    dropdown.addEventListener('touchend',()=>{setTimeout(()=>{suppressBlur=false;},400);});
     input.addEventListener('keydown',e=>{
       const items=dropdown.querySelectorAll('.pr-dropdown-item,.pr-dropdown-create');
       if(!items.length)return;
