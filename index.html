@@ -369,7 +369,7 @@ textarea{min-height:90px;resize:vertical}
     <button class="mobile-nav-btn active" data-tab="mobileToday"><span class="nav-icon">🏠</span></button>
     <button class="mobile-nav-btn" data-tab="mobileCharts"><span class="nav-icon">📈</span></button>
     <button class="mobile-nav-btn" data-tab="mobileHistory"><span class="nav-icon">📋</span></button>
-    <button class="mobile-nav-btn" data-tab="mobilePRs"><span class="nav-icon">🏆</span></button>
+    <button class="mobile-nav-btn" data-tab="mobilePRs" id="mobilePRsNavBtn"><span class="nav-icon">🏆</span></button>
     <div class="mobile-nav-add-wrap">
       <button class="mobile-nav-add" id="mobileAddBtn">+</button>
       <span class="mobile-nav-add-label" id="mobileAddLabel">Add</span>
@@ -862,7 +862,7 @@ function sortedDesc(){return[...entries].sort((a,b)=>b.date.localeCompare(a.date
 function weekBounds(offset=0){const now=new Date(),day=now.getDay(),mon=new Date(now);mon.setDate(now.getDate()-(day===0?6:day-1)+offset*7);mon.setHours(0,0,0,0);const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);return{start:localDateStr(mon),end:localDateStr(sun)};}
 function countSaunaInWeek(offset=0){const{start,end}=weekBounds(offset);return new Set(entries.filter(e=>(e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0))&&e.date>=start&&e.date<=end).map(e=>e.date)).size;}
 function totalSaunaSessions(){return new Set(entries.filter(e=>e.entryType==='sauna'||(e.saunaMinutes!==''&&e.saunaMinutes!=null&&Number(e.saunaMinutes)>0)).map(e=>e.date)).size;}
-function workoutBadgesHtml(entry){if(!entry||!entry.workouts)return'';const ws=entry.workouts.split(',').map(w=>w.trim()).filter(Boolean);if(!ws.length)return'';return`<div class="workout-badge">${ws.map(w=>`<span class="workout-tag">${w==='Burn Boot Camp'&&entry.bootcampTime?`🏋️ ${w} · ${fmtTime(entry.bootcampTime)}${entry.bootcampType?' · '+fmtBootcampType(entry.bootcampType):''}${entry.bootcampOnDemand?' · OD':''}${entry.bootcampAway?' · Away':''}`:w==='Cycling'&&!isBlank(entry.cyclingMiles)?`🚴 Cycling · ${entry.cyclingMiles}mi`:w}</span>`).join('')}</div>`;}
+function workoutBadgesHtml(entry){if(!entry||!entry.workouts)return'';const ws=entry.workouts.split(',').map(w=>w.trim()).filter(Boolean);if(!ws.length)return'';return`<div class="workout-badge">${ws.map(w=>{if(w==='Burn Boot Camp'){const parts=[`🏋️ ${w}`];if(entry.bootcampTime)parts.push(fmtTime(entry.bootcampTime));if(entry.bootcampType)parts.push(fmtBootcampType(entry.bootcampType));if(entry.bootcampOnDemand)parts.push('On Demand');if(entry.bootcampAway)parts.push('Away');return`<span class="workout-tag">${parts.join(' · ')}</span>`;}if(w==='Cycling'&&!isBlank(entry.cyclingMiles))return`<span class="workout-tag">🚴 Cycling · ${entry.cyclingMiles}mi</span>`;return`<span class="workout-tag">${w}</span>`;}).join('')}</div>`;}
 
 // ─── Baselines ────────────────────────────────────────────────────────────────
 // Fixed pre-sauna baseline window — 90 days ending the day before sauna start
@@ -1031,6 +1031,15 @@ function renderBootcampGoal(){
   if(mcPR){mcPR.style.display=show?'':'none';if(show)mcPR.innerHTML=`<div style="padding:14px 16px">${prCounterCardHtml()}</div>`;}
   const prTabBtn=document.getElementById('dprTabBtn');
   if(prTabBtn)prTabBtn.style.display=show?'':'none';
+  const mPRNav=document.getElementById('mobilePRsNavBtn');
+  if(mPRNav)mPRNav.style.display=show?'':'none';
+  // If Elliott is currently on the PR tab, switch to Today
+  if(!show){
+    const prMobileTab=document.getElementById('mobilePRs');
+    if(prMobileTab&&prMobileTab.classList.contains('active'))setMobileTab('mobileToday');
+    const prDesktopPanel=document.getElementById('dprTab');
+    if(prDesktopPanel&&prDesktopPanel.classList.contains('active'))setDesktopTab('dtodayTab');
+  }
 }
 function todayPRsHtml(){
   const todayPRs=prEntries.filter(p=>p.userName==='Kelli'&&p.date===todayStr);
