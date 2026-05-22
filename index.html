@@ -361,7 +361,10 @@ textarea{min-height:90px;resize:vertical}
   <div class="mobile-tab" id="mobilePRs">
     <div class="mobile-history-head">
       <h3>🏆 PRs</h3>
-      <button class="pill-btn primary" onclick="openPRForm()" style="font-size:12px;padding:6px 12px">+ Log PR</button>
+      <div style="display:flex;gap:8px">
+        <button class="pill-btn" onclick="exportPRData()" style="font-size:12px;padding:6px 10px">⬇ Export</button>
+        <button class="pill-btn primary" onclick="openPRForm()" style="font-size:12px;padding:6px 12px">+ Log PR</button>
+      </div>
     </div>
     <div style="padding:0 16px 80px" id="mobilePRList"></div>
   </div>
@@ -484,7 +487,10 @@ textarea{min-height:90px;resize:vertical}
     <div class="card">
       <div class="section-title">
         <h3>🏆 Personal Records</h3>
-        <button class="pill-btn primary" onclick="openPRForm()">+ Log PR</button>
+        <div style="display:flex;gap:8px">
+          <button class="pill-btn" onclick="exportPRData()">⬇ Export</button>
+          <button class="pill-btn primary" onclick="openPRForm()">+ Log PR</button>
+        </div>
       </div>
       <div id="desktopPRList"></div>
     </div>
@@ -1439,6 +1445,26 @@ function prListHtml(scope='desktop'){
   return out.join('');
 }
 
+window.exportPRData=function(){
+  const prs=prEntries.filter(p=>p.userName==='Kelli');
+  if(!prs.length){alert('No PR data to export.');return;}
+  const headers=['date','movement','category','equipment','result_type','weight_lbs','reps','time','count','height','height_unit','note'];
+  const rows=prs.map(p=>[
+    p.date||'',p.prMovement||'',p.prCategory||'',p.prEquipment||'',p.prResultType||'',
+    p.prWeight??'',p.prReps??'',p.prTime||'',p.prCount||'',p.prHeight??'',p.prHeightUnit||'',
+    (p.prNote||'').replace(/,/g,';')
+  ].join(','));
+  const csv=[headers.join(','),...rows].join('\n');
+  // Try file download first, fall back to clipboard
+  try{
+    const blob=new Blob([csv],{type:'text/csv'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='kelli_prs.csv';a.click();
+    URL.revokeObjectURL(url);
+  }catch(e){
+    navigator.clipboard.writeText(csv).then(()=>alert(`${prs.length} PRs copied to clipboard as CSV. Paste into Notes or email to yourself.`)).catch(()=>alert(csv));
+  }
+};
 window.togglePRCategory=function(id){
   const el=document.getElementById(id);
   const icon=document.getElementById(id+'-icon');
