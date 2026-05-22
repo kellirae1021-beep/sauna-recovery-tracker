@@ -191,7 +191,7 @@ textarea{min-height:90px;resize:vertical}
 .milestone-note{font-size:11px;color:var(--user-primary);display:flex;align-items:center;gap:5px}
 .range-select{width:auto;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font:inherit;font-size:12px;background:#fff;color:var(--text)}
 .history-item{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fcfafc;margin-bottom:8px}
-.history-date{font-weight:700;font-size:15px;margin-bottom:6px}
+.history-date{font-weight:700;font-size:15px;margin-bottom:6px;background:#f3edf7;margin:-12px -14px 8px;padding:8px 14px;border-radius:12px 12px 0 0}
 .history-entry{border-top:1px solid var(--border);padding:8px 0 4px}
 .history-entry-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
 .history-entry-type{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
@@ -254,7 +254,7 @@ textarea{min-height:90px;resize:vertical}
   .mobile-history-actions{display:flex;gap:8px}
   .mobile-history-list{padding:0}
   .mobile-history-item{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px}
-  .mobile-history-date{font-weight:700;font-size:14px;color:var(--muted);margin-bottom:8px}
+  .mobile-history-date{font-weight:700;font-size:14px;color:var(--text);margin-bottom:8px;background:#f3edf7;margin:-12px -16px 10px;padding:7px 16px}
   .mobile-history-entry{padding:8px 0 4px;border-top:1px solid var(--border)}
   .mobile-history-entry:first-of-type{border-top:none;padding-top:0}
   .mobile-history-type{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
@@ -541,13 +541,16 @@ textarea{min-height:90px;resize:vertical}
                 <option value="other">Other</option>
               </select>
             </div>
-            <div class="switch-row" style="grid-column:1/-1">
-              <div><strong>On Demand</strong><div style="font-size:12px;color:var(--muted)">Virtual class (travel)</div></div>
-              <input id="bootcampOnDemand" type="checkbox" style="width:24px;height:24px;accent-color:var(--user-primary)" />
+            <div style="display:flex;gap:20px;align-items:center;padding:8px 12px;background:#fcfafc;border:1px solid var(--border);border-radius:12px;grid-column:1/-1">
+              <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;font-weight:600;margin:0">
+                <input id="bootcampOnDemand" type="checkbox" style="width:18px;height:18px;accent-color:var(--user-primary)" />
+                On Demand
+              </label>
+              <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;font-weight:600;margin:0">
+                <input id="bootcampAway" type="checkbox" style="width:18px;height:18px;accent-color:var(--user-primary)" />
+                Away
+              </label>
             </div>
-            <div class="switch-row" style="grid-column:1/-1">
-              <div><strong>Away</strong><div style="font-size:12px;color:var(--muted)">Different Burn location</div></div>
-              <input id="bootcampAway" type="checkbox" style="width:24px;height:24px;accent-color:var(--user-primary)" />
             </div>
           </div>
         </div>
@@ -1603,7 +1606,7 @@ document.getElementById('cleanupBtn').addEventListener('click',runCleanup);
 document.getElementById('migrateWorkoutsBtn').addEventListener('click',runWorkoutMigration);
 document.getElementById('mobileMigrateWorkoutsBtn').addEventListener('click',runWorkoutMigration);
 document.getElementById('mobileCleanupBtn').addEventListener('click',runCleanup);
-document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(currentEntryType==='pr'){savePR();return;}if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);}closeModal('entryModal');renderAll();});
+document.getElementById('entryForm').addEventListener('submit',async e=>{e.preventDefault();if(currentEntryType==='pr'){savePR();return;}if(!validateForm()){alert('Fix highlighted fields before saving.');return;}const data=getFormData();const idx=allEntries.findIndex(x=>x.id===data.id);if(idx>=0)allEntries[idx]=data;else allEntries.unshift(data);entries=allEntries.filter(e=>e.userName===activeUser);try{await sbUpsert(data);}catch(err){console.warn('Supabase save failed:',err);alert(`Entry saved locally but failed to sync: ${err.message}. Check your connection or try again.`);}closeModal('entryModal');renderAll();});
 document.querySelectorAll('.pr-equip-chip').forEach(b=>b.addEventListener('click',()=>setPREquip(b.dataset.equip)));
 document.querySelectorAll('.pr-result-type-chip').forEach(b=>b.addEventListener('click',()=>setPRResultType(b.dataset.rtype)));
 Object.keys(FIELD_RULES).forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',validateForm);el.addEventListener('blur',validateForm);}});
