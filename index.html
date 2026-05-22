@@ -1390,7 +1390,7 @@ function prFilterHtml(){
   </div>`;
 }
 
-function prListHtml(){
+function prListHtml(scope='desktop'){
   const active=getPREquipFilter();
   const prs=prEntries.filter(p=>p.userName==='Kelli'&&active.includes(p.prEquipment));
   const filterHtml=prFilterHtml();
@@ -1398,7 +1398,7 @@ function prListHtml(){
   const out=[filterHtml];
   PR_CATEGORIES.forEach(cat=>{
     const catPRs=prs.filter(p=>p.prCategory===cat);if(!catPRs.length)return;
-    const catId='prcat-'+cat.replace(/[^a-z]/gi,'-');
+    const catId=scope+'-prcat-'+cat.replace(/[^a-z]/gi,'-');
     const byMovement=new Map();
     catPRs.forEach(p=>{if(!byMovement.has(p.prMovement))byMovement.set(p.prMovement,[]);byMovement.get(p.prMovement).push(p);});
     const sortedMovements=[...byMovement.keys()].sort();
@@ -1449,10 +1449,14 @@ window.togglePRCategory=function(id){
 };
 
 function renderPRs(){
-  const html=prListHtml();
-  const d=document.getElementById('desktopPRList');if(d){d.innerHTML=html;wireEquipFilter(d);}
-  const m=document.getElementById('mobilePRList');if(m){m.innerHTML=html;wireEquipFilter(m);}
+  const d=document.getElementById('desktopPRList');if(d){d.innerHTML=prListHtml('desktop');wireEquipFilter(d);}
+  const m=document.getElementById('mobilePRList');if(m){m.innerHTML=prListHtml('mobile');wireEquipFilter(m);}
 }
+
+
+
+
+
 function wireEquipFilter(container){
   container.querySelectorAll('[data-equip-filter]').forEach(cb=>{
     cb.addEventListener('change',()=>{
