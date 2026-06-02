@@ -111,7 +111,7 @@ textarea{min-height:90px;resize:vertical}
 .bootcamp-bar-fill.good{background:var(--teal)}.bootcamp-bar-fill.warn{background:#d4a030}.bootcamp-bar-fill.low{background:var(--rose)}
 .bootcamp-marker{position:absolute;top:-4px;width:3px;height:24px;border-radius:2px;background:#6f3f74;opacity:.5}
 .bootcamp-marker-label{position:absolute;top:26px;font-size:9px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
-.bootcamp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.bootcamp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
 .bootcamp-stat{background:#faf8fb;border:1px solid var(--border);border-radius:10px;padding:8px;text-align:center}
 .bootcamp-stat .bs-val{font-size:20px;font-weight:700;line-height:1.1;color:var(--text)}
 .bootcamp-stat .bs-lbl{font-size:10px;color:var(--muted);margin-top:2px}
@@ -383,7 +383,7 @@ textarea{min-height:90px;resize:vertical}
 <!-- ══ DESKTOP ══════════════════════════════════════════════════════════════ -->
 <div class="desktop-wrap">
   <div class="desktop-header">
-    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v44</div></div>
+    <div><h1>Sauna Recovery Tracker</h1><div class="version">version v45</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <div class="desktop-user-bar">
         <button class="desktop-user-btn active" data-user="Kelli">Kelli</button>
@@ -629,6 +629,8 @@ textarea{min-height:90px;resize:vertical}
 const USERS = ['Kelli','Elliott'];
 const GARMIN_PATHS = { Kelli:'data/garmin_daily_summary.json', Elliott:'data/garmin_elliott.json' };
 const SAUNA_START_DATE = '2026-03-19';
+const LIFETIME_START='2026-05-29';
+const LIFETIME_BASE=750;
 const COMPARE_COLORS = { sleepScore:'#b06a7f',hrv:'#7a9a7a',restingHr:'#7a7a9a',bodyBatteryHigh:'#d4a0b0',respiration:'#b4a0c8',pulseOx:'#e08a9a' };
 const CHART_PALETTE = {
   Kelli:{
@@ -1016,10 +1018,12 @@ function bootcampCardHtml(isMobile){
     <div class="bootcamp-marker" style="left:${goalPct}%"><span class="bootcamp-marker-label">250</span></div>
     <div class="bootcamp-marker" style="left:99%;background:#2f6f73"><span class="bootcamp-marker-label">300</span></div>
   </div>`;
+  const lifetimeCount=allEntries.filter(e=>e.userName==='Kelli'&&e.entryType==='workout'&&e.workouts&&e.workouts.includes('Burn Boot Camp')&&e.date>=LIFETIME_START&&!e.bootcampOnDemand&&!e.bootcampAway).length;
   const stats=`<div class="bootcamp-stats">
     <div class="bootcamp-stat"><div class="bs-val">${s.attended}</div><div class="bs-lbl">Attended</div></div>
     <div class="bootcamp-stat"><div class="bs-val">${s.needed250>0?s.needed250:'✓'}</div><div class="bs-lbl">Needed for 250</div></div>
     <div class="bootcamp-stat"><div class="bs-val">${s.remaining}</div><div class="bs-lbl">Open days left</div></div>
+    <div class="bootcamp-stat"><div class="bs-val">${LIFETIME_BASE+lifetimeCount}</div><div class="bs-lbl">Lifetime 🏠</div></div>
   </div>`;
   const chart=`<div class="bootcamp-monthly-title">Monthly attendance</div>${bootcampMonthSvg(s.monthly,s.monthOpen,s.attended,s.monthlyOD,s.monthlyAway)}`;
   if(isMobile){
