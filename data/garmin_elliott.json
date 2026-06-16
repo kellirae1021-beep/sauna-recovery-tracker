@@ -1261,5 +1261,35 @@
     "date": "2026-06-10",
     "sleepScore": 79,
     "hrv": 41.0
+  },
+  {
+    "date": "2026-06-11",
+    "sleepScore": 78,
+    "hrv": 41.0
+  },
+  {
+    "date": "2026-06-12",
+    "sleepScore": 85,
+    "hrv": 42.0
+  },
+  {
+    "date": "2026-06-13",
+    "sleepScore": 91,
+    "hrv": 42.0
+  },
+  {
+    "date": "2026-06-14",
+    "sleepScore": 69,
+    "hrv": 41.0
+  },
+  {
+    "date": "2026-06-15",
+    "sleepScore": 82,
+    "hrv": 41.0
+  },
+  {
+    "date": "2026-06-16",
+    "sleepScore": 84,
+    "hrv": 40.0
   }
 ]
