@@ -728,10 +728,18 @@ const BUILTIN_MOVEMENTS = [
   {name:'Power Clean',category:'Upper Body'},
 ];
 
-function getCustomMovements(){try{return JSON.parse(localStorage.getItem('srt-custom-movements')||'[]');}catch{return[];}}
+function getCustomMovements(){
+  try{
+    const customs=JSON.parse(localStorage.getItem('srt-custom-movements')||'[]');
+    // Strip any custom entries that duplicate a builtin name (case-insensitive) — prevents
+    // accidental shadowing when a user typed a known movement without selecting from dropdown.
+    const builtinNames=new Set(BUILTIN_MOVEMENTS.map(m=>m.name.toLowerCase()));
+    return customs.filter(m=>!builtinNames.has((m.name||'').toLowerCase()));
+  }catch{return[];}
+}
 function saveCustomMovements(arr){localStorage.setItem('srt-custom-movements',JSON.stringify(arr));}
 function getAllMovements(){return[...BUILTIN_MOVEMENTS,...getCustomMovements()].sort((a,b)=>a.name.localeCompare(b.name));}
-function getMovementCategory(name){return getAllMovements().find(m=>m.name===name)?.category||'Core & Other';}
+function getMovementCategory(name){return getAllMovements().find(m=>m.name.toLowerCase()===(name||'').toLowerCase())?.category||'Core & Other';}
 
 // Seed PR entries
 const seedPRs = [
@@ -1346,15 +1354,21 @@ function openPRForm(id=null){
 window.openPRForm=openPRForm;
 
 function savePR(){
-  const hiddenVal=document.getElementById('prMovement').value;
+  let hiddenVal=document.getElementById('prMovement').value;
   const inputVal=document.getElementById('prMovementInput').value.trim();
+  // If user typed without selecting from the dropdown, try a case-insensitive match
+  // against all known movements (builtin + custom + past entries) before treating it as new.
+  if(!hiddenVal&&inputVal){
+    const existingMov=getAllMovements().find(m=>m.name.toLowerCase()===inputVal.toLowerCase());
+    if(existingMov)hiddenVal=existingMov.name;
+  }
   let movName='',movCat='Core & Other';
   if(hiddenVal==='__new__'||(!hiddenVal&&inputVal)){
     movName=inputVal;
     movCat=document.getElementById('prNewCategory').value||'Core & Other';
     if(!movName){alert('Enter a movement name.');return;}
     const customs=getCustomMovements();
-    if(!customs.find(m=>m.name===movName)&&!BUILTIN_MOVEMENTS.find(m=>m.name===movName)){customs.push({name:movName,category:movCat});saveCustomMovements(customs);}
+    if(!customs.find(m=>m.name.toLowerCase()===movName.toLowerCase())&&!BUILTIN_MOVEMENTS.find(m=>m.name.toLowerCase()===movName.toLowerCase())){customs.push({name:movName,category:movCat});saveCustomMovements(customs);}
   } else {
     movName=hiddenVal||inputVal;
     movCat=getMovementCategory(movName)||'Core & Other';
